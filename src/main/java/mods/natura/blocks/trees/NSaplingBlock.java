@@ -43,7 +43,7 @@ public class NSaplingBlock extends BlockSapling
         setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
         this.setHardness(0.0F);
         this.setStepSound(Block.soundTypeGrass);
-        this.setCreativeTab(NaturaTab.woodTab);
+        this.setCreativeTab(NaturaTab.tab);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class NSaplingBlock extends BlockSapling
         else
             return EnumPlantType.Nether;
     }
-    
+
     @Override
     public void updateTick (World world, int x, int y, int z, Random random)
     {
@@ -186,14 +186,14 @@ public class NSaplingBlock extends BlockSapling
                 func_149879_c(world, x, y, z, random);
         }
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
         return icons[meta % 8];
     }
-    
+
     public void func_149879_c(World p_149879_1_, int p_149879_2_, int p_149879_3_, int p_149879_4_, Random p_149879_5_)
     {
         int l = p_149879_1_.getBlockMetadata(p_149879_2_, p_149879_3_, p_149879_4_);
@@ -207,7 +207,7 @@ public class NSaplingBlock extends BlockSapling
             this.func_149878_d(p_149879_1_, p_149879_2_, p_149879_3_, p_149879_4_, p_149879_5_);
         }
     }
-    
+
     public void func_149878_d(World world, int x, int y, int z, Random random)
     {
         int md = world.getBlockMetadata(x, y, z) % 8;
@@ -255,7 +255,7 @@ public class NSaplingBlock extends BlockSapling
         for (int i = 0; i < 8; i++)
             par3List.add(new ItemStack(par1, 1, i));
     }
-    
+
     public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_, boolean p_149851_5_)
     {
         return true;

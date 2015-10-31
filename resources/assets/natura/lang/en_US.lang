@@ -1,8 +1,6 @@
-itemGroup.natura.plants=Natura Plants
-itemGroup.natura.trees=Natura Trees
-itemGroup.natura.nether=Natura Nether
+itemGroup.natura=Natura
 
-item.natura.spawnegg.name=Spawn 
+item.natura.spawnegg.name=Spawn
 
 item.wheatBag.name=Wheat Seed Bag
 item.barleyBag.name=Barley Seed Bag

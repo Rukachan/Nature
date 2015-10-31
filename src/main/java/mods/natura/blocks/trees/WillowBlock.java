@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mods.natura.common.NaturaTab;
+import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +29,7 @@ public class WillowBlock extends BlockLog
         super();
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeWood);
-        // TODO 1.7 Where the heck did this go? setBurnProperties(this, 5, 20);
+	Blocks.fire.setFireInfo (this, 5, 20);
         this.setCreativeTab(NaturaTab.tab);
     }
 

@@ -3,6 +3,7 @@ package mods.natura.blocks.trees;
 import java.util.List;
 
 import mods.natura.common.NaturaTab;
+import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,7 +27,7 @@ public class Planks extends Block
     public Planks()
     {
         super(Material.wood);
-        // TODO 1.7 Where the heck did this go? setBurnProperties(this, 5, 20);
+	Blocks.fire.setFireInfo(this, 5, 20);
         this.setHardness(2.0f);
         this.setCreativeTab(NaturaTab.tab);
         this.setStepSound(Block.soundTypeWood);

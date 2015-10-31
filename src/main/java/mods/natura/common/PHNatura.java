@@ -29,7 +29,21 @@ public class PHNatura
         babyHeatscarMaximum = config.get("Mob Changes", "Maximum Baby Heatscar Spiders on Spider Death", 4).getInt(4);
         if (babyHeatscarMaximum < 0)
             babyHeatscarMaximum = 0;
-        overrideNether = config.get("Disabler", "Override Nether", !BoP).getBoolean(!BoP);
+
+	impSpawnRarity = config.get("Mob Changes", "Imp Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
+        if (impSpawnRarity < 0)
+            impSpawnRarity = 0;
+	heatscarSpawnRarity = config.get("Mob Changes", "Heatscar Spider Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
+        if (heatscarSpawnRarity < 0)
+            heatscarSpawnRarity = 0;
+	nitroCreeperSpawnRarity = config.get("Mob Changes", "Nitro Creeper Spawn Rarity (0 to disable, default: 8)", 8).getInt(8);
+        if (nitroCreeperSpawnRarity < 0)
+            nitroCreeperSpawnRarity = 0;
+	babyHeatscarSpawnRarity = config.get("Mob Changes", "Baby Heatscar Spider Spawn Rarity (0 to disable, default: 7)", 7).getInt(7);
+        if (babyHeatscarSpawnRarity < 0)
+            babyHeatscarSpawnRarity = 0;
+
+	overrideNether = config.get("Disabler", "Override Nether", !BoP).getBoolean(!BoP);
         canRespawnInNether = config.get("Disabler", "Obelisks let players respawn in the Nether", true).getBoolean(true);
 
         generateRedwood = config.get("Disabler", "Generate Redwood Trees", true).getBoolean(true);
@@ -261,6 +275,12 @@ public class PHNatura
     public static int tigerRarity;
     public static int silverbellRarity;
 
+    //Mobs
     public static int babyHeatscarMinimum;
     public static int babyHeatscarMaximum;
+
+    public static int impSpawnRarity;
+    public static int heatscarSpawnRarity;
+    public static int nitroCreeperSpawnRarity;
+    public static int babyHeatscarSpawnRarity;
 }

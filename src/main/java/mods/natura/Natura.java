@@ -61,7 +61,7 @@ public class Natura
     public static Material cloud = new CloudMaterial();
 
     public static Logger logger = LogManager.getLogger(modID);
-    
+
     public static final PulseManager pulsar = new PulseManager(modID, "Natura-Dynamic");
 
     @EventHandler
@@ -73,16 +73,12 @@ public class Natura
         PluginController.registerBuiltins();
 
         PHNatura.initProps(evt.getSuggestedConfigurationFile());
-        NaturaTab.tab = new TabTools("natura.plants");
-        NaturaTab.woodTab = new TabTools("natura.trees");
-        NaturaTab.netherTab = new TabTools("natura.nether");
+        NaturaTab.tab = new TabTools("natura");
 
         content = new NContent();
         content.preInit();
         content.addOredictSupport();
         NaturaTab.tab.init(new ItemStack(NContent.boneBag, 0));
-        NaturaTab.woodTab.init(new ItemStack(NContent.floraSapling, 1, 3));
-        NaturaTab.netherTab.init(new ItemStack(NContent.floraSapling, 1, 5));
 
         pulsar.preInit(evt);
     }

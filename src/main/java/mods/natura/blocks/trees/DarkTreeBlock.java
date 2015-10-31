@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.natura.common.NaturaTab;
+import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +29,7 @@ public class DarkTreeBlock extends Block
         this.setHardness(3.5F);
         this.setResistance(40F);
         this.setStepSound(Block.soundTypeWood);
-        //setBurnProperties(this.blockID, 5, 20);
+	Blocks.fire.setFireInfo(this, 5, 20);
         this.setCreativeTab(NaturaTab.tab);
     }
 

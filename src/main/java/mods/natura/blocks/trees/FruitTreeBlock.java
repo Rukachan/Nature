@@ -3,6 +3,7 @@ package mods.natura.blocks.trees;
 import java.util.Random;
 
 import mods.natura.common.NaturaTab;
+import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ public class FruitTreeBlock extends BlockLog
         this.setHardness(1.5F);
         this.setResistance(5F);
         this.setStepSound(Block.soundTypeWood);
-        // TODO 1.7 Where the heck did this go? setBurnProperties(this, 5, 20);
+	Blocks.fire.setFireInfo(this, 5, 20);
         this.setCreativeTab(NaturaTab.tab);
     }
 
@@ -23,7 +24,7 @@ public class FruitTreeBlock extends BlockLog
     {
     	int tex = blockIndexInTexture + (metadata % 4);
     	int orientation = metadata / 4;
-    	
+
     	switch (orientation) //Ends of logs
     	{
     	case 0:
@@ -39,7 +40,7 @@ public class FruitTreeBlock extends BlockLog
     			return tex + 16;
     		break;
     	}
-    	
+
     	return tex;
     }*/
 

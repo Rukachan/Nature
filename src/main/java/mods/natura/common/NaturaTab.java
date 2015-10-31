@@ -5,8 +5,6 @@ import mantle.lib.TabTools;
 public class NaturaTab
 {
     public static TabTools tab;
-    public static TabTools woodTab;
-    public static TabTools netherTab;
 
     /* public NaturaTab(String name)
      {

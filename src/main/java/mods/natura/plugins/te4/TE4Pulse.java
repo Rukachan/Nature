@@ -100,34 +100,6 @@ public class TE4Pulse
                 createSawmillRecipe(2400, new ItemStack(NContent.alternateBookshelf, 1, i), new ItemStack(NContent.planks, 6, plankMeta), new ItemStack(Items.book, 3), 100);
             }
         }
-        // - Fence Gates
-        addFenceGate(NContent.fenceGateAmaranth, "purpleheart");
-        addFenceGate(NContent.fenceGateBloodwood, "bloodwood");
-        addFenceGate(NContent.fenceGateDarkwood, "darkwood");
-        addFenceGate(NContent.fenceGateEucalyptus, "eucalyptus");
-        addFenceGate(NContent.fenceGateFusewood, "fusewood");
-        addFenceGate(NContent.fenceGateGhostwood, "ghostwood");
-        addFenceGate(NContent.fenceGateHopseed, "hopseed");
-        addFenceGate(NContent.fenceGateMaple, "maple");
-        addFenceGate(NContent.fenceGateRedwood, "redwood");
-        addFenceGate(NContent.fenceGateSakura, "sakura");
-        addFenceGate(NContent.fenceGateSilverbell, "silverbell");
-        addFenceGate(NContent.fenceGateTiger, "tiger");
-        addFenceGate(NContent.fenceGateWillow, "willow");
-        // - Pressure Plates
-        addPressurePlate(NContent.pressurePlateAmaranth, "purpleheart");
-        addPressurePlate(NContent.pressurePlateBloodwood, "bloodwood");
-        addPressurePlate(NContent.pressurePlateDarkwood, "darkwood");
-        addPressurePlate(NContent.pressurePlateEucalyptus, "eucalyptus");
-        addPressurePlate(NContent.pressurePlateFusewood, "fusewood");
-        addPressurePlate(NContent.pressurePlateGhostwood, "ghostwood");
-        addPressurePlate(NContent.pressurePlateHopseed, "hopseed");
-        addPressurePlate(NContent.pressurePlateMaple, "maple");
-        addPressurePlate(NContent.pressurePlateRedwood, "redwood");
-        addPressurePlate(NContent.pressurePlateSakura, "sakura");
-        addPressurePlate(NContent.pressurePlateSilverbell, "silverbell");
-        addPressurePlate(NContent.pressurePlateTiger, "tiger");
-        addPressurePlate(NContent.pressurePlateWillow, "willow");
         // - Trapdoors
         addTrapdoor(NContent.trapdoorAmaranth, "purpleheart");
         addTrapdoor(NContent.trapdoorBloodwood, "bloodwood");
