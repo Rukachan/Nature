@@ -186,9 +186,10 @@ public class NContent implements IFuelHandler
         tree = new TreeBlock().setBlockName("natura.treeblock");
         redwood = new SimpleLog().setBlockName("natura.redwood");
         planks = new Planks().setBlockName("natura.planks");
-        floraLeaves = (NLeaves) new NLeaves().setBlockName("natura.leaves");
-        floraLeavesNoColor = (NLeaves) new NLeavesNocolor().setBlockName("natura.leavesnocolor");
-        floraSapling = ((NSaplingBlock) new NSaplingBlock().setBlockName("natura.sapling"));
+	floraLeaves = (NLeaves) new NLeaves().setBlockName("natura.leaves");
+	floraLeavesNoColor = (NLeaves) new NLeavesNocolor().setBlockName("natura.leavesnocolor");
+
+	floraSapling = (NSaplingBlock) new NSaplingBlock().setBlockName("natura.sapling");
         willow = new WillowBlock().setBlockName("willow");
 
         saguaro = new SaguaroBlock().setBlockName("saguaro.block");
@@ -239,8 +240,11 @@ public class NContent implements IFuelHandler
 
         darkTree = new DarkTreeBlock().setBlockName("Darktree");
         GameRegistry.registerBlock(darkTree, DarkTreeItem.class, "Dark Tree");
+	Blocks.fire.setFireInfo(darkTree, 5, 20);
+
         darkLeaves = (NLeaves) new NLeavesDark().setBlockName("Darkleaves");
         GameRegistry.registerBlock(darkLeaves, NLeavesDarkItem.class, "Dark Leaves");
+
         thornVines = new ThornVines().setBlockName("Thornvines").setLightLevel(0.625f);
         GameRegistry.registerBlock(thornVines, "Thornvines");
         glowshroom = (Glowshroom) new Glowshroom().setBlockName("Glowshroom").setLightLevel(0.625f);
@@ -280,8 +284,12 @@ public class NContent implements IFuelHandler
         //Rare overworld
         rareTree = new OverworldTreeBlock().setBlockName("RareTree");
         GameRegistry.registerBlock(rareTree, OverworldTreeItem.class, "Rare Tree");
+	Blocks.fire.setFireInfo(rareTree, 5, 20);
+
         rareLeaves = (NLeaves) new OverworldLeaves().setBlockName("RareLeaves");
         GameRegistry.registerBlock(rareLeaves, OverworldLeavesItem.class, "Rare Leaves");//TODO 1.8 rename
+	Blocks.fire.setFireInfo(rareLeaves, 30, 60);
+
         rareSapling = (OverworldSapling) new OverworldSapling().setBlockName("RareSapling");
         GameRegistry.registerBlock(rareSapling, OverworldSaplingItem.class, "Rare Sapling");//TODO 1.8 rename
         bluebells = (FlowerBlock) new FlowerBlock().setBlockName("bluebells");
@@ -399,6 +407,14 @@ public class NContent implements IFuelHandler
         GameRegistry.registerItem(bowlEmpty, "natura.emptybowl");
         bowlStew = new BowlStew().setUnlocalizedName("natura.stewbowl");
         GameRegistry.registerItem(bowlStew, "natura.stewbowl");
+
+	/* fire! */
+	Blocks.fire.setFireInfo (planks, 5, 20);
+	Blocks.fire.setFireInfo (tree, 5, 20);
+	Blocks.fire.setFireInfo (redwood, 5, 20);
+	Blocks.fire.setFireInfo (floraLeaves, 30, 60);
+	Blocks.fire.setFireInfo (floraLeavesNoColor, 30, 60);
+
         addRecipes();
     }
 

@@ -32,7 +32,6 @@ public class NLeaves extends BlockLeaves
         this.setLightOpacity(1);
         this.setStepSound(Block.soundTypeGrass);
         this.setBlockName("floraLeaves");
-        setCreativeTab(NaturaTab.tab);
         //Blocks.fire.setFireInfo(this, 30, 60);
         this.setCreativeTab(NaturaTab.tab);
     }

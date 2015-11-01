@@ -29,7 +29,6 @@ public class DarkTreeBlock extends Block
         this.setHardness(3.5F);
         this.setResistance(40F);
         this.setStepSound(Block.soundTypeWood);
-	Blocks.fire.setFireInfo(this, 5, 20);
         this.setCreativeTab(NaturaTab.tab);
     }
 

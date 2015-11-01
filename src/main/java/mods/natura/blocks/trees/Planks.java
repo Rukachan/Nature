@@ -27,7 +27,7 @@ public class Planks extends Block
     public Planks()
     {
         super(Material.wood);
-	Blocks.fire.setFireInfo(this, 5, 20);
+	//Blocks.fire.setFireInfo(this, 5, 20);
         this.setHardness(2.0f);
         this.setCreativeTab(NaturaTab.tab);
         this.setStepSound(Block.soundTypeWood);
