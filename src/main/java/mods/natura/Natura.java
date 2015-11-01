@@ -78,7 +78,7 @@ public class Natura
         content = new NContent();
         content.preInit();
         content.addOredictSupport();
-        NaturaTab.tab.init(new ItemStack(NContent.barleyBag, 0));
+        NaturaTab.tab.init(new ItemStack(NContent.plantItem, 0, 0));
 
         pulsar.preInit(evt);
     }
