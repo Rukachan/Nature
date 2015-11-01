@@ -43,7 +43,6 @@ import mods.natura.blocks.trees.SimpleLog;
 import mods.natura.blocks.trees.TreeBlock;
 import mods.natura.blocks.trees.WillowBlock;
 import mods.natura.entity.BabyHeatscarSpider;
-import mods.natura.entity.FusewoodArrow;
 import mods.natura.entity.HeatscarSpider;
 import mods.natura.entity.ImpEntity;
 import mods.natura.entity.NitroCreeper;
@@ -299,11 +298,17 @@ public class NContent implements IFuelHandler
         //MinecraftForge.addGrassPlant(bluebells, 0, 18);
 
         //Vanilla overrides and alternates
-        alternateWorkbench = new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(NaturaTab.tab);
-        GameRegistry.registerBlock(alternateWorkbench, NAlternateItem.class, "Natura.workbench");
+	if (PHNatura.enableCraftingTables)
+	{
+	    alternateWorkbench = new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(NaturaTab.tab);
+	    GameRegistry.registerBlock(alternateWorkbench, NAlternateItem.class, "Natura.workbench");
+	}
 
-        alternateBookshelf = new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(NaturaTab.tab);
-        GameRegistry.registerBlock(alternateBookshelf, NAlternateItem.class, "Natura.bookshelf");
+	if (PHNatura.enableBookshelves)
+	{
+	    alternateBookshelf = new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(NaturaTab.tab);
+	    GameRegistry.registerBlock(alternateBookshelf, NAlternateItem.class, "Natura.bookshelf");
+	}
 
         grassBlock = new GrassBlock().setBlockName("GrassBlock");
         grassBlock.stepSound = Block.soundTypeGrass;
@@ -445,8 +450,11 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.bread), "bbb", 'b', "cropBarley"));
 
+	/* old recipe: Barley used to give its own kind of flour.
 	if (PHNatura.enableBarleyRecipe)
-	  GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley"));
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley")); */
+	if (PHNatura.enableBarleyRecipe)
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropBarley"));
         if (PHNatura.enableWheatRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropWheat"));
 
@@ -515,11 +523,14 @@ public class NContent implements IFuelHandler
         addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 5), "##", "##", "##", '#', new ItemStack(planks, 1, 4));
         addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 6), "##", "##", "##", '#', new ItemStack(redwood, 1, 0));
 
-        for (int i = 0; i < woodTextureNames.length; i++)
-        {
-            addShapedRecipeFirst(recipes, new ItemStack(alternateWorkbench, 1, i), "##", "##", '#', new ItemStack(planks, 1, i));
-            addShapedRecipeFirst(recipes, new ItemStack(alternateBookshelf, 1, i), "###", "bbb", "###", '#', new ItemStack(planks, 1, i), 'b', Items.book);
-        }
+	if (PHNatura.enableCraftingTables && PHNatura.enableBookshelves)
+	    for (int i = 0; i < woodTextureNames.length; i++)
+	    {
+		if (PHNatura.enableCraftingTables)
+		    addShapedRecipeFirst(recipes, new ItemStack(alternateWorkbench, 1, i), "##", "##", '#', new ItemStack(planks, 1, i));
+		if (PHNatura.enableBookshelves)
+		    addShapedRecipeFirst(recipes, new ItemStack(alternateBookshelf, 1, i), "###", "bbb", "###", '#', new ItemStack(planks, 1, i), 'b', Items.book);
+	    }
 
         GameRegistry.addRecipe(new ItemStack(Items.leather, 2), "##", "##", '#', new ItemStack(plantItem, 1, 6));
 
@@ -756,8 +767,11 @@ public class NContent implements IFuelHandler
         OreDictionary.registerOre("treeLeaves", new ItemStack(darkLeaves, 1, Short.MAX_VALUE));
 
         //Crafting table
-        OreDictionary.registerOre("crafterWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("craftingTableWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
+	if (PHNatura.enableCraftingTables)
+	{
+	    OreDictionary.registerOre("crafterWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
+	    OreDictionary.registerOre("craftingTableWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
+	}
 
         //Planks
         OreDictionary.registerOre("plankWood", new ItemStack(NContent.planks, 1, OreDictionary.WILDCARD_VALUE));
@@ -791,7 +805,6 @@ public class NContent implements IFuelHandler
         EntityRegistry.registerModEntity(ImpEntity.class, "Imp", 0, Natura.instance, 32, 5, true);
         EntityRegistry.registerModEntity(HeatscarSpider.class, "FlameSpider", 1, Natura.instance, 32, 5, true);
         EntityRegistry.registerModEntity(NitroCreeper.class, "NitroCreeper", 2, Natura.instance, 64, 5, true);
-        EntityRegistry.registerModEntity(FusewoodArrow.class, "FusewoodArrow", 3, Natura.instance, 64, 3, true);
         EntityRegistry.registerModEntity(BabyHeatscarSpider.class, "FlameSpiderBaby", 4, Natura.instance, 32, 5, true);
 
         BiomeGenBase[] nether = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER);

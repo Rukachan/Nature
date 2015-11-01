@@ -8,10 +8,8 @@ import net.minecraftforge.common.config.Configuration;
 
 public class PHNatura
 {
-
     public static void initProps (File confFile)
     {
-
         /* [Forge] Configuration class, used as config method */
         Configuration config = new Configuration(confFile);
         /* Load the configuration file */
@@ -19,9 +17,7 @@ public class PHNatura
 
         Natura.retrogen = config.get("Retrogen", "Retroactive Generation", false).getBoolean(false);
 
-        boolean BoP = false;
-        if(Loader.isModLoaded("BiomesOPlenty"))
-            BoP = true;
+        boolean BoP = Loader.isModLoaded("BiomesOPlenty");
 
         babyHeatscarMinimum = config.get("Mob Changes", "Minimum Baby Heatscar Spiders on Spider Death", 2).getInt(2);
         if (babyHeatscarMinimum < 0)
@@ -88,8 +84,12 @@ public class PHNatura
         generateBlueglowshroom = config.get("Disabler", "Generate Blue Glowshroom", true).getBoolean(true);
         generateGlowshroomtree = config.get("Disabler", "Generate Glowshroom Trees", true).getBoolean(true);
         dropCotton = config.get("Disabler", "Drop cotton seeds from grass", true).getBoolean(true);
-        dropBarley = config.get("Disabler", "Drop barley seeds from grass", true).getBoolean(true);
-        try
+        dropBarley = config.get("Disabler", "Drop barley seeds from grass", false).getBoolean(false);
+
+	enableCraftingTables = config.get("Disabler", "Enable crafting tables", true).getBoolean(true);
+        enableBookshelves = config.get("Disabler", "Enable bookshelves", true).getBoolean(true);
+
+	try
         {
             Class.forName("chococraft.common.ModChocoCraft");
             enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", false).getBoolean(false);
@@ -213,7 +213,6 @@ public class PHNatura
     public static int thornSpawnRarity;
 
     //Clouds
-
     public static int cloudSpawnRarity;
     public static int cloudSpawnHeight;
     public static int cloudSpawnRange;
@@ -228,7 +227,6 @@ public class PHNatura
     public static int ashSpawnRange;
 
     //Trees
-
     public static boolean generateRedwood;
     public static boolean generateSakura;
     public static boolean generateSmallEucalyptus;
@@ -285,4 +283,8 @@ public class PHNatura
     public static int heatscarSpawnRarity;
     public static int nitroCreeperSpawnRarity;
     public static int babyHeatscarSpawnRarity;
+
+    //Blocks
+    public static boolean enableCraftingTables;
+    public static boolean enableBookshelves;
 }

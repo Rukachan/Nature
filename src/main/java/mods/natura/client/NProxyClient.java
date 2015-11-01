@@ -2,13 +2,11 @@ package mods.natura.client;
 
 import mods.natura.client.entity.FlameSpiderBabyRender;
 import mods.natura.client.entity.FlameSpiderRender;
-import mods.natura.client.entity.FusewoodArrowRender;
 import mods.natura.client.entity.ImpModel;
 import mods.natura.client.entity.ImpRender;
 import mods.natura.client.entity.NitroCreeperRender;
 import mods.natura.common.NProxyCommon;
 import mods.natura.entity.BabyHeatscarSpider;
-import mods.natura.entity.FusewoodArrow;
 import mods.natura.entity.HeatscarSpider;
 import mods.natura.entity.ImpEntity;
 import mods.natura.entity.NitroCreeper;
@@ -40,7 +38,6 @@ public class NProxyClient extends NProxyCommon
         RenderingRegistry.registerEntityRenderingHandler(ImpEntity.class, new ImpRender(new ImpModel(), 0f));
         RenderingRegistry.registerEntityRenderingHandler(HeatscarSpider.class, new FlameSpiderRender());
         RenderingRegistry.registerEntityRenderingHandler(NitroCreeper.class, new NitroCreeperRender());
-        RenderingRegistry.registerEntityRenderingHandler(FusewoodArrow.class, new FusewoodArrowRender());
         RenderingRegistry.registerEntityRenderingHandler(BabyHeatscarSpider.class, new FlameSpiderBabyRender());
 
         Minecraft mc = Minecraft.getMinecraft();
