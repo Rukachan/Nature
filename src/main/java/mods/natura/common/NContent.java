@@ -154,11 +154,10 @@ public class NContent implements IFuelHandler
 	    cottonBag = new SeedBag(crops, 4, "cotton").setUnlocalizedName("cottonBag");
 	    GameRegistry.registerItem(cottonBag, "cottonBag");
 	    GameRegistry.registerCustomItemStack("bagCotton", new ItemStack(cottonBag, 1, 0));
+	    boneBag = new BoneBag("bone").setUnlocalizedName("boneBag");
+	    GameRegistry.registerItem(boneBag, "boneBag");
+	    GameRegistry.registerCustomItemStack("bagBone", new ItemStack(boneBag, 1, 0));
 	}
-        boneBag = new BoneBag("bone").setUnlocalizedName("boneBag");
-        GameRegistry.registerItem(boneBag, "boneBag");
-        GameRegistry.registerCustomItemStack("bagBone", new ItemStack(boneBag, 1, 0));
-
         netherBerryItem = new NetherBerryItem(1).setUnlocalizedName("berry.nether");
         GameRegistry.registerItem(netherBerryItem, "berry.nether");
         GameRegistry.registerCustomItemStack("berryBlight", new ItemStack(netherBerryItem, 1, 0));
