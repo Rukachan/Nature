@@ -444,7 +444,9 @@ public class NContent implements IFuelHandler
         GameRegistry.addRecipe(new ItemStack(Items.water_bucket, 1), "www", "wBw", "www", 'w', waterDrop, 'B', Items.bucket);
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.bread), "bbb", 'b', "cropBarley"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley"));
+
+	if (PHNatura.enableBarleyRecipe)
+	  GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley"));
         if (PHNatura.enableWheatRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropWheat"));
 
@@ -454,10 +456,8 @@ public class NContent implements IFuelHandler
         FurnaceRecipes.smelting().func_151394_a(new ItemStack(impMeat, 1, 0), new ItemStack(impMeat, 1, 1), 0.2F);
 
         for (int i = 1; i <= 2; i++)
-        {
             FurnaceRecipes.smelting().func_151394_a(new ItemStack(plantItem, 1, i), new ItemStack(Items.bread, 1), 0.5f);
-            GameRegistry.addRecipe(new ItemStack(Items.cake, 1), "AAA", "BEB", " C ", 'A', Items.milk_bucket, 'B', Items.sugar, 'C', new ItemStack(plantItem, 1, i), 'E', Items.egg);
-        }
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.cake, 1), "AAA", "BEB", " C ", 'A', Items.milk_bucket, 'B', Items.sugar, 'C', "foodFlour", 'E', Items.egg));//check1
 
         String[] berryTypes = new String[] { "cropRaspberry", "cropBlueberry", "cropBlackberry", "cropMaloberry", "cropStrawberry", "cropCranberry" };
 
@@ -502,8 +502,6 @@ public class NContent implements IFuelHandler
         GameRegistry.addRecipe(new ItemStack(planks, 4, 10), "w", 'w', new ItemStack(willow, 1, 0));
         GameRegistry.addRecipe(new ItemStack(planks, 4, 11), "w", 'w', new ItemStack(darkTree, 1, 0));
         GameRegistry.addRecipe(new ItemStack(planks, 4, 12), "w", 'w', new ItemStack(darkTree, 1, 1));
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley"));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 5), " s ", "#s#", "#s#", 's', "stickWood", '#', new ItemStack(floraLeavesNoColor, 1, 1)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.arrow, 4, 0), " f ", "#s#", " # ", 's', "stickWood", '#', new ItemStack(plantItem, 1, 5), 'f', Items.flint));
@@ -726,7 +724,7 @@ public class NContent implements IFuelHandler
 
         OreDictionary.registerOre("foodFlour", new ItemStack(plantItem, 1, 1));
         OreDictionary.registerOre("foodFlour", new ItemStack(plantItem, 1, 2));
-
+        OreDictionary.registerOre("dustWheat", new ItemStack(plantItem, 1, 2));
         OreDictionary.registerOre("foodEqualswheat", new ItemStack(plantItem, 1, 2));
 
         //Dusts

@@ -98,6 +98,7 @@ public class PHNatura
         {
             enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", true).getBoolean(true);
         }
+        enableBarleyRecipe = config.get("Disabler", "Enable barley to flour recipe", true).getBoolean(true);
 
         redwoodSpawnRarity = config.get("Worldgen", "Redwood Tree Spawn Rarity", 150).getInt(150);
         bloodSpawnRarity = config.get("Worldgen", "Blood Tree Spawn Rarity", 14).getInt(14);
@@ -252,6 +253,7 @@ public class PHNatura
     public static boolean generateAshClouds;
     public static boolean generateDarkClouds;
     public static boolean enableWheatRecipe;
+    public static boolean enableBarleyRecipe;
     public static boolean dropBarley;
     public static boolean dropCotton;
 
