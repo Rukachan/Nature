@@ -88,6 +88,7 @@ public class PHNatura
 
 	enableCraftingTables = config.get("Disabler", "Enable crafting tables", true).getBoolean(true);
         enableBookshelves = config.get("Disabler", "Enable bookshelves", true).getBoolean(true);
+	enableSeedBags = config.get("Disabler", "Enable Seed Bags", true).getBoolean(true);
 
 	try
         {
@@ -185,11 +186,6 @@ public class PHNatura
     public static boolean generateSkyberries;
     public static boolean generateStingberries;
 
-    public static boolean generateGreenglowshroom;
-    public static boolean generatePurpleglowshroom;
-    public static boolean generateBlueglowshroom;
-    public static boolean generateGlowshroomtree;
-
     public static int saguaroSpawnRarity;
 
     public static int raspSpawnRarity;
@@ -243,6 +239,7 @@ public class PHNatura
 
     public static boolean generateDarkwood;
     public static boolean generateFusewood;
+    public static boolean generateGlowshroomtree;
 
     public static boolean generateThornvines;
 
@@ -250,13 +247,6 @@ public class PHNatura
     public static boolean generateSulfurClouds;
     public static boolean generateAshClouds;
     public static boolean generateDarkClouds;
-    public static boolean enableWheatRecipe;
-    public static boolean enableBarleyRecipe;
-    public static boolean dropBarley;
-    public static boolean dropCotton;
-
-    public static boolean overrideNether;
-    public static boolean canRespawnInNether;
 
     public static int redwoodSpawnRarity;
     public static int bloodSpawnRarity;
@@ -275,6 +265,11 @@ public class PHNatura
     public static int tigerRarity;
     public static int silverbellRarity;
 
+    //Glowshrooms
+    public static boolean generateGreenglowshroom;
+    public static boolean generatePurpleglowshroom;
+    public static boolean generateBlueglowshroom;
+
     //Mobs
     public static int babyHeatscarMinimum;
     public static int babyHeatscarMaximum;
@@ -287,4 +282,15 @@ public class PHNatura
     //Blocks
     public static boolean enableCraftingTables;
     public static boolean enableBookshelves;
+
+    //Items
+    public static boolean enableSeedBags;
+    public static boolean enableWheatRecipe;
+    public static boolean enableBarleyRecipe;
+
+    //Other
+    public static boolean dropBarley;
+    public static boolean dropCotton;
+    public static boolean overrideNether;
+    public static boolean canRespawnInNether;
 }

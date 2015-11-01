@@ -134,24 +134,27 @@ public class NContent implements IFuelHandler
         waterDrop = new CactusJuice(false).setUnlocalizedName("waterdrop");
         GameRegistry.registerItem(waterDrop, "waterdrop");
 
-        wheatBag = new SeedBag(Blocks.wheat, 0, "wheat").setUnlocalizedName("wheatBag");
-        GameRegistry.registerItem(wheatBag, "wheatBag");
-        GameRegistry.registerCustomItemStack("bagWheat", new ItemStack(wheatBag, 1, 0));
-        barleyBag = new SeedBag(crops, 0, "barley").setUnlocalizedName("barleyBag");
-        GameRegistry.registerItem(barleyBag, "barleyBag");
-        GameRegistry.registerCustomItemStack("bagBarley", new ItemStack(barleyBag, 1, 0));
-        potatoBag = new SeedBag(Blocks.potatoes, 0, "potato").setUnlocalizedName("potatoBag");
-        GameRegistry.registerItem(potatoBag, "potatoBag");
-        GameRegistry.registerCustomItemStack("bagPotato", new ItemStack(potatoBag, 1, 0));
-        carrotBag = new SeedBag(Blocks.carrots, 0, "carrot").setUnlocalizedName("carrotBag");
-        GameRegistry.registerItem(carrotBag, "carrotBag");
-        GameRegistry.registerCustomItemStack("bagCarrot", new ItemStack(carrotBag, 1, 0));
-        netherWartBag = new SeedBag(Blocks.nether_wart, 0, "netherwart").setUnlocalizedName("wartBag");
-        GameRegistry.registerItem(netherWartBag, "wartBag");
-        GameRegistry.registerCustomItemStack("bagNetherWart", new ItemStack(netherWartBag, 1, 0));
-        cottonBag = new SeedBag(crops, 4, "cotton").setUnlocalizedName("cottonBag");
-        GameRegistry.registerItem(cottonBag, "cottonBag");
-        GameRegistry.registerCustomItemStack("bagCotton", new ItemStack(cottonBag, 1, 0));
+	if (PHNatura.enableSeedBags)
+	{
+	    wheatBag = new SeedBag(Blocks.wheat, 0, "wheat").setUnlocalizedName("wheatBag");
+	    GameRegistry.registerItem(wheatBag, "wheatBag");
+	    GameRegistry.registerCustomItemStack("bagWheat", new ItemStack(wheatBag, 1, 0));
+	    barleyBag = new SeedBag(crops, 0, "barley").setUnlocalizedName("barleyBag");
+	    GameRegistry.registerItem(barleyBag, "barleyBag");
+	    GameRegistry.registerCustomItemStack("bagBarley", new ItemStack(barleyBag, 1, 0));
+	    potatoBag = new SeedBag(Blocks.potatoes, 0, "potato").setUnlocalizedName("potatoBag");
+	    GameRegistry.registerItem(potatoBag, "potatoBag");
+	    GameRegistry.registerCustomItemStack("bagPotato", new ItemStack(potatoBag, 1, 0));
+	    carrotBag = new SeedBag(Blocks.carrots, 0, "carrot").setUnlocalizedName("carrotBag");
+	    GameRegistry.registerItem(carrotBag, "carrotBag");
+	    GameRegistry.registerCustomItemStack("bagCarrot", new ItemStack(carrotBag, 1, 0));
+	    netherWartBag = new SeedBag(Blocks.nether_wart, 0, "netherwart").setUnlocalizedName("wartBag");
+	    GameRegistry.registerItem(netherWartBag, "wartBag");
+	    GameRegistry.registerCustomItemStack("bagNetherWart", new ItemStack(netherWartBag, 1, 0));
+	    cottonBag = new SeedBag(crops, 4, "cotton").setUnlocalizedName("cottonBag");
+	    GameRegistry.registerItem(cottonBag, "cottonBag");
+	    GameRegistry.registerCustomItemStack("bagCotton", new ItemStack(cottonBag, 1, 0));
+	}
         boneBag = new BoneBag("bone").setUnlocalizedName("boneBag");
         GameRegistry.registerItem(boneBag, "boneBag");
         GameRegistry.registerCustomItemStack("bagBone", new ItemStack(boneBag, 1, 0));
@@ -426,13 +429,16 @@ public class NContent implements IFuelHandler
     public void addRecipes ()
     {
         //Crops
-        GameRegistry.addRecipe(new ItemStack(wheatBag, 1, 0), "sss", "sss", "sss", 's', Items.wheat_seeds);
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(barleyBag, 1, 0), "sss", "sss", "sss", 's', "seedBarley"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(potatoBag, 1, 0), "sss", "sss", "sss", 's', "cropPotato"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(carrotBag, 1, 0), "sss", "sss", "sss", 's', "cropCarrot"));
-        GameRegistry.addRecipe(new ItemStack(netherWartBag, 1, 0), "sss", "sss", "sss", 's', Items.nether_wart);
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cottonBag, 1, 0), "sss", "sss", "sss", 's', "seedCotton"));
-        GameRegistry.addRecipe(new ItemStack(boneBag, 1, 0), "sss", "sss", "sss", 's', new ItemStack(Items.dye, 1, 15));
+	if (PHNatura.enableSeedBags)
+	{
+	    GameRegistry.addRecipe(new ItemStack(wheatBag, 1, 0), "sss", "sss", "sss", 's', Items.wheat_seeds);
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(barleyBag, 1, 0), "sss", "sss", "sss", 's', "seedBarley"));
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(potatoBag, 1, 0), "sss", "sss", "sss", 's', "cropPotato"));
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(carrotBag, 1, 0), "sss", "sss", "sss", 's', "cropCarrot"));
+	    GameRegistry.addRecipe(new ItemStack(netherWartBag, 1, 0), "sss", "sss", "sss", 's', Items.nether_wart);
+	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cottonBag, 1, 0), "sss", "sss", "sss", 's', "seedCotton"));
+	    GameRegistry.addRecipe(new ItemStack(boneBag, 1, 0), "sss", "sss", "sss", 's', new ItemStack(Items.dye, 1, 15));
+	}
 
         GameRegistry.addRecipe(new ItemStack(Items.wheat_seeds, 9, 0), "s", 's', wheatBag);
         GameRegistry.addRecipe(new ItemStack(seeds, 9, 0), "s", 's', barleyBag);
