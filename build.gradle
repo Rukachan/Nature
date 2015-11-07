@@ -1,7 +1,6 @@
 /*
- * Natura
- * Master build file
- * Based on TConstruct's master build file
+ * Nature's master build file
+ * Based on Natura's master build file
  * Authors: Sunstrike, ProgWML6
  * Help from AbrarSyed
  */
@@ -48,46 +47,26 @@ repositories {
 apply plugin: 'forge'
 group = 'mods.natura'
 
-// define the properties file
-ext.configFile = file "build.properties"
-
-configFile.withReader {
+file "build.properties" withReader {
     // read config.  it shall from now on be referenced as simply config or as project.config
     def prop = new Properties()
     prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
+    ext.config = new ConfigSlurper().parse prop
 }
 
 dependencies {
-    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
-    compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.FMP_version}:dev"
-    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
-    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft.version}-${config.CCLIB.version}:dev"
+    compile "codechicken:ForgeMultipart:${config.minecraft.version}-${config.FMP.version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
+    compile "codechicken:NotEnoughItems:${config.minecraft.version}-${config.NEI.version}:dev"
 }
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
+    version = config.minecraft.version + "-" + config.forge.version
     runDir = 'run'
 }
 
-// sets version to the slimeKnights version format
-task buildInfo {
-    def cmd = "git rev-parse --short HEAD"
-    def proc = cmd.execute()
-    proc.waitFor()
-    if (proc.exitValue() == 0) {
-        ext.revision = proc.text.trim()
-    } else {
-        ext.revision = "GITBORK"
-    }
-
-    if (System.getenv().BUILD_NUMBER != null) {
-        ext.buildNum = System.getenv().BUILD_NUMBER
-    } else {
-        ext.buildNum = "DEV"
-    }
-}
-version = "${minecraft.version}-${project.buildInfo.buildNum}.${project.buildInfo.revision}"
+version = "${minecraft.version}-${config.project.version}"
 
 sourceSets {
     main {
@@ -96,19 +75,18 @@ sourceSets {
         }
     }
 }
+
 processResources
 {
-        // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
-        include '**/*.info'
+	include 'mcmod.info'
 
-                // replace version and MCVersion
-      expand 'version':project.version, 'mcversion':project.minecraft.version
+	// replace version and mcversion
+	expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
-        // copy everything else, thats not text
     from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.info'
+	exclude 'mcmod.info'
     }
 }
 
@@ -127,21 +105,3 @@ artifacts {
     archives devjar
     archives sourcesjar
 }
-
-task("uploadJars", dependsOn:"reobf") {
-
-    description = "uploads JARs"
-
-    if (project.hasProperty("local_maven")) {
-	    apply plugin: 'maven'
-            uploadArchives {
-                repositories {
-                    mavenDeployer {
-                        repository(url: "file://${local_maven}")
-                }
-            }
-        }
-    }
-}
-
-
