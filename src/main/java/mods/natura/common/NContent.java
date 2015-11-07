@@ -109,7 +109,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import tconstruct.library.crafting.PatternBuilder;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -828,7 +827,7 @@ public class NContent implements IFuelHandler
 
     public void modIntegration ()
     {
-        try
+/*        try
         {
             Class.forName("tconstruct.TConstruct");
             PatternBuilder pb = PatternBuilder.instance;
@@ -838,7 +837,7 @@ public class NContent implements IFuelHandler
         {
 
         }
-
+*/
     }
 
     public static Item spawnEgg;

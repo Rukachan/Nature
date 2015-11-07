@@ -6,6 +6,8 @@ import cpw.mods.fml.common.Loader;
 import mods.natura.Natura;
 import net.minecraftforge.common.config.Configuration;
 
+import mods.natura.plugins.PluginManager;
+
 public class PHNatura
 {
     public static void initProps (File confFile)
@@ -159,6 +161,8 @@ public class PHNatura
         sulfurCloudBlacklist = config.get("Worldgen","dimension blacklist(sulfur clouds)", new int[]{}).getIntList();
 
         seaLevel = config.get("general", "Sea level", 64).getInt(64);
+
+	PluginManager.config(config);
 
         /* Save the configuration file */
         if(config.hasChanged())

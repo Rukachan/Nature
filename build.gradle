@@ -59,8 +59,6 @@ configFile.withReader {
 }
 
 dependencies {
-    compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
-    compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tconstruct_version}:deobf"
     compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
     compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.FMP_version}:dev"
     compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
@@ -103,11 +101,11 @@ processResources
         // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
-		
+
                 // replace version and MCVersion
       expand 'version':project.version, 'mcversion':project.minecraft.version
     }
-        
+
         // copy everything else, thats not text
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
@@ -131,7 +129,7 @@ artifacts {
 }
 
 task("uploadJars", dependsOn:"reobf") {
-    
+
     description = "uploads JARs"
 
     if (project.hasProperty("local_maven")) {

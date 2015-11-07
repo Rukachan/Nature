@@ -1,6 +1,5 @@
 package mods.natura.blocks.tech;
 
-import mantle.blocks.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
@@ -421,6 +420,8 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
     /**
      * Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't
      * fuel
+     *
+     * TODO: get rid of this?
      */
     public static int getFuelTime (ItemStack par0ItemStack)
     {
@@ -434,7 +435,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
 
             if (par0ItemStack.getItem() instanceof ItemBlock && item != null)
             {
-                Block block = BlockUtils.getBlockFromItem(item);
+                Block block = Block.getBlockFromItem(item);
 
                 if (block == Blocks.wooden_slab)
                 {
@@ -469,7 +470,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
                 return 1600;
             if (item == Items.lava_bucket)
                 return 20000;
-            if (BlockUtils.getBlockFromItem(item) == Blocks.sapling)
+            if (Block.getBlockFromItem(item) == Blocks.sapling)
                 return 100;
             if (item == Items.blaze_rod)
                 return 2400;

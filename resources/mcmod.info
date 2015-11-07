@@ -2,13 +2,13 @@
   {
     "modid": "Natura",
     "name": "Natura",
-    "description": "Heyo, Redwood trees! Chop them all day long!",
+    "description": "A fork of Natura",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "www.minecraftforum.net/topic/1753754-natura/",
+    "url": "https://github.com/Rukachan/Nature",
     "updateUrl": "",
     "authors": [
-      "mDiyo", "Slime Knights"
+      "mDiyo", "Slime Knights", "Rukachan"
     ],
     "credits": "Samtrion, tterrag",
     "logoFile": "",

@@ -3,15 +3,12 @@ package mods.natura;
 import java.util.Random;
 
 import cpw.mods.fml.common.*;
-import mantle.lib.TabTools;
-import mantle.pulsar.control.PulseManager;
 import mods.natura.common.NContent;
 import mods.natura.common.NProxyCommon;
 import mods.natura.common.NaturaTab;
 import mods.natura.common.PHNatura;
 import mods.natura.dimension.NetheriteWorldProvider;
 import mods.natura.gui.NGuiHandler;
-import mods.natura.plugins.PluginController;
 import mods.natura.worldgen.BaseCloudWorldgen;
 import mods.natura.worldgen.BaseCropWorldgen;
 import mods.natura.worldgen.BaseTreeWorldgen;
@@ -48,7 +45,14 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "Natura", name = "Natura", version = "2.2.0", acceptedMinecraftVersions = "[1.7.10]", dependencies = "required-after:Mantle")
+import net.minecraft.item.Item;
+import net.minecraft.creativetab.CreativeTabs;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+import mods.natura.plugins.PluginManager;
+
+@Mod(modid = "Natura", name = "Natura", version = "2.2.0", acceptedMinecraftVersions = "[1.7.10]")
 public class Natura
 {
     /* Proxies for sides, used for graphics processing */
@@ -62,25 +66,27 @@ public class Natura
 
     public static Logger logger = LogManager.getLogger(modID);
 
-    public static final PulseManager pulsar = new PulseManager(modID, "Natura-Dynamic");
-
     @EventHandler
     public void preInit (FMLPreInitializationEvent evt)
     {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        PluginController.registerBuiltins();
-
         PHNatura.initProps(evt.getSuggestedConfigurationFile());
-        NaturaTab.tab = new TabTools("natura");
+
+	NaturaTab.tab = new CreativeTabs("natura") {
+	  @Override
+	  @SideOnly(Side.CLIENT)
+	  public Item getTabIconItem() {
+	    return new ItemStack(NContent.plantItem, 0, 0).getItem(); /* r-right? */
+	  }
+	};
 
         content = new NContent();
         content.preInit();
         content.addOredictSupport();
-        NaturaTab.tab.init(new ItemStack(NContent.plantItem, 0, 0));
 
-        pulsar.preInit(evt);
+	PluginManager.preInit(evt);
     }
 
     public static BaseCropWorldgen crops;
@@ -115,7 +121,7 @@ public class Natura
         OreDictionary.registerOre("cropVine", new ItemStack(NContent.thornVines));
         random.setSeed(2 ^ 16 + 2 ^ 8 + (4 * 3 * 271));
 
-        pulsar.init(evt);
+	PluginManager.init(evt);
     }
 
     @EventHandler
@@ -124,7 +130,7 @@ public class Natura
         content.createEntities();
         content.modIntegration();
 
-        pulsar.postInit(evt);
+	PluginManager.postInit(evt);
     }
     @SubscribeEvent
     public void bonemealEvent (BonemealEvent event)
