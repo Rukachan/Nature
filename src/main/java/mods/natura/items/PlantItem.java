@@ -3,7 +3,7 @@ package mods.natura.items;
 import java.util.List;
 
 import mods.natura.common.NCraftingItem;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -16,7 +16,7 @@ public class PlantItem extends NCraftingItem
     {
         super(new String[] { "barley.plant", "barley.flour", "wheat.flour", "cotton.plant", "powder.sulfur", "fletching.ghostwood", "leather.imp", "string.flame", "dye.blue" }, new String[] {
                 "barley_plant", "barley_flour", "wheat_flour", "cotton_plant", "sulfur", "ghostwood_fletching", "leather_imp", "flamestring", "dye_blue" });
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

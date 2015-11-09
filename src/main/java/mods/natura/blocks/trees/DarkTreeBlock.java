@@ -3,7 +3,7 @@ package mods.natura.blocks.trees;
 import java.util.List;
 import java.util.Random;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ public class DarkTreeBlock extends Block
         this.setHardness(3.5F);
         this.setResistance(40F);
         this.setStepSound(Block.soundTypeWood);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

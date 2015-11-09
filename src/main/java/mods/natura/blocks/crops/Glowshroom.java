@@ -3,7 +3,7 @@ package mods.natura.blocks.crops;
 import java.util.List;
 import java.util.Random;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import mods.natura.worldgen.GlowshroomGenBlueGreen;
 import mods.natura.worldgen.GlowshroomGenPurple;
 import net.minecraft.block.BlockMushroom;
@@ -26,7 +26,7 @@ public class Glowshroom extends BlockMushroom
     {
         super();
         this.setStepSound(soundTypeGrass);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

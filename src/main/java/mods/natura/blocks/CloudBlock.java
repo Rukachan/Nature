@@ -2,7 +2,7 @@ package mods.natura.blocks;
 
 import mods.natura.Natura;
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -22,7 +22,7 @@ public class CloudBlock extends NBlock
         super(Natura.cloud, 0.3F, new String[] { "cloud_white", "cloud_gray", "cloud_dark", "cloud_sulfur" });
         this.setStepSound(soundTypeCloth);
         this.setBlockName("cloud");
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

@@ -2,7 +2,7 @@ package mods.natura.blocks.trees;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -21,7 +21,7 @@ public class SimpleLog extends Planks
     public SimpleLog()
     {
         super();
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

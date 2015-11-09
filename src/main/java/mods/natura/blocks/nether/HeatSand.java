@@ -1,6 +1,6 @@
 package mods.natura.blocks.nether;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,7 +24,7 @@ public class HeatSand extends BlockFalling
         super();
         this.setHardness(3f);
         this.setStepSound(Block.soundTypeSand);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.setHarvestLevel("shovel", 0);
     }
 

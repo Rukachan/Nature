@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import mods.natura.worldgen.RareTreeGen;
 import mods.natura.worldgen.WillowGen;
 import net.minecraft.block.Block;
@@ -35,7 +35,7 @@ public class OverworldSapling extends BlockSapling
         setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
         this.setHardness(0.0F);
         this.setStepSound(Block.soundTypeGrass);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

@@ -2,7 +2,7 @@ package mods.natura.items;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
@@ -31,7 +31,7 @@ public class BoneBag extends Item
     {
         super();
         textureName = texture;
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

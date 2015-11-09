@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -21,7 +21,7 @@ public class NLeavesDark extends NLeaves
     public NLeavesDark()
     {
         super();
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @SideOnly(Side.CLIENT)

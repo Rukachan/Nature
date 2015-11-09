@@ -3,7 +3,7 @@ package mods.natura.items.tools;
 import java.util.List;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ public class NaturaArmor extends ItemArmor
         super(material, renderIndex, slotType);
         this.itemTexture = itemTexture;
         this.armorTexture = armorTexture;
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

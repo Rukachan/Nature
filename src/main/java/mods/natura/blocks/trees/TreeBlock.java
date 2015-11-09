@@ -3,7 +3,7 @@ package mods.natura.blocks.trees;
 import java.util.List;
 import java.util.Random;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
@@ -30,7 +30,7 @@ public class TreeBlock extends BlockLog
         this.setResistance(5F);
         this.setStepSound(Block.soundTypeWood);
 	//Blocks.fire.setFireInfo(this, 5, 20);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

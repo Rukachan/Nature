@@ -3,7 +3,7 @@ package mods.natura.items.blocks;
 import java.util.List;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -27,7 +27,7 @@ public class NDoorItem extends Item
     {
         super();
         maxStackSize = 64;
-        setCreativeTab(NaturaTab.tab);
+        setCreativeTab(Natura.tab);
         setHasSubtypes(true);
     }
 

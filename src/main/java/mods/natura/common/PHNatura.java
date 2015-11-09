@@ -44,7 +44,7 @@ public class PHNatura
 	overrideNether = config.get("Disabler", "Override Nether", !BoP).getBoolean(!BoP);
         canRespawnInNether = config.get("Disabler", "Obelisks let players respawn in the Nether", true).getBoolean(true);
 
-        generateRedwood = config.get("Disabler", "Generate Redwood Trees", true).getBoolean(true);
+        generateRedwood = config.get("Disabler", "Generate Redwood Trees", false).getBoolean(false);
         generateSakura = config.get("Disabler", "Generate Sakura Trees", true).getBoolean(true);
         generateSmallEucalyptus = config.get("Disabler", "Generate Small Eucalyptus Trees", true).getBoolean(true);
         generateBush = config.get("Disabler", "Generate Hopseed Trees", true).getBoolean(true);

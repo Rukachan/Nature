@@ -3,7 +3,7 @@ package mods.natura.items;
 import java.util.List;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,7 @@ public class SeedFood extends ItemSeedFood
         // TODO 1.7 check last param
         super(hunger, saturation, cropID, Blocks.farmland);
         crop = cropID;
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.Random;
 import cpw.mods.fml.common.*;
 import mods.natura.common.NContent;
 import mods.natura.common.NProxyCommon;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import mods.natura.common.PHNatura;
 import mods.natura.dimension.NetheriteWorldProvider;
 import mods.natura.gui.NGuiHandler;
@@ -74,7 +74,7 @@ public class Natura
 
         PHNatura.initProps(evt.getSuggestedConfigurationFile());
 
-	NaturaTab.tab = new CreativeTabs("natura") {
+	tab = new CreativeTabs("natura") {
 	  @Override
 	  @SideOnly(Side.CLIENT)
 	  public Item getTabIconItem() {
@@ -205,4 +205,5 @@ public class Natura
 
     NContent content;
     public static Random random = new Random();
+    public static CreativeTabs tab;
 }

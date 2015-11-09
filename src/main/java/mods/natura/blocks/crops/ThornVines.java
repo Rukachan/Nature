@@ -1,7 +1,7 @@
 package mods.natura.blocks.crops;
 
 import mods.natura.Natura;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.BlockVine;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ public class ThornVines extends BlockVine
     public ThornVines()
     {
         super();
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         setHardness(1.0F);
         setStepSound(soundTypeGrass);
     }

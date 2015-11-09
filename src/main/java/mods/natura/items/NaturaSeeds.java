@@ -2,7 +2,7 @@ package mods.natura.items;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,7 +29,7 @@ public class NaturaSeeds extends ItemSeeds
     {
         super(cropID, soilID);
         blockType = cropID;
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.setHasSubtypes(true);
     }
 

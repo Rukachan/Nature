@@ -4,7 +4,7 @@ import java.util.Random;
 
 import mods.natura.client.SaguaroRenderer;
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import mods.natura.worldgen.SaguaroGen;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -28,7 +28,7 @@ public class SaguaroBlock extends Block implements IPlantable
     public SaguaroBlock()
     {
         super(Material.cactus);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         setStepSound(soundTypeCloth);
         this.setHardness(0.3f);
         this.setTickRandomly(true);

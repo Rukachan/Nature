@@ -2,7 +2,7 @@ package mods.natura.blocks.trees;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ public class Planks extends Block
         super(Material.wood);
 	//Blocks.fire.setFireInfo(this, 5, 20);
         this.setHardness(2.0f);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.setStepSound(Block.soundTypeWood);
     }
 

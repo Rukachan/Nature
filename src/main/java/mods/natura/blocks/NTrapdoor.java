@@ -1,6 +1,6 @@
 package mods.natura.blocks;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,7 +16,7 @@ public class NTrapdoor extends BlockTrapDoor
     {
         super(par2Material);
         textureName = texture;
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.disableStats();
     }
 

@@ -2,7 +2,7 @@ package mods.natura.blocks;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,7 +22,7 @@ public class NBlock extends Block
     {
         super(material);
         setHardness(hardness);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         textureNames = tex;
     }
 

@@ -3,7 +3,7 @@ package mods.natura.blocks.crops;
 import java.util.Random;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +24,7 @@ public class HerbBlock extends CropBlock
         this.setHardness(0.0F);
         this.setStepSound(soundTypeGrass);
         this.disableStats();
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

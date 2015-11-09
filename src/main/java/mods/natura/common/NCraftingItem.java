@@ -10,6 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mods.natura.Natura;
 
 public class NCraftingItem extends Item
 {
@@ -20,7 +21,7 @@ public class NCraftingItem extends Item
     public NCraftingItem(String[] names, String[] tex)
     {
         super();
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         textureNames = tex;

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import mods.natura.client.BerryRender;
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
@@ -42,7 +42,7 @@ public class BerryBush extends BlockLeavesBase implements IPlantable
         this.setHardness(0.3F);
         this.setStepSound(Block.soundTypeGrass);
         this.setBlockName("berrybush");
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     /* Berries show up at meta 12-15 */

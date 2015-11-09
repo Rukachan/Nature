@@ -2,7 +2,7 @@ package mods.natura.items;
 
 import java.util.List;
 
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +25,7 @@ public class BerryItem extends ItemFood
         super(heal, 0.4F, false);
         setHasSubtypes(true);
         setMaxDamage(0);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
         this.setAlwaysEdible();
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -33,7 +33,7 @@ public class NLeaves extends BlockLeaves
         this.setStepSound(Block.soundTypeGrass);
         this.setBlockName("floraLeaves");
         //Blocks.fire.setFireInfo(this, 30, 60);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

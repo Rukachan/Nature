@@ -267,14 +267,14 @@ public class NContent implements IFuelHandler
         brailActivator = new BlazeRailPowered(true).setHardness(0.7F).setBlockName("blazerail.activator").setBlockTextureName("natura:brail_activator");
         GameRegistry.registerBlock(brailActivator, "BrailActivator");
 
-        netherrackFurnace = new NetherrackFurnaceBlock().setHardness(3.5F).setCreativeTab(NaturaTab.tab).setBlockName("furnace.netherrack");
+        netherrackFurnace = new NetherrackFurnaceBlock().setHardness(3.5F).setCreativeTab(Natura.tab).setBlockName("furnace.netherrack");
         GameRegistry.registerBlock(netherrackFurnace, "NetherFurnace");
         GameRegistry.registerTileEntity(NetherrackFurnaceLogic.class, "netherrackFurnace");
-        respawnObelisk = new RespawnObelisk(Material.wood).setHardness(1.0F).setResistance(1000000F).setCreativeTab(NaturaTab.tab).setBlockName("nether.obelisk");
+        respawnObelisk = new RespawnObelisk(Material.wood).setHardness(1.0F).setResistance(1000000F).setCreativeTab(Natura.tab).setBlockName("nether.obelisk");
         GameRegistry.registerBlock(respawnObelisk, "Obelisk");
-        netherGlass = (NetherGlass) new NetherGlass().setHardness(1.0F).setResistance(3000F).setStepSound(Block.soundTypeGlass).setCreativeTab(NaturaTab.tab).setBlockName("nether.glass");
+        netherGlass = (NetherGlass) new NetherGlass().setHardness(1.0F).setResistance(3000F).setStepSound(Block.soundTypeGlass).setCreativeTab(Natura.tab).setBlockName("nether.glass");
         GameRegistry.registerBlock(netherGlass, NetherGlassItem.class, "NetherGlass");
-        netherHopper = (BlazeHopper) new BlazeHopper().setHardness(3.0F).setResistance(8.0F).setCreativeTab(NaturaTab.tab).setBlockName("nether.hopper");
+        netherHopper = (BlazeHopper) new BlazeHopper().setHardness(3.0F).setResistance(8.0F).setCreativeTab(Natura.tab).setBlockName("nether.hopper");
         GameRegistry.registerBlock(netherHopper, "NetherHopper");
 
         potashApple = new NetherFoodItem().setUnlocalizedName("Natura.netherfood");
@@ -301,13 +301,13 @@ public class NContent implements IFuelHandler
         //Vanilla overrides and alternates
 	if (PHNatura.enableCraftingTables)
 	{
-	    alternateWorkbench = new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(NaturaTab.tab);
+	    alternateWorkbench = new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(Natura.tab);
 	    GameRegistry.registerBlock(alternateWorkbench, NAlternateItem.class, "Natura.workbench");
 	}
 
 	if (PHNatura.enableBookshelves)
 	{
-	    alternateBookshelf = new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(NaturaTab.tab);
+	    alternateBookshelf = new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(Natura.tab);
 	    GameRegistry.registerBlock(alternateBookshelf, NAlternateItem.class, "Natura.bookshelf");
 	}
 

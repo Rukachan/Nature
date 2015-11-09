@@ -3,7 +3,7 @@ package mods.natura.blocks;
 import java.util.List;
 
 import mods.natura.client.GrassColorizerAlternate;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,7 +24,7 @@ public class GrassBlock extends Block
     {
         super(Material.grass);
         setHardness(0.6F);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @Override

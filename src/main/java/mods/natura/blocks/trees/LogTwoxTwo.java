@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mods.natura.common.NContent;
-import mods.natura.common.NaturaTab;
+import mods.natura.Natura;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -31,7 +31,7 @@ public class LogTwoxTwo extends Block
         super(material);
         this.setHardness(hardness);
         this.setStepSound(Block.soundTypeMetal);
-        this.setCreativeTab(NaturaTab.tab);
+        this.setCreativeTab(Natura.tab);
     }
 
     @SideOnly(Side.CLIENT)
