@@ -27,7 +27,6 @@ public class OverworldTreeBlock extends BlockLog
         super();
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeWood);
-	//Blocks.fire.setFireInfo(this, 5, 20);
         this.setCreativeTab(Natura.tab);
     }
 

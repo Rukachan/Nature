@@ -88,9 +88,11 @@ public class PHNatura
         dropCotton = config.get("Disabler", "Drop cotton seeds from grass", true).getBoolean(true);
         dropBarley = config.get("Disabler", "Drop barley seeds from grass", false).getBoolean(false);
 
-	enableCraftingTables = config.get("Disabler", "Enable crafting tables", true).getBoolean(true);
+    	enableCraftingTables = config.get("Disabler", "Enable crafting tables", true).getBoolean(true);
         enableBookshelves = config.get("Disabler", "Enable bookshelves", true).getBoolean(true);
-	enableSeedBags = config.get("Disabler", "Enable Seed Bags", true).getBoolean(true);
+    	enableDoors = config.get("Disabler", "Enable Doors", true).getBoolean(true);
+        enableTrapdoors = config.get("Disabler", "Enable Trapdoors", true).getBoolean(true);
+        enableSeedBags = config.get("Disabler", "Enable Seed Bags", true).getBoolean(true);
 
 	try
         {
@@ -286,6 +288,8 @@ public class PHNatura
     //Blocks
     public static boolean enableCraftingTables;
     public static boolean enableBookshelves;
+    public static boolean enableDoors;
+    public static boolean enableTrapdoors;
 
     //Items
     public static boolean enableSeedBags;

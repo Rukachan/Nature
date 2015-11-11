@@ -29,7 +29,6 @@ public class TreeBlock extends BlockLog
         this.setHardness(1.5F);
         this.setResistance(5F);
         this.setStepSound(Block.soundTypeWood);
-	//Blocks.fire.setFireInfo(this, 5, 20);
         this.setCreativeTab(Natura.tab);
     }
 

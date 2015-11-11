@@ -22,6 +22,7 @@ public class NLeavesDark extends NLeaves
     {
         super();
         this.setCreativeTab(Natura.tab);
+        this.setBlockName("Darkleaves");
     }
 
     @SideOnly(Side.CLIENT)
@@ -94,7 +95,7 @@ public class NLeavesDark extends NLeaves
     {
         if (metadata % 4 == 2)
             return NContent.potashApple;
-        return Item.getItemFromBlock(NContent.floraSapling);
+        return Item.getItemFromBlock(NContent.netherSapling);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class OverworldLeaves extends NLeaves
     public OverworldLeaves()
     {
         super();
+        this.setBlockName("RareLeaves");
     }
 
     @SideOnly(Side.CLIENT)
