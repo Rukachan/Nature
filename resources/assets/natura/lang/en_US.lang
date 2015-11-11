@@ -89,9 +89,9 @@ block.root.redwood.name=Redwood Root
 
 block.eucalyptus.NPlanks.name=Eucalyptus Planks
 block.sakura.NPlanks.name=Sakura Planks
-block.ghostwood.NPlanks.name=Ghostwood Planks
-block.hopseed.NPlanks.name=Hopseed Planks
-block.bloodwood.NPlanks.name=Bloodwood Planks
+block.ghost.NPlanks.name=Ghostwood Planks
+block.bush.NPlanks.name=Hopseed Planks
+block.blood.NPlanks.name=Bloodwood Planks
 block.redwood.NPlanks.name=Redwood Planks
 block.maple.NPlanks.name=Maple Planks
 block.silverbell.NPlanks.name=Silverbell Planks
