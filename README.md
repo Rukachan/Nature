@@ -6,7 +6,7 @@ Changes from the original:
 * Fence gates, Buttons, Pressure plates, Slabs, Stairs, etc are now craftable
 * Added config options to disable and set the rarity of the mobs
 * Added config options to disable blocks and items
-* Disabled by default the generation of redwood trees and grass dropping barley seeds
+* Disabled by default the generation of redwood trees and grass dropping barley and cotton seeds (wild ones still spawn and you can get their seeds from them).
 * Only one kind of flour
 * Removed multiple unused textures
 * Removed unused code
