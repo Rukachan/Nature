@@ -1,5 +1,6 @@
 package mods.natura.common;
 
+import mods.natura.blocks.NPressurePlate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,11 @@ import java.util.List;
 import mods.natura.Natura;
 import mods.natura.blocks.CloudBlock;
 import mods.natura.blocks.GrassBlock;
+import mods.natura.blocks.GrassSlab;
+import mods.natura.blocks.NButton;
+import mods.natura.blocks.NFenceGate;
+import mods.natura.blocks.NSlabBase;
+import mods.natura.blocks.NStairs;
 import mods.natura.blocks.NTrapdoor;
 import mods.natura.blocks.crops.BerryBush;
 import mods.natura.blocks.crops.CropBlock;
@@ -19,6 +25,7 @@ import mods.natura.blocks.nether.HeatSand;
 import mods.natura.blocks.nether.NetherGlass;
 import mods.natura.blocks.nether.TaintedSoil;
 import mods.natura.blocks.overrides.AlternateBookshelf;
+import mods.natura.blocks.overrides.AlternateFence;
 import mods.natura.blocks.overrides.AlternateWorkbench;
 import mods.natura.blocks.tech.BlazeHopper;
 import mods.natura.blocks.tech.BlazeRail;
@@ -65,8 +72,10 @@ import mods.natura.items.SpawnEgg;
 import mods.natura.items.blocks.BerryBushItem;
 import mods.natura.items.blocks.CloudItem;
 import mods.natura.items.blocks.DarkTreeItem;
+import mods.natura.items.blocks.FenceItem;
 import mods.natura.items.blocks.GlowshroomItem;
 import mods.natura.items.blocks.GrassBlockItem;
+import mods.natura.items.blocks.GrassSlabItem;
 import mods.natura.items.blocks.LogTwoxTwoItem;
 import mods.natura.items.blocks.NAlternateItem;
 import mods.natura.items.blocks.NDoorItem;
@@ -77,6 +86,8 @@ import mods.natura.items.blocks.NetherSaplingItem;
 import mods.natura.items.blocks.NetherGlassItem;
 import mods.natura.items.blocks.NoColorLeavesItem;
 import mods.natura.items.blocks.OverworldLeavesItem;
+import mods.natura.items.blocks.PlankSlab1Item;
+import mods.natura.items.blocks.PlankSlab2Item;
 import mods.natura.items.blocks.RareSaplingItem;
 import mods.natura.items.blocks.OverworldTreeItem;
 import mods.natura.items.blocks.PlanksItem;
@@ -89,6 +100,7 @@ import mods.natura.items.tools.NaturaArmor;
 import mods.natura.util.DispenserBehaviorSpawnEgg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.BlockPressurePlate.Sensitivity;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EnumCreatureType;
@@ -316,9 +328,77 @@ public class NContent implements IFuelHandler
 		    GameRegistry.registerBlock(alternateBookshelf, NAlternateItem.class, "Natura.bookshelf");
 		}
 
+		if (PHNatura.enableFences)
+		{
+			alternateFence = new AlternateFence(Material.wood).setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setBlockName("fence").setCreativeTab(Natura.tab);
+			GameRegistry.registerBlock(alternateFence, FenceItem.class, "Natura.fence"); 
+		}
+
         grassBlock = new GrassBlock().setBlockName("GrassBlock");
         grassBlock.stepSound = Block.soundTypeGrass;
         GameRegistry.registerBlock(grassBlock, GrassBlockItem.class, "GrassBlock");
+
+        /* ###################### */
+        if (PHNatura.enableSlabs)
+        {
+	        grassSlab = new GrassSlab("GrassSlab");
+	        grassSlab.stepSound = Block.soundTypeGrass;
+	        GameRegistry.registerBlock(grassSlab, GrassSlabItem.class, "GrassSlab");
+	
+	        plankSlab1 = new NSlabBase(Material.wood, planks, 0, 8, "plankSlab1").setHardness(2.0f);
+	        plankSlab1.stepSound = Block.soundTypeWood;
+	        GameRegistry.registerBlock(plankSlab1, PlankSlab1Item.class, "plankSlab1");
+	
+	        plankSlab2 = new NSlabBase(Material.wood, planks, 8, 5, "plankSlab2").setHardness(2.0f);
+	        plankSlab2.stepSound = Block.soundTypeWood;
+	        GameRegistry.registerBlock(plankSlab2, PlankSlab2Item.class, "plankSlab2"); 
+        }
+
+
+        /* Stairs */
+        if (PHNatura.enableStairs)
+        {
+            /* public String[] stairNames = new String[] { "eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "amaranth", "tiger",
+    		"willow", "darkwood", "fusewood"}; */
+	        stairEucalyptus = new NStairs(planks, 0, "eucalyptus");
+	        GameRegistry.registerBlock(stairEucalyptus, "stair.eucalyptus");
+	
+	        stairSakura = new NStairs(planks, 1, "sakura");
+	        GameRegistry.registerBlock(stairSakura, "stair.sakura");
+	
+	        stairGhostwood = new NStairs(planks, 2, "ghostwood");
+	        GameRegistry.registerBlock(stairGhostwood, "stair.ghostwood");
+	
+	        stairRedwood = new NStairs(planks, 3, "redwood");
+	        GameRegistry.registerBlock(stairRedwood, "stair.redwood");
+	
+	        stairBloodwood = new NStairs(planks, 4, "bloodwood");
+	        GameRegistry.registerBlock(stairBloodwood, "stair.bloodwood");
+	
+	        stairHopseed = new NStairs(planks, 5, "hopseed");
+	        GameRegistry.registerBlock(stairHopseed, "stair.hopseed");
+	
+	        stairMaple = new NStairs(planks, 6, "maple");
+	        GameRegistry.registerBlock(stairMaple, "stair.maple");
+	
+	        stairSilverbell = new NStairs(planks, 7, "silverbell");
+	        GameRegistry.registerBlock(stairSilverbell, "stair.silverbell");
+	
+	        stairAmaranth = new NStairs(planks, 8, "amaranth");
+	        GameRegistry.registerBlock(stairAmaranth, "stair.amaranth");
+	
+	        stairTiger = new NStairs(planks, 9, "tiger");
+	        GameRegistry.registerBlock(stairTiger, "stair.tiger");
+	
+	        stairWillow = new NStairs(planks, 10, "willow");
+	        GameRegistry.registerBlock(stairWillow, "stair.willow");
+	
+	        stairDarkwood = new NStairs(planks, 11, "darkwood");
+	        GameRegistry.registerBlock(stairDarkwood, "stair.darkwood");
+	
+	        stairFusewood = new NStairs(planks, 12, "fusewood");
+	        GameRegistry.registerBlock(stairFusewood, "stair.fusewood");
+        }
 
         if (PHNatura.enableTrapdoors)
         {
@@ -362,7 +442,96 @@ public class NContent implements IFuelHandler
 	        GameRegistry.registerBlock(trapdoorFusewood, "trapdoor.fusewood");
         }
 
-        ToolMaterial Bloodwood = EnumHelper.addToolMaterial("Bloodwood", 3, 350, 7f, 3, 24);
+        if (PHNatura.enablePressurePlates)
+        {
+        	pressurePlateEucalyptus = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 0, "eucalyptus");
+        	GameRegistry.registerBlock(pressurePlateEucalyptus, "pressureplate.eucalyptus");
+        	pressurePlateSakura = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 1, "sakura");
+        	GameRegistry.registerBlock(pressurePlateSakura, "pressureplate.sakura");
+        	pressurePlateGhostwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 2, "ghostwood");
+        	GameRegistry.registerBlock(pressurePlateGhostwood, "pressureplate.ghostwood");
+        	pressurePlateRedwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 3, "redwood");
+        	GameRegistry.registerBlock(pressurePlateRedwood, "pressureplate.redwood");
+        	pressurePlateBloodwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 4, "bloodwood");
+        	GameRegistry.registerBlock(pressurePlateBloodwood, "pressureplate.bloodwood");
+        	pressurePlateHopseed = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 5, "hopseed");
+        	GameRegistry.registerBlock(pressurePlateHopseed, "pressureplate.hopseed");
+        	pressurePlateMaple = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 6, "maple");
+        	GameRegistry.registerBlock(pressurePlateMaple, "pressureplate.maple");
+        	pressurePlateAmaranth = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 7, "amaranth");
+        	GameRegistry.registerBlock(pressurePlateAmaranth, "pressureplate.amaranth");
+        	pressurePlateSilverbell = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 8, "silverbell");
+        	GameRegistry.registerBlock(pressurePlateSilverbell, "pressureplate.silverbell");
+        	pressurePlateTiger = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 9, "tiger");
+        	GameRegistry.registerBlock(pressurePlateTiger, "pressureplate.tiger");
+        	pressurePlateWillow = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 10, "willow");
+        	GameRegistry.registerBlock(pressurePlateWillow, "pressureplate.willow");
+        	pressurePlateDarkwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 11, "darkwood");
+        	GameRegistry.registerBlock(pressurePlateDarkwood, "pressureplate.darkwood");
+        	pressurePlateFusewood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 12, "fusewood");
+        	GameRegistry.registerBlock(pressurePlateFusewood, "pressureplate.fusewood");
+        }
+
+        if (PHNatura.enableButtons)
+        {
+        	buttonEucalyptus = new NButton(planks, 0, "eucalyptus");
+        	GameRegistry.registerBlock(buttonEucalyptus, "button.eucalyptus");
+        	buttonSakura = new NButton(planks, 1, "sakura");
+        	GameRegistry.registerBlock(buttonSakura, "button.sakura");
+        	buttonGhostwood = new NButton(planks, 2, "ghostwood");
+        	GameRegistry.registerBlock(buttonGhostwood, "button.ghostwood");
+        	buttonRedwood = new NButton(planks, 3, "redwood");
+        	GameRegistry.registerBlock(buttonRedwood, "button.redwood");
+        	buttonBloodwood = new NButton(planks, 4, "bloodwood");
+        	GameRegistry.registerBlock(buttonBloodwood, "button.bloodwood");
+        	buttonHopseed = new NButton(planks, 5, "hopseed");
+        	GameRegistry.registerBlock(buttonHopseed, "button.hopseed");
+        	buttonMaple = new NButton(planks, 6, "maple");
+        	GameRegistry.registerBlock(buttonMaple, "button.maple");
+        	buttonAmaranth = new NButton(planks, 7, "amaranth");
+        	GameRegistry.registerBlock(buttonAmaranth, "button.amaranth");
+        	buttonSilverbell = new NButton(planks, 8, "silverbell");
+        	GameRegistry.registerBlock(buttonSilverbell, "button.silverbell");
+        	buttonTiger = new NButton(planks, 9, "tiger");
+        	GameRegistry.registerBlock(buttonTiger, "button.tiger");
+        	buttonWillow = new NButton(planks, 10, "willow");
+        	GameRegistry.registerBlock(buttonWillow, "button.willow");
+        	buttonDarkwood = new NButton(planks, 11, "darkwood");
+        	GameRegistry.registerBlock(buttonDarkwood, "button.darkwood");
+        	buttonFusewood = new NButton(planks, 12, "fusewood");
+        	GameRegistry.registerBlock(buttonFusewood, "button.fusewood");
+        }
+
+        if (PHNatura.enableFenceGates)
+        {
+        	fenceGateEucalyptus = new NFenceGate(planks, 0, "eucalyptus");
+        	GameRegistry.registerBlock(fenceGateEucalyptus, "fenceGate.eucalyptus");
+        	fenceGateSakura = new NFenceGate(planks, 1, "sakura");
+        	GameRegistry.registerBlock(fenceGateSakura, "fenceGate.sakura");
+        	fenceGateGhostwood = new NFenceGate(planks, 2, "ghostwood");
+        	GameRegistry.registerBlock(fenceGateGhostwood, "fenceGate.ghostwood");
+        	fenceGateRedwood = new NFenceGate(planks, 3, "redwood");
+        	GameRegistry.registerBlock(fenceGateRedwood, "fenceGate.redwood");
+        	fenceGateBloodwood = new NFenceGate(planks, 4, "bloodwood");
+        	GameRegistry.registerBlock(fenceGateBloodwood, "fenceGate.bloodwood");
+        	fenceGateHopseed = new NFenceGate(planks, 5, "hopseed");
+        	GameRegistry.registerBlock(fenceGateHopseed, "fenceGate.hopseed");
+        	fenceGateMaple = new NFenceGate(planks, 6, "maple");
+        	GameRegistry.registerBlock(fenceGateMaple, "fenceGate.maple");
+        	fenceGateAmaranth = new NFenceGate(planks, 7, "amaranth");
+        	GameRegistry.registerBlock(fenceGateAmaranth, "fenceGate.amaranth");
+        	fenceGateSilverbell = new NFenceGate(planks, 8, "silverbell");
+        	GameRegistry.registerBlock(fenceGateSilverbell, "fenceGate.silverbell");
+        	fenceGateTiger = new NFenceGate(planks, 9, "tiger");
+        	GameRegistry.registerBlock(fenceGateTiger, "fenceGate.tiger");
+        	fenceGateWillow = new NFenceGate(planks, 10, "willow");
+        	GameRegistry.registerBlock(fenceGateWillow, "fenceGate.willow");
+        	fenceGateDarkwood = new NFenceGate(planks, 11, "darkwood");
+        	GameRegistry.registerBlock(fenceGateDarkwood, "fenceGate.darkwood");
+        	fenceGateFusewood = new NFenceGate(planks, 12, "fusewood");
+        	GameRegistry.registerBlock(fenceGateFusewood, "fenceGate.fusewood");
+        }
+
         ArmorMaterial Imp = EnumHelper.addArmorMaterial("Imp", 33, new int[] {1, 3, 2, 1}, 15);
 
         impHelmet = new NaturaArmor(Imp, 1, 0, "imp_helmet", "imp").setUnlocalizedName("natura.armor.imphelmet");
@@ -520,10 +689,12 @@ public class NContent implements IFuelHandler
 	if (PHNatura.enableCraftingTables && PHNatura.enableBookshelves)
 	    for (int i = 0; i < woodTextureNames.length; i++)
 	    {
-		if (PHNatura.enableCraftingTables)
-		    addShapedRecipeFirst(recipes, new ItemStack(alternateWorkbench, 1, i), "##", "##", '#', new ItemStack(planks, 1, i));
-		if (PHNatura.enableBookshelves)
-		    addShapedRecipeFirst(recipes, new ItemStack(alternateBookshelf, 1, i), "###", "bbb", "###", '#', new ItemStack(planks, 1, i), 'b', Items.book);
+	    	if (PHNatura.enableCraftingTables)
+	    		addShapedRecipeFirst(recipes, new ItemStack(alternateWorkbench, 1, i), "##", "##", '#', new ItemStack(planks, 1, i));
+	    	if (PHNatura.enableBookshelves)
+	    		addShapedRecipeFirst(recipes, new ItemStack(alternateBookshelf, 1, i), "###", "bbb", "###", '#', new ItemStack(planks, 1, i), 'b', Items.book);
+	    	if (PHNatura.enableFences)
+	    		addShapedRecipeFirst(recipes, new ItemStack(alternateFence, 2, i), "s#s", "s#s", '#', new ItemStack(planks, 1, i), 's', Items.stick);
 	    }
 
         GameRegistry.addRecipe(new ItemStack(Items.leather, 2), "##", "##", '#', new ItemStack(plantItem, 1, 6));
@@ -581,20 +752,48 @@ public class NContent implements IFuelHandler
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(grassBlock, 1, 1), new ItemStack(grassBlock, 1, 0), "dyeBlue"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(grassBlock, 1, 2), new ItemStack(grassBlock, 1, 0), "dyeRed"));
 
-        if (PHNatura.enableTrapdoors)
+        if (PHNatura.enableTrapdoors || PHNatura.enableFenceGates || PHNatura.enableButtons || PHNatura.enablePressurePlates || PHNatura.enableStairs)
         {
-	        //Extra wood things
-	        Block[] trapdoors = new Block[] {trapdoorEucalyptus, trapdoorSakura, trapdoorGhostwood, trapdoorRedwood, trapdoorBloodwood, trapdoorHopseed, trapdoorMaple, trapdoorSilverbell,
+	        Block[] trapdoors = {trapdoorEucalyptus, trapdoorSakura, trapdoorGhostwood, trapdoorRedwood, trapdoorBloodwood, trapdoorHopseed, trapdoorMaple, trapdoorSilverbell,
 	                trapdoorAmaranth, trapdoorTiger, trapdoorWillow, trapdoorDarkwood, trapdoorFusewood};
-	
-	        for (int i = 0; i < trapdoors.length; i++)
-	        	addShapedRecipeFirst(recipes, new ItemStack(trapdoors[i], 2, i), "###", "###", '#', new ItemStack(planks, 1, i));
+        	Block[] fenceGates = {fenceGateEucalyptus, fenceGateSakura, fenceGateGhostwood, fenceGateRedwood, fenceGateBloodwood, fenceGateHopseed, fenceGateMaple, fenceGateSilverbell,
+         	         fenceGateAmaranth, fenceGateTiger, fenceGateWillow, fenceGateDarkwood, fenceGateFusewood };
+        	Block[] buttons = {buttonEucalyptus, buttonSakura, buttonGhostwood, buttonRedwood, buttonBloodwood, buttonHopseed, buttonMaple, buttonSilverbell, buttonAmaranth, buttonTiger,
+            		buttonWillow, buttonDarkwood, buttonFusewood};
+        	Block[] pressurePlates = {pressurePlateEucalyptus, pressurePlateSakura, pressurePlateGhostwood, pressurePlateRedwood, pressurePlateBloodwood, pressurePlateHopseed,
+            		pressurePlateMaple, pressurePlateSilverbell, pressurePlateAmaranth, pressurePlateTiger, pressurePlateWillow, pressurePlateDarkwood, pressurePlateFusewood};
+        	Block[] stairs = new Block[] {stairEucalyptus, stairSakura, stairGhostwood, stairRedwood, stairBloodwood, stairHopseed, stairMaple, stairSilverbell, stairAmaranth, stairTiger, stairWillow,
+            		stairDarkwood, stairFusewood};
+
+	        for (int i = 0; i < 13; i++)
+	        {
+	        	if (PHNatura.enableTrapdoors)
+	        		addShapedRecipeFirst(recipes, new ItemStack(trapdoors[i], 2, 0), "###", "###", '#', new ItemStack(planks, 1, i));
+	        	if (PHNatura.enableFenceGates)
+	        		addShapedRecipeFirst(recipes, new ItemStack(fenceGates[i], 1, 0), "s#s", "s#s", '#', new ItemStack(planks, 1, i), 's', Items.stick);
+	        	if (PHNatura.enableButtons)
+	        		addShapedRecipeFirst(recipes, new ItemStack(buttons[i], 1, 0), "#", '#', new ItemStack(planks, 1, i));
+	        	if (PHNatura.enablePressurePlates)
+	        		addShapedRecipeFirst(recipes, new ItemStack(pressurePlates[i], 1, 0), "##", '#', new ItemStack(planks, 1, i));
+	        	if (PHNatura.enableStairs)
+	        		addShapedRecipeFirst(recipes, new ItemStack(stairs[i], 4, 0	), "#  ", "## ", "###", '#', new ItemStack(planks, 1, i));
+	        }
+        }
+
+        if (PHNatura.enableSlabs)
+        {
+        	for (int i = 0; i < 8; i++)
+        		addShapedRecipeFirst(recipes, new ItemStack(plankSlab1, 6, i), "###", '#', new ItemStack(planks, 1, i));
+        	for (int i = 0; i < 5; i++)
+        		addShapedRecipeFirst(recipes, new ItemStack(plankSlab2, 6, i), "###", '#', new ItemStack(planks, 1, 8 + i));
+        	for (int i = 0; i < 3; i++)
+        		GameRegistry.addRecipe(new ItemStack(grassSlab, 6, i), "bbb", 'b', new ItemStack(grassBlock, 1, i));
         }
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brail, 16), "X X", "X#X", "X X", 'X', Items.blaze_rod, '#', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brailPowered, 6), "X X", "X#X", "XRX", 'X', Items.blaze_rod, 'R', "dustRedstone", '#', new ItemStack(darkTree, 1, 1)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brailActivator, 6), "XSX", "X#X", "XSX", 'X', Items.blaze_rod, '#', Blocks.redstone_torch, 'S', "stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brailDetector, 6), "X X", "X#X", "XRX", 'X', Items.blaze_rod, 'R', "dustRedstone", '#', Blocks.wooden_pressure_plate)); /* ###: was nether pressure plate, if we ever add it back, or if we add back natura pressure plates, remember to add that too. */
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brailDetector, 6), "X X", "X#X", "XRX", 'X', Items.blaze_rod, 'R', "dustRedstone", '#', "pressurePlateWood")); /* ###: was nether pressure plate */
 
         GameRegistry.addRecipe(new ItemStack(NContent.netherrackFurnace), "###", "# #", "###", '#', Blocks.netherrack);
         GameRegistry.addRecipe(new ItemStack(NContent.respawnObelisk), "###", "# #", "###", '#', new ItemStack(tree, 1, 2));
@@ -604,7 +803,6 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.glass_bottle, 3), "# #", " # ", '#', "glass"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.daylight_detector), "GGG", "QQQ", "WWW", 'G', "glass", 'Q', "gemQuartz", 'W', "slabWood"));
-
     }
 
     public void addShapedRecipeFirst (List recipeList, ItemStack itemstack, Object... objArray)
@@ -712,11 +910,6 @@ public class NContent implements IFuelHandler
         recipeList.add(0, new ShapelessRecipes(par1ItemStack, arraylist));
     }
 
-    public void addLoot ()
-    {
-        //ChestGenHooks.getInfo(ChestGenHooks.BONUS_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(VanityBlocksStorage.StorageBlock,0,0),3,5,6));
-    }
-
     public void addOredictSupport ()
     {
         //Food
@@ -753,6 +946,13 @@ public class NContent implements IFuelHandler
 
         OreDictionary.registerOre("taintedSoil", new ItemStack(taintedSoil, 1));
 
+        //Slabs
+        if (PHNatura.enableSlabs)
+        {
+	        OreDictionary.registerOre("slabWood", new ItemStack(plankSlab1, 1, Short.MAX_VALUE));
+	        OreDictionary.registerOre("slabWood", new ItemStack(plankSlab2, 1, Short.MAX_VALUE));
+        }
+
         //Saplings
         OreDictionary.registerOre("treeSapling", new ItemStack(floraSapling, 1, Short.MAX_VALUE));
         OreDictionary.registerOre("treeSapling", new ItemStack(rareSapling, 1, Short.MAX_VALUE));
@@ -765,11 +965,11 @@ public class NContent implements IFuelHandler
         OreDictionary.registerOre("treeLeaves", new ItemStack(darkLeaves, 1, Short.MAX_VALUE));
 
         //Crafting table
-	if (PHNatura.enableCraftingTables)
-	{
-	    OreDictionary.registerOre("crafterWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
-	    OreDictionary.registerOre("craftingTableWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
-	}
+        if (PHNatura.enableCraftingTables)
+        {
+        	OreDictionary.registerOre("crafterWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
+        	OreDictionary.registerOre("craftingTableWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
+        }
 
         //Planks
         OreDictionary.registerOre("plankWood", new ItemStack(NContent.planks, 1, OreDictionary.WILDCARD_VALUE));
@@ -781,6 +981,24 @@ public class NContent implements IFuelHandler
         OreDictionary.registerOre("logWood", new ItemStack(NContent.bloodwood, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("logWood", new ItemStack(NContent.redwood, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("logWood", new ItemStack(NContent.willow, 1, OreDictionary.WILDCARD_VALUE));
+
+        //Stairs
+        if (PHNatura.enableStairs)
+        {
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairEucalyptus, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairSakura, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairGhostwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairRedwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairBloodwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairHopseed, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairMaple, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairSilverbell, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairAmaranth, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairTiger, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairWillow, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairDarkwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairFusewood, 1, OreDictionary.WILDCARD_VALUE)); 
+        }
 
         //Dye
         OreDictionary.registerOre("dyeBlue", new ItemStack(plantItem, 1, 8));
@@ -796,6 +1014,25 @@ public class NContent implements IFuelHandler
         //Bowl
         OreDictionary.registerOre("bowlWood", new ItemStack(bowlEmpty, 1, 0));
         OreDictionary.registerOre("bowlWood", new ItemStack(Items.bowl, 1, 0));
+
+        //Pressure Plates
+        if (PHNatura.enablePressurePlates)
+        {
+        	OreDictionary.registerOre("pressurePlateWood", Blocks.wooden_pressure_plate);
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateEucalyptus, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateSakura, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateGhostwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateRedwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateBloodwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateHopseed, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateMaple, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateSilverbell, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateAmaranth, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateTiger, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateWillow, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateDarkwood, 1, OreDictionary.WILDCARD_VALUE));
+	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateFusewood, 1, OreDictionary.WILDCARD_VALUE)); 
+        }
     }
 
     public void createEntities ()
@@ -939,10 +1176,47 @@ public class NContent implements IFuelHandler
             "fusewood" };
     public static Block alternateWorkbench;
     public static Block alternateBookshelf;
+    public static Block alternateFence;
 
     //Golem type things
     public static Block grassBlock;
 
+    /* slabs */
+    public static Block grassSlab;
+    public static Block plankSlab1;
+    public static Block plankSlab2;
+
+    /* stairs */
+    public static Block stairEucalyptus;
+    public static Block stairSakura;
+    public static Block stairGhostwood;
+    public static Block stairRedwood;
+    public static Block stairBloodwood;
+    public static Block stairHopseed;
+    public static Block stairMaple;
+    public static Block stairSilverbell;
+    public static Block stairAmaranth;
+    public static Block stairTiger;
+    public static Block stairWillow;
+    public static Block stairDarkwood;
+    public static Block stairFusewood;
+
+    /* pressure plates */
+    public static Block pressurePlateEucalyptus;
+    public static Block pressurePlateSakura;
+    public static Block pressurePlateGhostwood;
+    public static Block pressurePlateRedwood;
+    public static Block pressurePlateBloodwood;
+    public static Block pressurePlateHopseed;
+    public static Block pressurePlateMaple;
+    public static Block pressurePlateAmaranth;
+    public static Block pressurePlateSilverbell;
+    public static Block pressurePlateTiger;
+    public static Block pressurePlateWillow;
+    public static Block pressurePlateDarkwood;
+    public static Block pressurePlateFusewood; 
+
+    /* Trapdoors */
     public static Block trapdoorEucalyptus;
     public static Block trapdoorSakura;
     public static Block trapdoorGhostwood;
@@ -956,6 +1230,36 @@ public class NContent implements IFuelHandler
     public static Block trapdoorWillow;
     public static Block trapdoorDarkwood;
     public static Block trapdoorFusewood;
+    
+    /* Buttons */
+    public static Block buttonEucalyptus;
+    public static Block buttonSakura;
+    public static Block buttonGhostwood;
+    public static Block buttonRedwood;
+    public static Block buttonBloodwood;
+    public static Block buttonHopseed;
+    public static Block buttonMaple;
+    public static Block buttonAmaranth;
+    public static Block buttonSilverbell;
+    public static Block buttonTiger;
+    public static Block buttonWillow;
+    public static Block buttonDarkwood;
+    public static Block buttonFusewood;
+
+    /* Fence gates */
+    public static Block fenceGateEucalyptus;
+    public static Block fenceGateSakura;
+    public static Block fenceGateGhostwood;
+    public static Block fenceGateRedwood;
+    public static Block fenceGateBloodwood;
+    public static Block fenceGateHopseed;
+    public static Block fenceGateMaple;
+    public static Block fenceGateAmaranth;
+    public static Block fenceGateSilverbell;
+    public static Block fenceGateTiger;
+    public static Block fenceGateWillow;
+    public static Block fenceGateDarkwood;
+    public static Block fenceGateFusewood; 
 
     @Override
     public int getBurnTime (ItemStack fuel)

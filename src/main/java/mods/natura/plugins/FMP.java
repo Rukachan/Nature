@@ -41,16 +41,16 @@ public class FMP implements IPluginBase
     @Optional.Method (modid = modId)
     public void init (FMLInitializationEvent evt)
     {
-	registerBlock(NContent.bloodwood);
-	registerBlock(NContent.willow);
-	registerBlock(NContent.planks, 0, 12);
-	registerBlock(NContent.tree, 0, 3);
-	registerBlock(NContent.rareTree, 0, 3);
-	registerBlock(NContent.rareLeaves, 0, 3);
-	registerBlock(NContent.darkLeaves, 0, 3);
-	registerBlock(NContent.redwood, 0, 2);
-	registerBlock(NContent.floraLeaves, 0, 2);
-	registerBlock(NContent.floraLeavesNoColor, 0, 2);
+		registerBlock(NContent.bloodwood);
+		registerBlock(NContent.willow);
+		registerBlock(NContent.planks, 0, 12);
+		registerBlock(NContent.tree, 0, 3);
+		registerBlock(NContent.rareTree, 0, 3);
+		registerBlock(NContent.rareLeaves, 0, 3);
+		registerBlock(NContent.darkLeaves, 0, 3);
+		registerBlock(NContent.redwood, 0, 2);
+		registerBlock(NContent.floraLeaves, 0, 2);
+		registerBlock(NContent.floraLeavesNoColor, 0, 2);
     }
 
     @Override

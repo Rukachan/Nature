@@ -115,6 +115,21 @@ block.sapling.maple.name=Maple Sapling
 block.sapling.purpleheart.name=Amaranth Sapling
 block.sapling.silverbell.name=Silverbell Sapling
 
+
+block.wood.eucalyptus.slab.name=Eucalyptus Slab
+block.wood.sakura.slab.name=Sakura Slab
+block.wood.ghost.slab.name=Ghostwood Slab
+block.wood.bush.slab.name=Hopseed Slab
+block.wood.redwood.slab.name=Redwood Slab
+block.wood.blood.slab.name=Blood Slab
+block.wood.darkwood.slab.name=Darkwood Slab
+block.wood.fusewood.slab.name=Fusewood Slab
+block.wood.willow.slab.name=Willow Slab
+block.wood.tiger.slab.name=Tigerwood Slab
+block.wood.maple.slab.name=Maple Slab
+block.wood.purpleheart.slab.name=Amaranth Slab
+block.wood.silverbell.slab.name=Silverbell Slab 
+
 tile.door.eucalyptus.name=Eucalyptus Door
 tile.door.sakura.name=Sakura Door
 tile.door.ghostwood.name=Ghostwood Door
@@ -122,6 +137,62 @@ tile.door.hopseed.name=Hopseed Door
 tile.door.redwood.name=Redwood Door
 tile.door.bloodwood.name=Bloodwood Door
 tile.door.redwoodbark.name=Redwood Bark Door
+
+tile.pressureplate.eucalyptus.name=Eucalyptus Pressure Plate
+tile.pressureplate.sakura.name=Sakura Pressure Plate
+tile.pressureplate.ghostwood.name=Ghostwood Pressure Plate
+tile.pressureplate.hopseed.name=Hopseed Pressure Plate
+tile.pressureplate.redwood.name=Redwood Pressure Plate
+tile.pressureplate.bloodwood.name=Blood Pressure Plate
+tile.pressureplate.darkwood.name=Darkwood Pressure Plate
+tile.pressureplate.fusewood.name=Fusewood Pressure Plate
+tile.pressureplate.willow.name=Willow Pressure Plate
+tile.pressureplate.tiger.name=Tigerwood Pressure Plate
+tile.pressureplate.maple.name=Maple Pressure Plate
+tile.pressureplate.amaranth.name=Amaranth Pressure Plate
+tile.pressureplate.silverbell.name=Silverbell Pressure Plate
+
+tile.fenceGate.eucalyptus.name=Eucalyptus Fence Gate
+tile.fenceGate.sakura.name=Sakura Fence Gate
+tile.fenceGate.ghostwood.name=Ghostwood Fence Gate
+tile.fenceGate.hopseed.name=Hopseed Fence Gate
+tile.fenceGate.redwood.name=Redwood Fence Gate
+tile.fenceGate.bloodwood.name=Blood Fence Gate
+tile.fenceGate.darkwood.name=Darkwood Fence Gate
+tile.fenceGate.fusewood.name=Fusewood Fence Gate
+tile.fenceGate.willow.name=Willow Fence Gate
+tile.fenceGate.tiger.name=Tigerwood Fence Gate
+tile.fenceGate.maple.name=Maple Fence Gate
+tile.fenceGate.amaranth.name=Amaranth Fence Gate
+tile.fenceGate.silverbell.name=Silverbell Fence Gate
+
+tile.stair.eucalyptus.name=Eucalyptus Stairs
+tile.stair.sakura.name=Sakura Stairs
+tile.stair.ghostwood.name=Ghostwood Stairs
+tile.stair.hopseed.name=Hopseed Stairs
+tile.stair.redwood.name=Redwood Stairs
+tile.stair.bloodwood.name=Blood Stairs
+tile.stair.darkwood.name=Darkwood Stairs
+tile.stair.fusewood.name=Fusewood Stairs
+tile.stair.willow.name=Willow Stairs
+tile.stair.tiger.name=Tigerwood Stairs
+tile.stair.maple.name=Maple Stairs
+tile.stair.amaranth.name=Amaranth Stairs
+tile.stair.silverbell.name=Silverbell Stairs
+
+tile.button.eucalyptus.name=Eucalyptus Button
+tile.button.sakura.name=Sakura Button
+tile.button.ghostwood.name=Ghostwood Button
+tile.button.hopseed.name=Hopseed Button
+tile.button.redwood.name=Redwood Button
+tile.button.bloodwood.name=Blood Button
+tile.button.darkwood.name=Darkwood Button
+tile.button.fusewood.name=Fusewood Button
+tile.button.willow.name=Willow Button
+tile.button.tiger.name=Tigerwood Button
+tile.button.maple.name=Maple Button
+tile.button.amaranth.name=Amaranth Button
+tile.button.silverbell.name=Silverbell Button 
 
 tile.trapdoor.eucalyptus.name=Eucalyptus Trapdoor
 tile.trapdoor.sakura.name=Sakura Trapdoor

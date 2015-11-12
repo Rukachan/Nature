@@ -28,20 +28,20 @@ public class PHNatura
         if (babyHeatscarMaximum < 0)
             babyHeatscarMaximum = 0;
 
-	impSpawnRarity = config.get("Mob Changes", "Imp Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
-        if (impSpawnRarity < 0)
-            impSpawnRarity = 0;
-	heatscarSpawnRarity = config.get("Mob Changes", "Heatscar Spider Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
-        if (heatscarSpawnRarity < 0)
-            heatscarSpawnRarity = 0;
-	nitroCreeperSpawnRarity = config.get("Mob Changes", "Nitro Creeper Spawn Rarity (0 to disable, default: 8)", 8).getInt(8);
-        if (nitroCreeperSpawnRarity < 0)
-            nitroCreeperSpawnRarity = 0;
-	babyHeatscarSpawnRarity = config.get("Mob Changes", "Baby Heatscar Spider Spawn Rarity (0 to disable, default: 7)", 7).getInt(7);
-        if (babyHeatscarSpawnRarity < 0)
-            babyHeatscarSpawnRarity = 0;
+		impSpawnRarity = config.get("Mob Changes", "Imp Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
+		if (impSpawnRarity < 0)
+			impSpawnRarity = 0;
+		heatscarSpawnRarity = config.get("Mob Changes", "Heatscar Spider Spawn Rarity (0 to disable, default: 10)", 10).getInt(10);
+		if (heatscarSpawnRarity < 0)
+			heatscarSpawnRarity = 0;
+		nitroCreeperSpawnRarity = config.get("Mob Changes", "Nitro Creeper Spawn Rarity (0 to disable, default: 8)", 8).getInt(8);
+		if (nitroCreeperSpawnRarity < 0)
+			nitroCreeperSpawnRarity = 0;
+		babyHeatscarSpawnRarity = config.get("Mob Changes", "Baby Heatscar Spider Spawn Rarity (0 to disable, default: 7)", 7).getInt(7);
+		if (babyHeatscarSpawnRarity < 0)
+			babyHeatscarSpawnRarity = 0;
 
-	overrideNether = config.get("Disabler", "Override Nether", !BoP).getBoolean(!BoP);
+		overrideNether = config.get("Disabler", "Override Nether", !BoP).getBoolean(!BoP);
         canRespawnInNether = config.get("Disabler", "Obelisks let players respawn in the Nether", true).getBoolean(true);
 
         generateRedwood = config.get("Disabler", "Generate Redwood Trees", false).getBoolean(false);
@@ -85,16 +85,22 @@ public class PHNatura
         generatePurpleglowshroom = config.get("Disabler", "Generate Purple Glowshroom", true).getBoolean(true);
         generateBlueglowshroom = config.get("Disabler", "Generate Blue Glowshroom", true).getBoolean(true);
         generateGlowshroomtree = config.get("Disabler", "Generate Glowshroom Trees", true).getBoolean(true);
-        dropCotton = config.get("Disabler", "Drop cotton seeds from grass", true).getBoolean(true);
+        dropCotton = config.get("Disabler", "Drop cotton seeds from grass", false).getBoolean(false);
         dropBarley = config.get("Disabler", "Drop barley seeds from grass", false).getBoolean(false);
 
     	enableCraftingTables = config.get("Disabler", "Enable crafting tables", true).getBoolean(true);
         enableBookshelves = config.get("Disabler", "Enable bookshelves", true).getBoolean(true);
     	enableDoors = config.get("Disabler", "Enable Doors", true).getBoolean(true);
         enableTrapdoors = config.get("Disabler", "Enable Trapdoors", true).getBoolean(true);
+        enableSlabs = config.get("Disabler", "Enable Slabs", true).getBoolean(true);
+        enableStairs = config.get("Disabler", "Enable Stairs", true).getBoolean(true);
+        enableFenceGates = config.get("Disabler", "Enable Fence Gates", true).getBoolean(true);
+        enableButtons = config.get("Disabler", "Enable Buttons", true).getBoolean(true);
+        enablePressurePlates = config.get("Disabler", "Enable Pressureplates", true).getBoolean(true);
+        enableFences = config.get("Disabler", "Enable Fences", true).getBoolean(true);
         enableSeedBags = config.get("Disabler", "Enable Seed Bags", true).getBoolean(true);
 
-	try
+        try
         {
             Class.forName("chococraft.common.ModChocoCraft");
             enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", false).getBoolean(false);
@@ -164,7 +170,7 @@ public class PHNatura
 
         seaLevel = config.get("general", "Sea level", 64).getInt(64);
 
-	PluginManager.config(config);
+        PluginManager.config(config);
 
         /* Save the configuration file */
         if(config.hasChanged())
@@ -290,6 +296,12 @@ public class PHNatura
     public static boolean enableBookshelves;
     public static boolean enableDoors;
     public static boolean enableTrapdoors;
+    public static boolean enableSlabs;
+    public static boolean enableStairs;
+	public static boolean enableFenceGates;
+	public static boolean enableButtons;
+	public static boolean enablePressurePlates;
+	public static boolean enableFences;
 
     //Items
     public static boolean enableSeedBags;

@@ -32,7 +32,6 @@ public class NProxyClient extends NProxyCommon
         RenderingRegistry.registerBlockHandler(new CropRender());
         RenderingRegistry.registerBlockHandler(new FenceRender());
         RenderingRegistry.registerBlockHandler(new HopperRender());
-        RenderingRegistry.registerBlockHandler(new LeverRender());
         FMLCommonHandler.instance().bus().register(new NCropsTickHandler());
 
         RenderingRegistry.registerEntityRenderingHandler(ImpEntity.class, new ImpRender(new ImpModel(), 0f));
@@ -85,9 +84,4 @@ public class NProxyClient extends NProxyCommon
         tessellator.draw();
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
-
-    /*public File getMinecraftDir ()
-    {
-        return Minecraft.getMinecraftDir();
-    }*/
 }
