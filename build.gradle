@@ -23,7 +23,6 @@ buildscript {
     }
 }
 
-
 repositories {
     maven {
         name 'CB Maven FS'
@@ -42,7 +41,6 @@ repositories {
         url 'http://files.minecraftforge.net/maven'
     }
 }
-
 
 apply plugin: 'forge'
 group = 'mods.natura'

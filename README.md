@@ -11,7 +11,7 @@ Changes from the original:
 * Removed multiple unused textures
 * Removed unused code
 * Removed dependancy on mantle
-* Removed stuff considered bloated and annoying (eg the sticks, tools, etc)
+* Removed stuff considered bloated and annoying (eg the sticks, bowls, tools, etc)
 * Merged all the creative tabs into one
 * Other bug fixes
 

@@ -38,15 +38,7 @@ public class BowlStew extends ItemFood
     @Override
     public IIcon getIcon (ItemStack stack, int renderPass)
     {
-        if (renderPass == 0)
-        {
-            int stackDamage = stack.getItemDamage() % 14;
-            if (stackDamage == 0)
-                return Items.bowl.getIconFromDamage(0);
-            return NContent.bowlEmpty.getIconFromDamage(stack.getItemDamage() % 14 - 1);
-        }
-        else
-            return icons[stack.getItemDamage() / 14];
+    	return renderPass == 0 ? Items.bowl.getIconFromDamage(0) : icons[stack.getItemDamage() / 14];
     }
 
     @SideOnly(Side.CLIENT)
@@ -71,20 +63,9 @@ public class BowlStew extends ItemFood
         {
             --stack.stackSize;
             if (stack.stackSize <= 0)
-            {
-                int stackDamage = stack.getItemDamage() % 14;
-                if (stackDamage == 0)
-                    return new ItemStack(Items.bowl);
+            	return new ItemStack(Items.bowl);
 
-                return new ItemStack(NContent.bowlEmpty, 1, stackDamage - 1);
-            }
-
-            ItemStack returnStack = new ItemStack(Items.bowl);
-            int stackDamage = stack.getItemDamage() % 14;
-            if (stackDamage != 0)
-                returnStack = new ItemStack(NContent.bowlEmpty, 1, stackDamage - 1);
-
-            player.inventory.addItemStackToInventory(returnStack);
+            player.inventory.addItemStackToInventory(new ItemStack(Items.bowl));
         }
 
         return stack;

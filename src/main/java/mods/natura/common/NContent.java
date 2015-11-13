@@ -58,7 +58,6 @@ import mods.natura.entity.NitroCreeper;
 import mods.natura.items.BerryItem;
 import mods.natura.items.BerryMedley;
 import mods.natura.items.BoneBag;
-import mods.natura.items.BowlEmpty;
 import mods.natura.items.BowlStew;
 import mods.natura.items.CactusJuice;
 import mods.natura.items.ImpMeat;
@@ -560,8 +559,6 @@ public class NContent implements IFuelHandler
         taintedSoil.setHarvestLevel("shovel", 0);
         heatSand.setHarvestLevel("shovel", 0);
 
-        bowlEmpty = new BowlEmpty().setUnlocalizedName("natura.emptybowl");
-        GameRegistry.registerItem(bowlEmpty, "natura.emptybowl");
         bowlStew = new BowlStew().setUnlocalizedName("natura.stewbowl");
         GameRegistry.registerItem(bowlStew, "natura.stewbowl");
 
@@ -626,26 +623,15 @@ public class NContent implements IFuelHandler
             FurnaceRecipes.smelting().func_151394_a(new ItemStack(plantItem, 1, i), new ItemStack(Items.bread, 1), 0.5f);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.cake, 1), "AAA", "BEB", " C ", 'A', Items.milk_bucket, 'B', Items.sugar, 'C', "foodFlour", 'E', Items.egg));//check1
 
-        String[] berryTypes = new String[] { "cropRaspberry", "cropBlueberry", "cropBlackberry", "cropMaloberry", "cropStrawberry", "cropCranberry" };
+        String[] berryTypes = {"cropRaspberry", "cropBlueberry", "cropBlackberry", "cropMaloberry"};
 
-        for (int iter1 = 0; iter1 < berryTypes.length - 2; iter1++)
-            for (int iter2 = iter1 + 1; iter2 < berryTypes.length - 1; iter2++)
-                for (int iter3 = iter2 + 1; iter3 < berryTypes.length; iter3++)
-                    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 1, 0), "bowlWood", berryTypes[iter1], berryTypes[iter2], berryTypes[iter3]));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 1), Items.bowl, berryTypes[0], berryTypes[1], berryTypes[2]));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 1), Items.bowl, berryTypes[1], berryTypes[2], berryTypes[3]));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 1), Items.bowl, berryTypes[2], berryTypes[3], berryTypes[0]));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 1), Items.bowl, berryTypes[0], berryTypes[2], berryTypes[3]));
 
-        for (int iter1 = 0; iter1 < berryTypes.length - 3; iter1++)
-            for (int iter2 = iter1 + 1; iter2 < berryTypes.length - 2; iter2++)
-                for (int iter3 = iter2 + 1; iter3 < berryTypes.length - 1; iter3++)
-                    for (int iter4 = iter3 + 1; iter4 < berryTypes.length; iter4++)
-                        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 2, 0), "bowlWood", "bowlWood", berryTypes[iter1], berryTypes[iter2], berryTypes[iter3], berryTypes[iter4]));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(berryMedley, 2), Items.bowl, Items.bowl, berryTypes[0], berryTypes[1], berryTypes[2], berryTypes[3]));
 
-        //GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(toolStationWood, 1, 1), "p", "w", 'p', new ItemStack(blankPattern, 1, 0), 'w', "logWood"));
-        /*GameRegistry.addShapelessRecipe(new ItemStack(berryMedley, 1), new ItemStack(berryItem, 1, 0), new ItemStack(berryItem, 1, 1), new ItemStack(berryItem, 1, 2), new ItemStack(Item.bowlEmpty));
-        GameRegistry.addShapelessRecipe(new ItemStack(berryMedley, 1), new ItemStack(berryItem, 1, 0), new ItemStack(berryItem, 1, 1), new ItemStack(berryItem, 1, 3), new ItemStack(Item.bowlEmpty));
-        GameRegistry.addShapelessRecipe(new ItemStack(berryMedley, 1), new ItemStack(berryItem, 1, 0), new ItemStack(berryItem, 1, 2), new ItemStack(berryItem, 1, 3), new ItemStack(Item.bowlEmpty));
-        GameRegistry.addShapelessRecipe(new ItemStack(berryMedley, 1), new ItemStack(berryItem, 1, 1), new ItemStack(berryItem, 1, 2), new ItemStack(berryItem, 1, 3), new ItemStack(Item.bowlEmpty));
-        GameRegistry.addShapelessRecipe(new ItemStack(berryMedley, 2), new ItemStack(berryItem, 1, 0), new ItemStack(berryItem, 1, 1), new ItemStack(berryItem, 1, 2), new ItemStack(berryItem, 1, 3),
-        		new ItemStack(Item.bowlEmpty), new ItemStack(Item.bowlEmpty));*/
         //GameRegistry.addShapelessRecipe(new ItemStack(plantItem, 1, 2), new ItemStack(plantItem, 1, 1), Item.bucketWater );
         //GameRegistry.addShapelessRecipe(new ItemStack(plantItem, 2, 2), new ItemStack(plantItem, 1, 1), Item.egg );
 
@@ -721,23 +707,10 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addShapelessRecipe(new ItemStack(Blocks.soul_sand, 1, 0), heatSand, taintedSoil);
 
-        for (int i = 0; i < BowlEmpty.textureNames.length; i++)
-        {
-            if (!(BowlEmpty.textureNames[i].equals("")))
-            {
-                if (FluidRegistry.isFluidRegistered("mushroomsoup"))
-                    FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluid("mushroomsoup"), new ItemStack(this.bowlStew, 1, i));
-                addShapedRecipeFirst(recipes, new ItemStack(bowlEmpty, 4, i), "# #", " # ", '#', new ItemStack(planks, 1, i));
-                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bowlStew, 1, i + 1), "bowlWood", new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom_block)));
-                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bowlStew, 1, i + 15), "bowlWood", new ItemStack(glowshroom, 1, 0), new ItemStack(glowshroom, 1, 1), new ItemStack(glowshroom, 1, 2)));
-            }
-        }
-
         addShapelessRecipeFirst(recipes, new ItemStack(bowlStew, 1, 0), new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom), new ItemStack(Items.bowl));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bowlStew, 1, 14), new ItemStack(glowshroom, 1, 0), new ItemStack(glowshroom, 1, 1), new ItemStack(glowshroom, 1, 2), "bowlWood"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bowlStew, 1, 14), new ItemStack(glowshroom, 1, 0), new ItemStack(glowshroom, 1, 1), new ItemStack(glowshroom, 1, 2), Items.bowl));
 
-        /*bowlEmpty = new BowlEmpty(PHNatura.bowlEmpty).setUnlocalizedName("natura.emptybowl");
-        bowlStew = new BowlStew(PHNatura.bowlStew).setUnlocalizedName("natura.stewbowl");*/
+        /*bowlStew = new BowlStew(PHNatura.bowlStew).setUnlocalizedName("natura.stewbowl");*/
 
         //Turn logs into charcoal
         FurnaceRecipes.smelting().func_151394_a(new ItemStack(tree, 1, 0), new ItemStack(Items.coal, 1, 1), 0.15f);
@@ -762,10 +735,10 @@ public class NContent implements IFuelHandler
             		buttonWillow, buttonDarkwood, buttonFusewood};
         	Block[] pressurePlates = {pressurePlateEucalyptus, pressurePlateSakura, pressurePlateGhostwood, pressurePlateRedwood, pressurePlateBloodwood, pressurePlateHopseed,
             		pressurePlateMaple, pressurePlateSilverbell, pressurePlateAmaranth, pressurePlateTiger, pressurePlateWillow, pressurePlateDarkwood, pressurePlateFusewood};
-        	Block[] stairs = new Block[] {stairEucalyptus, stairSakura, stairGhostwood, stairRedwood, stairBloodwood, stairHopseed, stairMaple, stairSilverbell, stairAmaranth, stairTiger, stairWillow,
-            		stairDarkwood, stairFusewood};
+        	Block[] stairs = {stairEucalyptus, stairSakura, stairGhostwood, stairRedwood, stairBloodwood, stairHopseed, stairMaple, stairSilverbell, stairAmaranth, stairTiger, stairWillow,
+        			stairDarkwood, stairFusewood};
 
-	        for (int i = 0; i < 13; i++)
+	        for (int i = 0; i < woodTextureNames.length; i++)
 	        {
 	        	if (PHNatura.enableTrapdoors)
 	        		addShapedRecipeFirst(recipes, new ItemStack(trapdoors[i], 2, 0), "###", "###", '#', new ItemStack(planks, 1, i));
@@ -1011,11 +984,7 @@ public class NContent implements IFuelHandler
         //Chest
         OreDictionary.registerOre("chestWood", new ItemStack(Blocks.chest));
 
-        //Bowl
-        OreDictionary.registerOre("bowlWood", new ItemStack(bowlEmpty, 1, 0));
-        OreDictionary.registerOre("bowlWood", new ItemStack(Items.bowl, 1, 0));
-
-        //Pressure Plates
+        /* Pressure Plates */
         if (PHNatura.enablePressurePlates)
         {
         	OreDictionary.registerOre("pressurePlateWood", Blocks.wooden_pressure_plate);
@@ -1033,6 +1002,16 @@ public class NContent implements IFuelHandler
 	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateDarkwood, 1, OreDictionary.WILDCARD_VALUE));
 	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateFusewood, 1, OreDictionary.WILDCARD_VALUE)); 
         }
+
+        /* Fences */
+        if (PHNatura.enableFences)
+        {
+        	OreDictionary.registerOre("fenceWood", Blocks.fence);
+	        OreDictionary.registerOre("fenceWood", new ItemStack(alternateFence, 1, OreDictionary.WILDCARD_VALUE));
+        }
+
+        /* Cloud, only the normal one */
+    	OreDictionary.registerOre("cloud", new ItemStack(cloud, 1, 0)); /* Chisel */
     }
 
     public void createEntities ()
@@ -1054,21 +1033,6 @@ public class NContent implements IFuelHandler
 		  EntityRegistry.addSpawn(BabyHeatscarSpider.class, PHNatura.babyHeatscarSpawnRarity, 4, 4, EnumCreatureType.monster, nether);
 
         BlockDispenser.dispenseBehaviorRegistry.putObject(spawnEgg, new DispenserBehaviorSpawnEgg());
-    }
-
-    public void modIntegration ()
-    {
-/*        try
-        {
-            Class.forName("tconstruct.TConstruct");
-            PatternBuilder pb = PatternBuilder.instance;
-            pb.registerMaterial(new ItemStack(saguaro), 2, "Cactus");
-        }
-        catch (Exception e)
-        {
-
-        }
-*/
     }
 
     public static Item spawnEgg;
@@ -1168,12 +1132,11 @@ public class NContent implements IFuelHandler
     public static RareSaplingBlock rareSapling;
     public static FlowerBlock bluebells;
 
-    public static Item bowlEmpty;
     public static Item bowlStew;
 
     //Vanilla overrides and alternates
-    public static final String woodTextureNames[] = { "eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "purpleheart", "tiger", "willow", "darkwood",
-            "fusewood" };
+    public static final String woodTextureNames[] = {"eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "purpleheart", "tiger", "willow", "darkwood",
+            "fusewood"};
     public static Block alternateWorkbench;
     public static Block alternateBookshelf;
     public static Block alternateFence;

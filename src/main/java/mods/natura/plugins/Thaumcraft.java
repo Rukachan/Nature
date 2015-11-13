@@ -148,7 +148,6 @@ public class Thaumcraft implements IPluginBase
 
 	for (int i = 0; i < 13; i++)
 	{
-	    ThaumcraftApi.registerObjectTag(new ItemStack(NContent.bowlEmpty, 0, i), bowlEmptyTag);
 	    ThaumcraftApi.registerObjectTag(new ItemStack(NContent.bowlStew, 0, i), bowlStewTag);
 	    ThaumcraftApi.registerObjectTag(new ItemStack(NContent.bowlStew, 0, i + 13), glowStewTag);
 	}

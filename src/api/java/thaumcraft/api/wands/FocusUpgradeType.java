@@ -42,7 +42,7 @@ public class FocusUpgradeType {
 		// allocate space
 		if (id>=types.length) {
 			FocusUpgradeType[] temp = new FocusUpgradeType[id+1];
-			System.arraycopy(types, 0, temp, 0, types.length);
+			System.arraycopy(types, 0, temp, 0, id);
 			types = temp;
 		}
 		

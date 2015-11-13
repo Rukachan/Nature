@@ -74,19 +74,19 @@ public class Natura
 
         PHNatura.initProps(evt.getSuggestedConfigurationFile());
 
-	tab = new CreativeTabs("natura") {
-	  @Override
-	  @SideOnly(Side.CLIENT)
-	  public Item getTabIconItem() {
-	    return new ItemStack(NContent.plantItem, 0, 0).getItem(); /* r-right? */
-	  }
-	};
+        tab = new CreativeTabs("natura") {
+        	@Override
+        	@SideOnly(Side.CLIENT)
+        	public Item getTabIconItem() {
+        		return new ItemStack(NContent.plantItem, 0, 0).getItem(); /* r-right? */
+        	}
+        };
 
         content = new NContent();
         content.preInit();
         content.addOredictSupport();
 
-	PluginManager.preInit(evt);
+        PluginManager.preInit(evt);
     }
 
     public static BaseCropWorldgen crops;
@@ -121,16 +121,15 @@ public class Natura
         OreDictionary.registerOre("cropVine", new ItemStack(NContent.thornVines));
         random.setSeed(2 ^ 16 + 2 ^ 8 + (4 * 3 * 271));
 
-	PluginManager.init(evt);
+        PluginManager.init(evt);
     }
 
     @EventHandler
     public void postInit (FMLPostInitializationEvent evt)
     {
         content.createEntities();
-        content.modIntegration();
 
-	PluginManager.postInit(evt);
+        PluginManager.postInit(evt);
     }
     @SubscribeEvent
     public void bonemealEvent (BonemealEvent event)
