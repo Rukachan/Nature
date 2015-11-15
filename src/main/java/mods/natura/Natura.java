@@ -52,19 +52,21 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import mods.natura.plugins.PluginManager;
 
-@Mod(modid = "Natura", name = "Natura", version = "2.2.0", acceptedMinecraftVersions = "[1.7.10]")
+@Mod(modid = Natura.MODID, name = Natura.NAME, version = Natura.VERSION, acceptedMinecraftVersions = "[1.7.10]")
 public class Natura
 {
     /* Proxies for sides, used for graphics processing */
     @SidedProxy(clientSide = "mods.natura.client.NProxyClient", serverSide = "mods.natura.common.NProxyCommon")
     public static NProxyCommon proxy;
-    public static final String modID = "Natura";
+    public static final String MODID = "Natura";
+    public static final String NAME = "Natura";
+    public static final String VERSION = "2.2.0";
     /* Instance of this mod, used for grabbing prototype fields */
-    @Instance(modID)
+    @Instance(MODID)
     public static Natura instance;
     public static Material cloud = new CloudMaterial();
 
-    public static Logger logger = LogManager.getLogger(modID);
+    public static Logger logger = LogManager.getLogger(MODID);
 
     @EventHandler
     public void preInit (FMLPreInitializationEvent evt)

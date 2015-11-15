@@ -2,10 +2,14 @@ package mods.natura.common;
 
 import mods.natura.blocks.NPressurePlate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import mods.natura.Natura;
+import mods.natura.blocks.BarricadeBlock;
 import mods.natura.blocks.CloudBlock;
 import mods.natura.blocks.GrassBlock;
 import mods.natura.blocks.GrassSlab;
@@ -68,6 +72,7 @@ import mods.natura.items.PlantItem;
 import mods.natura.items.SeedBag;
 import mods.natura.items.SeedFood;
 import mods.natura.items.SpawnEgg;
+import mods.natura.items.blocks.BarricadeItem;
 import mods.natura.items.blocks.BerryBushItem;
 import mods.natura.items.blocks.CloudItem;
 import mods.natura.items.blocks.DarkTreeItem;
@@ -128,7 +133,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class NContent implements IFuelHandler
 {
-
     public void preInit ()
     {
         spawnEgg = new SpawnEgg().setUnlocalizedName("natura.spawnegg");
@@ -242,8 +246,6 @@ public class NContent implements IFuelHandler
         GameRegistry.registerBlock(floraSapling, FloraSaplingItem.class, "florasapling");
         GameRegistry.registerBlock(saguaro, SaguaroItem.class, "Saguaro");
         GameRegistry.registerBlock(willow, WillowItem.class, "willow");
-
-
 
         //Nether
         bloodwood = new LogTwoxTwo(8f, Material.wood).setBlockName("bloodwood");
@@ -531,6 +533,27 @@ public class NContent implements IFuelHandler
         	GameRegistry.registerBlock(fenceGateFusewood, "fenceGate.fusewood");
         }
 
+        /* Barricades */
+        if (PHNatura.enableVanillaBarricades)
+        {
+	        String vanillaWoodNames[] = {"oak", "spruce", "birch", "jungle"};
+	        String vanillaWoodNames2[] = {"acacia", "darkoak"};
+	        vanillaBarricades = initBarricades ("", vanillaWoodNames, Blocks.log);
+	        vanillaBarricades2 = initBarricades ("", vanillaWoodNames2, Blocks.log2);
+        }
+        String nameTree[] = {"eucalyptus", "sakura", "ghostwood", "hopseed"};
+        String nameDark[] = {"darkwood", "fusewood"};
+        String nameRare[] = {"maple", "silverbell", "amaranth", "tiger"};
+        String nameWillow[] = {"willow"};
+
+        if (PHNatura.enableNaturaBarricades)
+        	barricades = ArrayUtils.addAll(initBarricades ("", nameTree, tree), ArrayUtils.addAll(
+        			                       initBarricades ("", nameDark, darkTree), ArrayUtils.addAll(
+        			                       initBarricades ("", nameRare, rareTree),
+        			                       initBarricades ("", nameWillow, willow))));
+        if (PHNatura.enableNaturaPlankBarricades)
+        	plankBarricades = initBarricades ("plank", woodTextureNames, planks);
+
         ArmorMaterial Imp = EnumHelper.addArmorMaterial("Imp", 33, new int[] {1, 3, 2, 1}, 15);
 
         impHelmet = new NaturaArmor(Imp, 1, 0, "imp_helmet", "imp").setUnlocalizedName("natura.armor.imphelmet");
@@ -776,6 +799,25 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.glass_bottle, 3), "# #", " # ", '#', "glass"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.daylight_detector), "GGG", "QQQ", "WWW", 'G', "glass", 'Q', "gemQuartz", 'W', "slabWood"));
+
+        if (PHNatura.enableVanillaBarricades)
+        {
+        	recipeBarricades(vanillaBarricades, Blocks.log);
+        	recipeBarricades(vanillaBarricades2, Blocks.log2);
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(vanillaBarricades[0], 1, 0), "b", "b", 'b', "logWood"));
+        }
+
+        if (PHNatura.enableNaturaBarricades)
+        {
+        	recipeBarricades(ArrayUtils.subarray(barricades, 0, 3), tree);
+        	recipeBarricades(ArrayUtils.subarray(barricades, 4, 5), darkTree);
+        	recipeBarricades(ArrayUtils.subarray(barricades, 6, 9), rareTree);
+        	recipeBarricades(ArrayUtils.subarray(barricades, 10, 10), willow);
+        }
+        /* The stick recipe...
+         * if (PHNatura.enableNaturaPlankBarricades)
+        	recipeBarricades (plankBarricades, planks);
+        	*/
     }
 
     public void addShapedRecipeFirst (List recipeList, ItemStack itemstack, Object... objArray)
@@ -1222,7 +1264,29 @@ public class NContent implements IFuelHandler
     public static Block fenceGateTiger;
     public static Block fenceGateWillow;
     public static Block fenceGateDarkwood;
-    public static Block fenceGateFusewood; 
+    public static Block fenceGateFusewood;
+
+    /* Barricades */
+    public static Block vanillaBarricades[];
+    public static Block vanillaBarricades2[];
+    public static Block barricades[];
+    public static Block plankBarricades[];
+
+    private Block[] initBarricades (String prefix, String name[], Block block)
+    {
+        Block ret[] = new Block[name.length];
+        for (int i = 0; i < name.length; i++)
+        {
+        	ret[i] = new BarricadeBlock(block, i).setBlockName("barricade");
+        	GameRegistry.registerBlock(ret[i], BarricadeItem.class, "barricade." + prefix + "." + name[i]);
+        }
+        return ret;
+    }
+    private void recipeBarricades (Block out[], Block in)
+    {
+    	for (int i = 0; i < out.length; i++)
+    		GameRegistry.addRecipe(new ItemStack(out[i], 1, 0), "b", "b", 'b', new ItemStack(in, 1, i));
+    }
 
     @Override
     public int getBurnTime (ItemStack fuel)

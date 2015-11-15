@@ -32,6 +32,7 @@ public class NProxyClient extends NProxyCommon
         RenderingRegistry.registerBlockHandler(new CropRender());
         RenderingRegistry.registerBlockHandler(new FenceRender());
         RenderingRegistry.registerBlockHandler(new HopperRender());
+        RenderingRegistry.registerBlockHandler(new BarricadeRender());
         FMLCommonHandler.instance().bus().register(new NCropsTickHandler());
 
         RenderingRegistry.registerEntityRenderingHandler(ImpEntity.class, new ImpRender(new ImpModel(), 0f));

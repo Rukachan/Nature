@@ -99,6 +99,9 @@ public class PHNatura
         enablePressurePlates = config.get("Disabler", "Enable Pressureplates", true).getBoolean(true);
         enableFences = config.get("Disabler", "Enable Fences", true).getBoolean(true);
         enableSeedBags = config.get("Disabler", "Enable Seed Bags", true).getBoolean(true);
+        enableVanillaBarricades = config.get("Disabler", "Enable Vanilla Barricades", true).getBoolean(true);
+        enableNaturaBarricades = config.get("Disabler", "Enable Natura Barricades", true).getBoolean(true);
+        enableNaturaPlankBarricades = config.get("Disabler", "Enable Natura Plank Barricades", true).getBoolean(true);
 
         try
         {
@@ -302,6 +305,9 @@ public class PHNatura
 	public static boolean enableButtons;
 	public static boolean enablePressurePlates;
 	public static boolean enableFences;
+	public static boolean enableVanillaBarricades;
+	public static boolean enableNaturaBarricades;
+	public static boolean enableNaturaPlankBarricades;
 
     //Items
     public static boolean enableSeedBags;
