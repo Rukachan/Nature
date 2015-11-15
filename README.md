@@ -14,6 +14,7 @@ Changes from the original:
 * Removed stuff considered bloated and annoying (eg the sticks, bowls, tools, etc)
 * Merged all the creative tabs into one
 * Other bug fixes
+* Added barricades for planks and logs (can be disabled in the config)
 
 Most code is public domain under [Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/)
 
