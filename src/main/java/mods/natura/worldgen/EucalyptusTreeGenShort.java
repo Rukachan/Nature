@@ -19,11 +19,11 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         mdLeaves = leavesMetadata;
     }
 
+    @Override
     public boolean generate (World world, Random random, int x, int y, int z)
     {
         int height = findGround(world, x, y, z);
-        generateRandomTree(world, random, x, height, z);
-        return true;
+        return generateRandomTree(world, random, x, height, z);
     }
 
     int findGround (World world, int x, int y, int z)
@@ -31,16 +31,12 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         int l = 0;
         Block i1 = world.getBlock(x, y - 1, z);
         if (!world.getBlock(x, y, z).func_149730_j() && (i1 == Blocks.grass || i1 == Blocks.dirt))
-        {
             return y;
-        }
         int k1 = 96;
         do
         {
             if (k1 < 32)
-            {
                 break;
-            }
             Block j1 = world.getBlock(x, k1, z);
             if ((j1 == Blocks.grass || j1 == Blocks.dirt) && !world.getBlock(x, k1 + 1, z).func_149730_j())
             {
@@ -100,14 +96,10 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         }
 
         if (!flag)
-        {
             return false;
-        }
         Block j1 = world.getBlock(posX, posY - 1, posZ);
         if (j1 != Blocks.grass && j1 != Blocks.dirt || posY >= 256 - height - 1)
-        {
             return false;
-        }
         world.setBlock(posX, posY - 1, posZ, Blocks.dirt);
         world.setBlock(posX, posY, posZ, Blocks.air);
         Block test = world.getBlock(posX, posY, posZ);
@@ -120,9 +112,7 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         {
             Block i2 = world.getBlock(posX, posY + k1, posZ);
             if (i2 == Blocks.air || i2 == NContent.floraLeaves || i2 == NContent.floraSapling)
-            {
                 this.setBlockAndNotifyAdequately(world, posX, posY + k1, posZ, NContent.tree, mdWood);
-            }
         }
 
         genBranch(world, random, posX, posY, posZ, height, 1);
@@ -170,13 +160,9 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         for (int bIter = 4; bIter > 0; bIter--)
         {
             if (heightShift % 3 != 0)
-            {
                 posX += byte0;
-            }
             if (heightShift % 3 != 1)
-            {
                 posZ += byte1;
-            }
             int branch = heightShift % 3;
             posY += branch;
             if (branch == 2)
@@ -241,45 +227,31 @@ public class EucalyptusTreeGenShort extends WorldGenerator
         }
     }
 
-    public boolean generateNode (World world, Random random, int x, int y, int z)
+    public void generateNode (World world, Random random, int x, int y, int z)
     {
         this.setBlockAndNotifyAdequately(world, x, y, z, NContent.tree, mdWood);
         for (int xIter = x - 2; xIter <= x + 2; xIter++)
-        {
             for (int zIter = z - 1; zIter <= z + 1; zIter++)
             {
                 Block bID = world.getBlock(xIter, y, zIter);
                 if (bID != NContent.floraLeaves && !bID.func_149730_j())
-                {
                     this.setBlockAndNotifyAdequately(world, xIter, y, zIter, NContent.floraLeaves, mdLeaves);
-                }
             }
-        }
 
         for (int xIter = x - 1; xIter <= x + 1; xIter++)
-        {
             for (int zIter = z - 2; zIter <= z + 2; zIter++)
             {
                 Block bID = world.getBlock(xIter, y, zIter);
                 if (bID != NContent.floraLeaves && !bID.func_149730_j())
-                {
                     this.setBlockAndNotifyAdequately(world, xIter, y, zIter, NContent.floraLeaves, mdLeaves);
-                }
             }
-        }
 
         for (int xIter = x - 1; xIter <= x + 1; xIter++)
-        {
             for (int zIter = z - 1; zIter <= z + 1; zIter++)
             {
                 Block bID = world.getBlock(xIter, y + 1, zIter);
                 if (bID != NContent.floraLeaves && !bID.func_149730_j())
-                {
                     this.setBlockAndNotifyAdequately(world, xIter, y + 1, zIter, NContent.floraLeaves, mdLeaves);
-                }
             }
-        }
-
-        return true;
     }
 }

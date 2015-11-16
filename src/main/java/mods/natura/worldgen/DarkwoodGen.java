@@ -89,22 +89,16 @@ public class DarkwoodGen extends WorldGenerator
 
                             if (block != Blocks.air && !block.isLeaves(world, l1, i1, j1) && block != Blocks.netherrack && block != Blocks.soul_sand && block != NContent.taintedSoil
                                     && !block.isWood(world, l1, i1, j1))
-                            {
                                 flag = false;
-                            }
                         }
                         else
-                        {
                             flag = false;
-                        }
                     }
                 }
             }
 
             if (!flag)
-            {
                 return false;
-            }
             else
             {
                 Block soil = world.getBlock(xPos, yPos - 1, zPos);
@@ -137,9 +131,7 @@ public class DarkwoodGen extends WorldGenerator
                                     Block block = world.getBlock(j2, j1, l2);
 
                                     if (block == null || block.canBeReplacedByLeaves(world, j2, j1, l2))
-                                    {
                                         this.setBlockAndNotifyAdequately(world, j2, j1, l2, NContent.darkLeaves, random.nextInt(25) == 0 ? 2 : random.nextInt(15) == 0 ? 1 : 0);
-                                    }
                                 }
                             }
                         }
@@ -150,23 +142,16 @@ public class DarkwoodGen extends WorldGenerator
                         Block block = world.getBlock(xPos, yPos + j1, zPos);
 
                         if (block == Blocks.air || block == null || block.isLeaves(world, xPos, yPos + j1, zPos))
-                        {
                             this.setBlockAndNotifyAdequately(world, xPos, yPos + j1, zPos, NContent.darkTree, this.metaWood);
-
-                        }
                     }
 
                     return true;
                 }
                 else
-                {
                     return false;
-                }
             }
         }
         else
-        {
             return false;
-        }
     }
 }

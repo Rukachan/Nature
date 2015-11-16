@@ -184,9 +184,7 @@ public class BushTreeGen extends WorldGenerator
                     if ((var12 >= 0 || var14 >= 0 || var12 * var12 + var14 * var14 <= var10 * var10) && (var12 <= 0 && var14 <= 0 || var12 * var12 + var14 * var14 <= (var10 + 1) * (var10 + 1))
                             && (par6Random.nextInt(4) != 0 || var12 * var12 + var14 * var14 <= (var10 - 1) * (var10 - 1))
                             && (block == null || block.canBeReplacedByLeaves(par1World, var11, var8, var13)))
-                    {
                         this.setBlockAndNotifyAdequately(par1World, var11, var8, var13, NContent.floraLeaves, this.leavesMetadata);
-                    }
                 }
             }
         }

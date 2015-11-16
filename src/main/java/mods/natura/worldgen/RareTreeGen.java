@@ -119,9 +119,7 @@ public class RareTreeGen extends WorldGenerator
                         Block block = world.getBlock(x, y, z);
 
                         if (block == null || block.canBeReplacedByLeaves(world, x, y, z))
-                        {
                             this.setBlockAndNotifyAdequately(world, x, y, z, NContent.rareLeaves, this.metaLeaves);
-                        }
                     }
                 }
             }
@@ -135,9 +133,7 @@ public class RareTreeGen extends WorldGenerator
             Block block = world.getBlock(xPos, yPos + localHeight, zPos);
 
             if (block == Blocks.air || block == null || block.isLeaves(world, xPos, yPos + localHeight, zPos))
-            {
                 this.setBlockAndNotifyAdequately(world, xPos, yPos + localHeight, zPos, NContent.rareTree, this.metaWood);
-            }
         }
     }
 

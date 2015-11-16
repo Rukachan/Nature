@@ -128,13 +128,9 @@ public class BloodTreeLargeGen extends WorldGenerator
         for (int j2 = 4; j2 > 0; j2--)
         {
             if (i2 % 3 != 0)
-            {
                 xPos += offsetX;
-            }
             if (i2 % 3 != 1)
-            {
                 zPos += offsetZ;
-            }
             yPos += i2 % 3 - 1;
             generateNode(world, random, xPos, yPos, zPos);
             i2 = random.nextInt(15);
@@ -189,48 +185,32 @@ public class BloodTreeLargeGen extends WorldGenerator
         }
     }
 
-    public boolean generateNode (World world, Random random, int x, int y, int z)
+    public void generateNode (World world, Random random, int x, int y, int z)
     {
         setBlockAndNotifyAdequately(world, x, y, z, NContent.bloodwood, 15);
         for (int l = x - 1; l <= x + 1; l++)
-        {
             for (int k1 = z - 1; k1 <= z + 1; k1++)
-            {
                 for (int j2 = y - 1; j2 <= y + 1; j2++)
                 {
                     Block i3 = world.getBlock(l, j2, k1);
                     if (i3 != NContent.floraLeaves && !i3.func_149730_j())
-                    {
                         setBlockAndNotifyAdequately(world, l, j2, k1, NContent.floraLeavesNoColor, mdLeaves);
-                    }
                 }
-            }
-        }
 
         for (int i1 = x - 1; i1 <= x + 1; i1++)
-        {
             for (int l1 = z - 2; l1 <= z + 2; l1++)
             {
                 Block k2 = world.getBlock(i1, y, l1);
                 if (k2 != NContent.floraLeaves && !k2.func_149730_j())
-                {
                     setBlockAndNotifyAdequately(world, i1, y, l1, NContent.floraLeavesNoColor, mdLeaves);
-                }
             }
-        }
 
         for (int j1 = x - 2; j1 <= x + 2; j1++)
-        {
             for (int i2 = z - 1; i2 <= z + 1; i2++)
             {
                 Block l2 = world.getBlock(j1, y + 1, i2);
                 if (l2 != NContent.floraLeaves && !l2.func_149730_j())
-                {
                     setBlockAndNotifyAdequately(world, j1, y, i2, NContent.floraLeavesNoColor, mdLeaves);
-                }
             }
-        }
-
-        return true;
     }
 }
