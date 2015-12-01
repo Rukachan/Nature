@@ -170,7 +170,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                                 if (lValue > 0.0D)
                                     blockID = Blocks.netherrack;
 
-                                if (lValue > 56.0D)
+                                if (lValue > 56.0D && PHNatura.generateTaintedSoil)
                                     blockID = NContent.taintedSoil;
 
                                 lowerIDs[layerPos] = blockID;
@@ -211,7 +211,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                 int i1 = (int) (this.netherrackExclusivityNoise[iterX + iterZ * 16] / 3.0D + 3.0D + this.hellRNG.nextDouble() * 0.25D);
                 int j1 = -1;
                 Block b1 = Blocks.netherrack;
-                Block b2 = NContent.taintedSoil;
+                Block b2 = PHNatura.generateTaintedSoil ? NContent.taintedSoil : Blocks.netherrack;
 
                 for (int k1 = 127; k1 >= 0; --k1)
                 {
@@ -235,19 +235,18 @@ public class NetheriteChunkProvider implements IChunkProvider
                                 else if (k1 >= seaLevel - 4 && k1 <= seaLevel + 1)
                                 {
                                     b1 = Blocks.netherrack;
-                                    b2 = NContent.taintedSoil;
+                                    b2 = PHNatura.generateTaintedSoil ? NContent.taintedSoil : Blocks.netherrack;
 
                                     if (flag1)
+                                    {
                                         b1 = Blocks.gravel;
-
-                                    if (flag1)
                                         b2 = Blocks.netherrack;
-
-                                    if (flag)
+                                    }
+                                    else if (flag)
+                                    {
                                         b1 = Blocks.soul_sand;
-
-                                    if (flag)
                                         b2 = NContent.heatSand;
+                                    }
                                 }
 
                                 if (k1 < seaLevel && b1 == null || b1 == Blocks.air)

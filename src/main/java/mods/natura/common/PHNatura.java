@@ -85,6 +85,9 @@ public class PHNatura
         generatePurpleglowshroom = config.get("Disabler", "Generate Purple Glowshroom", true).getBoolean(true);
         generateBlueglowshroom = config.get("Disabler", "Generate Blue Glowshroom", true).getBoolean(true);
         generateGlowshroomtree = config.get("Disabler", "Generate Glowshroom Trees", true).getBoolean(true);
+
+        generateTaintedSoil = config.get("Disabler", "Generate Tainted Soil", true).getBoolean(true);
+
         dropCotton = config.get("Disabler", "Drop cotton seeds from grass", false).getBoolean(false);
         dropBarley = config.get("Disabler", "Drop barley seeds from grass", false).getBoolean(false);
 
@@ -255,6 +258,8 @@ public class PHNatura
     public static boolean generateDarkwood;
     public static boolean generateFusewood;
     public static boolean generateGlowshroomtree;
+
+    public static boolean generateTaintedSoil;
 
     public static boolean generateThornvines;
 
