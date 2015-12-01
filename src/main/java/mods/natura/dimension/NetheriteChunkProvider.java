@@ -245,7 +245,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                                     else if (flag)
                                     {
                                         b1 = Blocks.soul_sand;
-                                        b2 = NContent.heatSand;
+                                        b2 = PHNatura.generateHeatSand ? NContent.heatSand : Blocks.netherrack;
                                     }
                                 }
 

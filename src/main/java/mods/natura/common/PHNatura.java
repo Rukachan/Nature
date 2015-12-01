@@ -87,6 +87,7 @@ public class PHNatura
         generateGlowshroomtree = config.get("Disabler", "Generate Glowshroom Trees", true).getBoolean(true);
 
         generateTaintedSoil = config.get("Disabler", "Generate Tainted Soil", true).getBoolean(true);
+        generateHeatSand = config.get("Disabler", "Generate Heat Sand", true).getBoolean(true);
 
         dropCotton = config.get("Disabler", "Drop cotton seeds from grass", false).getBoolean(false);
         dropBarley = config.get("Disabler", "Drop barley seeds from grass", false).getBoolean(false);
@@ -260,6 +261,7 @@ public class PHNatura
     public static boolean generateGlowshroomtree;
 
     public static boolean generateTaintedSoil;
+    public static boolean generateHeatSand;
 
     public static boolean generateThornvines;
 

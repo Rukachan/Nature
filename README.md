@@ -15,6 +15,7 @@ Changes from the original:
 * Merged all the creative tabs into one
 * Other bug fixes
 * Added barricades for planks and logs (can be disabled in the config)
+* Added the ability to disable the generation of tainted soil and heat sand
 
 Most code is public domain under [Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/)
 
