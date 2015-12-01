@@ -814,10 +814,10 @@ public class NContent implements IFuelHandler
         	recipeBarricades(ArrayUtils.subarray(barricades, 6, 9), rareTree);
         	recipeBarricades(ArrayUtils.subarray(barricades, 10, 10), willow);
         }
-        /* The stick recipe...
-         * if (PHNatura.enableNaturaPlankBarricades)
-        	recipeBarricades (plankBarricades, planks);
-        	*/
+
+        if (PHNatura.enableNaturaPlankBarricades)
+        	for (int i = 0; i < plankBarricades.length; i++)
+        		GameRegistry.addRecipe(new ShapedOreRecipe (new ItemStack(plankBarricades[i], 4, 0), "a", "b", 'a', "barricadeLogWood", 'b', new ItemStack(planks, 1, i)));
     }
 
     public void addShapedRecipeFirst (List recipeList, ItemStack itemstack, Object... objArray)
@@ -1051,6 +1051,11 @@ public class NContent implements IFuelHandler
         	OreDictionary.registerOre("fenceWood", Blocks.fence);
 	        OreDictionary.registerOre("fenceWood", new ItemStack(alternateFence, 1, OreDictionary.WILDCARD_VALUE));
         }
+
+        /* Barricades */
+        if (PHNatura.enableNaturaBarricades)
+        	for (Block barricade : barricades)
+        	OreDictionary.registerOre("barricadeLogWood", barricade);
 
         /* Cloud, only the normal one */
     	OreDictionary.registerOre("cloud", new ItemStack(cloud, 1, 0)); /* Chisel */

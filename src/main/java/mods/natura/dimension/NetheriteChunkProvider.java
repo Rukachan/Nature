@@ -165,19 +165,13 @@ public class NetheriteChunkProvider implements IChunkProvider
                                 Block blockID = Blocks.air;
 
                                 if (iterY * 8 + offsetY < b1)
-                                {
                                     blockID = Blocks.lava;
-                                }
 
                                 if (lValue > 0.0D)
-                                {
                                     blockID = Blocks.netherrack;
-                                }
 
                                 if (lValue > 56.0D)
-                                {
                                     blockID = NContent.taintedSoil;
-                                }
 
                                 lowerIDs[layerPos] = blockID;
                                 layerPos += amountPerLayer;
@@ -228,9 +222,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                         Block b3 = lowerIDs[l1];
 
                         if (b3 == null || b3 == Blocks.air)
-                        {
                             j1 = -1;
-                        }
                         else if (b3 == Blocks.netherrack)
                         {
                             if (j1 == -1)
@@ -246,41 +238,27 @@ public class NetheriteChunkProvider implements IChunkProvider
                                     b2 = NContent.taintedSoil;
 
                                     if (flag1)
-                                    {
                                         b1 = Blocks.gravel;
-                                    }
 
                                     if (flag1)
-                                    {
                                         b2 = Blocks.netherrack;
-                                    }
 
                                     if (flag)
-                                    {
                                         b1 = Blocks.soul_sand;
-                                    }
 
                                     if (flag)
-                                    {
                                         b2 = NContent.heatSand;
-                                    }
                                 }
 
                                 if (k1 < seaLevel && b1 == null || b1 == Blocks.air)
-                                {
                                     b1 = Blocks.lava;
-                                }
 
                                 j1 = i1;
 
                                 if (k1 >= seaLevel - 1)
-                                {
                                     lowerIDs[l1] = b1;
-                                }
                                 else
-                                {
                                     lowerIDs[l1] = b2;
-                                }
                             }
                             else if (j1 > 0)
                             {
@@ -290,9 +268,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                         }
                     }
                     else
-                    {
                         lowerIDs[l1] = Blocks.bedrock;
-                    }
                 }
             }
         }
@@ -347,9 +323,7 @@ public class NetheriteChunkProvider implements IChunkProvider
         if (event.getResult() == Result.DENY)
             return event.noisefield;
         if (par1ArrayOfDouble == null)
-        {
             par1ArrayOfDouble = new double[par5 * par6 * par7];
-        }
 
         double d0 = 684.412D;
         double d1 = 2053.236D;
@@ -369,9 +343,7 @@ public class NetheriteChunkProvider implements IChunkProvider
             double d2 = i2;
 
             if (i2 > par6 / 2)
-            {
                 d2 = par6 - 1 - i2;
-            }
 
             if (d2 < 4.0D)
             {
@@ -395,9 +367,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                 double d5 = this.noiseData5[l1] / 8000.0D;
 
                 if (d5 < 0.0D)
-                {
                     d5 = -d5;
-                }
 
                 d5 = d5 * 3.0D - 3.0D;
 
@@ -406,9 +376,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                     d5 /= 2.0D;
 
                     if (d5 < -1.0D)
-                    {
                         d5 = -1.0D;
-                    }
 
                     d5 /= 1.4D;
                     d5 /= 2.0D;
@@ -417,9 +385,7 @@ public class NetheriteChunkProvider implements IChunkProvider
                 else
                 {
                     if (d5 > 1.0D)
-                    {
                         d5 = 1.0D;
-                    }
 
                     d5 /= 6.0D;
                 }
@@ -437,17 +403,11 @@ public class NetheriteChunkProvider implements IChunkProvider
                     double d10 = (this.noiseData1[k1] / 10.0D + 1.0D) / 2.0D;
 
                     if (d10 < 0.0D)
-                    {
                         d6 = d8;
-                    }
                     else if (d10 > 1.0D)
-                    {
                         d6 = d9;
-                    }
                     else
-                    {
                         d6 = d8 + (d9 - d8) * d10;
-                    }
 
                     d6 -= d7;
                     double d11;
@@ -463,14 +423,10 @@ public class NetheriteChunkProvider implements IChunkProvider
                         d11 = (d4 - k2) / 4.0D;
 
                         if (d11 < 0.0D)
-                        {
                             d11 = 0.0D;
-                        }
 
                         if (d11 > 1.0D)
-                        {
                             d11 = 1.0D;
-                        }
 
                         d6 = d6 * (1.0D - d11) + -10.0D * d11;
                     }
