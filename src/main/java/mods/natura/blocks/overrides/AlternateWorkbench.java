@@ -4,7 +4,10 @@ import java.util.List;
 
 import mods.natura.Natura;
 import mods.natura.common.NContent;
+import mods.natura.common.NReg;
+import mods.natura.common.PHNatura;
 import mods.natura.gui.NGuiHandler;
+import mods.natura.items.blocks.NAlternateItem;
 import net.minecraft.block.BlockWorkbench;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,10 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class AlternateWorkbench extends BlockWorkbench
+public class AlternateWorkbench extends BlockWorkbench implements NReg
 {
     IIcon[] topIcons;
     IIcon[] sideIcons;
@@ -91,4 +96,21 @@ public class AlternateWorkbench extends BlockWorkbench
             return true;
         }
     }
+
+	@Override
+	public void reg() {
+	    GameRegistry.registerBlock(this, NAlternateItem.class, "Natura.workbench");
+	}
+
+	@Override
+	public void regRecipe() {
+	    for (int i = 0; i < NContent.woodTextureNames.length; i++)
+	    	GameRegistry.addRecipe(new ItemStack(this, 1, i), "##", "##", '#', new ItemStack(NContent.planks, 1, i));
+	}
+
+	@Override
+	public void regOredict() {
+    	OreDictionary.registerOre("crafterWood", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
+    	OreDictionary.registerOre("craftingTableWood", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
+	}
 }

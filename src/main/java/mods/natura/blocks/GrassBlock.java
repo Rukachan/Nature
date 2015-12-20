@@ -18,13 +18,11 @@ import net.minecraft.world.biome.BiomeGenBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class GrassBlock extends Block
+public class GrassBlock extends NBlock
 {
     public GrassBlock()
     {
-        super(Material.grass);
-        setHardness(0.6F);
-        this.setCreativeTab(Natura.tab);
+        super(Material.grass, 0.6f, null, -1, -1, 3);
     }
 
     @Override
@@ -42,37 +40,21 @@ public class GrassBlock extends Block
     }
 
     @Override
-    public void getSubBlocks (Item id, CreativeTabs tab, List list)
-    {
-        for (int iter = 0; iter < 3; iter++)
-        {
-            list.add(new ItemStack(id, 1, iter));
-        }
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor ()
     {
-        double d0 = 0.5D;
-        double d1 = 1.0D;
-        return ColorizerGrass.getGrassColor(d0, d1);
+        return ColorizerGrass.getGrassColor(0.5D, 1.0D);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor (int meta)
     {
-        /*if (par1 % 8 == 0)
-            return this.getBlockColor();
-        return 0xFFFFFF;*/
-        double d0 = 0.5D;
-        double d1 = 1.0D;
-        if (meta == 1)
-            return GrassColorizerAlternate.getBlueGrassColor(d0, 0.5D);
-        if (meta == 2)
-            return GrassColorizerAlternate.getOrangeGrassColor(1.0D, 1.0D);
-        return ColorizerGrass.getGrassColor(d0, d1);
+        return meta == 1 ?
+        		GrassColorizerAlternate.getBlueGrassColor(0.5D, 0.5D)
+        		: meta == 2 ?
+        				GrassColorizerAlternate.getOrangeGrassColor(1.0D, 1.0D)
+        				: ColorizerGrass.getGrassColor(0.5D, 1.0D);
     }
 
     @Override
@@ -85,32 +67,27 @@ public class GrassBlock extends Block
         int meta = world.getBlockMetadata(x, y, z);
 
         for (int k1 = -1; k1 <= 1; ++k1)
-        {
             for (int l1 = -1; l1 <= 1; ++l1)
             {
                 BiomeGenBase biome = world.getBiomeGenForCoords(x + l1, z + k1);
                 int grassColor = 0;
-                if (meta == 1)
+                if (meta == 1 || meta == 2)
                 {
                     double temp = MathHelper.clamp_float(biome.getFloatTemperature(x, y, z), 0.0F, 1.0F);
                     double rainfall = MathHelper.clamp_float(biome.getFloatRainfall(), 0.0F, 1.0F);
-                    grassColor = GrassColorizerAlternate.getBlueGrassColor(temp, rainfall);
-                }
-                else if (meta == 2)
-                {
-                    double temp = MathHelper.clamp_float(biome.getFloatTemperature(x, y, z), 0.0F, 1.0F);
-                    double rainfall = MathHelper.clamp_float(biome.getFloatRainfall(), 0.0F, 1.0F);
-                    grassColor = GrassColorizerAlternate.getOrangeGrassColor(temp, rainfall);
+                    grassColor = meta == 1 ? GrassColorizerAlternate.getBlueGrassColor(temp, rainfall) : GrassColorizerAlternate.getOrangeGrassColor(temp, rainfall);
                 }
                 else
-                {
                     grassColor = biome.getBiomeGrassColor(x, y, z);
-                }
                 l += (grassColor & 16711680) >> 16;
                 i1 += (grassColor & 65280) >> 8;
                 j1 += grassColor & 255;
             }
-        }
         return (l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255;
     }
+
+	@Override
+	public void reg() {
+		// TODO Auto-generated method stub
+	}
 }

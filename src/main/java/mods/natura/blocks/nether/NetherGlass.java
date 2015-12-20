@@ -3,6 +3,7 @@ package mods.natura.blocks.nether;
 import java.util.List;
 import java.util.Random;
 
+import mods.natura.blocks.NBlock;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,11 +22,14 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class NetherGlass extends Block
+public class NetherGlass extends NBlock
 {
+    @SideOnly(Side.CLIENT)
+    public IIcon[] icons;
+
     public NetherGlass()
     {
-        super(Material.glass);
+        super(Material.glass, 0.3f, new String[] {"glass_soul", "glass_heat", "glass_soul_item", "glass_heat_item"}, 2);
     }
 
     @Override
@@ -53,17 +57,11 @@ public class NetherGlass extends Block
     }
 
     @Override
-    public int damageDropped (int metadata)
-    {
-        return metadata;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered (IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered (IBlockAccess par1, int par2, int par3, int par4, int par5)
     {
-        Block i1 = par1IBlockAccess.getBlock(par2, par3, par4);
-        return i1 == this ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
+        Block i1 = par1.getBlock(par2, par3, par4);
+        return i1 == this ? false : super.shouldSideBeRendered(par1, par2, par3, par4, par5);
     }
 
     @Override
@@ -73,53 +71,35 @@ public class NetherGlass extends Block
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
-    public IIcon[] icons;
-
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons (IIconRegister par1IconRegister)
+    public void registerBlockIcons (IIconRegister iconRegister)
     {
-        icons = new IIcon[4];
-        icons[0] = par1IconRegister.registerIcon("natura:glass_soul");
-        icons[1] = par1IconRegister.registerIcon("natura:glass_heat");
-        icons[2] = par1IconRegister.registerIcon("natura:glass_soul_item");
-        icons[3] = par1IconRegister.registerIcon("natura:glass_heat_item");
+        icons = new IIcon[] {iconRegister.registerIcon("natura:glass_soul"),
+        					 iconRegister.registerIcon("natura:glass_heat"),
+        					 iconRegister.registerIcon("natura:glass_soul_item"),
+        					 iconRegister.registerIcon("natura:glass_heat_item")};
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side)
     {
-        int meta = world.getBlockMetadata(x, y, z);
-        if (meta < 1)
-            return icons[0];
-        return icons[1];
+        return icons[world.getBlockMetadata(x, y, z) < 1 ? 0 : 1];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
-        if (meta < 1)
-            return icons[2];
-        return icons[3];
+        return icons[meta < 1 ? 2 : 3];
     }
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
         int meta = world.getBlockMetadata(x, y, z);
-        if (meta == 0)
-        {
-            return null;
-        }
-        else if (meta == 1)
-        {
-            float f = 0.125F;
-            return AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1 - f, z + 1);
-        }
-        return super.getCollisionBoundingBoxFromPool(world, x, y, z);
+        return meta == 0 ? null : meta == 1 ? AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1 - 0.125F, z + 1) : super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
@@ -129,23 +109,14 @@ public class NetherGlass extends Block
         {
             int meta = world.getBlockMetadata(x, y, z);
             if (meta == 0)
-            {
                 ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 20, 1));
-            }
             else if (meta == 1)
-            {
                 NContent.heatSand.onEntityCollidedWithBlock(world, x, y, z, entity);
-            }
         }
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (int var4 = 0; var4 < 2; ++var4)
-        {
-            par3List.add(new ItemStack(par1, 1, var4));
-        }
-    }
+	@Override
+	public void reg() {
+		// TODO Auto-generated method stub
+	}
 }

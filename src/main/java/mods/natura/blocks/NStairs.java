@@ -1,10 +1,15 @@
 package mods.natura.blocks;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import mods.natura.Natura;
+import mods.natura.common.NContent;
+import mods.natura.common.NReg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class NStairs extends BlockStairs
+public class NStairs extends BlockStairs implements NReg
 {
     public NStairs(Block par2Block, int par3, String name)
     {
@@ -14,4 +19,21 @@ public class NStairs extends BlockStairs
         this.setLightOpacity(0);
         this.setBlockName("stair." + name);
     }
+
+	@Override
+	public void reg() {
+		GameRegistry.registerBlock(this, "stair." + this.getUnlocalizedName());
+	}
+
+	@Override
+	public void regRecipe() {
+    	GameRegistry.addRecipe(new ItemStack(this, 4, 0), "#  ", "## ", "###", '#', new ItemStack(NContent.planks, 1, i++));
+	}
+
+	@Override
+	public void regOredict() {
+		OreDictionary.registerOre("stairWood", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
+	}
+
+	static int i = 0;
 }

@@ -1,43 +1,27 @@
 package mods.natura.blocks;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import mods.natura.Natura;
 import mods.natura.client.BarricadeRender;
+import mods.natura.items.blocks.BarricadeItem;
 
-public class BarricadeBlock extends Block
+public class BarricadeBlock extends NBlock
 {
-    Block modelBlock;
-    int modelMeta;
-
-    public BarricadeBlock(Block model, int meta)
-    {
-        super(Material.wood);
-        this.modelBlock = model;
-        this.modelMeta = meta;
-        setHardness(4.0F);
-        this.setCreativeTab(Natura.tab);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon (int side, int meta)
-    {
-        return modelBlock.getIcon(2, modelMeta);
-    }
-
-    @Override
-    public void registerBlockIcons (IIconRegister par1IconRegister)
-    {
-
-    }
+	public BarricadeBlock(Block model, int meta)
+	{
+		super(Material.wood, 4.0F, model, meta, 2, 1);
+		this.setBlockName("barricade");
+	}
 
     @Override
     public boolean renderAsNormalBlock ()
@@ -73,21 +57,15 @@ public class BarricadeBlock extends Block
     public void harvestBlock (World world, EntityPlayer player, int x, int y, int z, int meta)
     {
         if (meta % 4 > 0)
-        {
             world.setBlock(x, y, z, this, meta - 1, 3);
-            dropBlockAsItem(world, x, y, z, new ItemStack(this));
-        }
-        else
-        {
-            dropBlockAsItem(world, x, y, z, new ItemStack(this));
-        }
+        dropBlockAsItem(world, x, y, z, new ItemStack(this));
     }
 
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
         ItemStack stack = player.getCurrentEquippedItem();
-        if ((stack != null) && (stack.getItem() == Item.getItemFromBlock(this)) && (!player.isSneaking()))
+        if (stack != null && stack.getItem() == Item.getItemFromBlock(this) && !player.isSneaking())
         {
             int meta = world.getBlockMetadata(x, y, z);
             if (meta % 4 != 3)
@@ -111,12 +89,10 @@ public class BarricadeBlock extends Block
     @Override
     public void onBlockExploded (World world, int x, int y, int z, Explosion explosion)
     {
-        double distance = (x - explosion.explosionX) + (y - explosion.explosionY) + (z - explosion.explosionZ);
-        distance = Math.abs(distance);
-        double power = (explosion.explosionSize * 2) / distance;
+        double distance = Math.abs (x - explosion.explosionX + y - explosion.explosionY + z - explosion.explosionZ);
+        double power = explosion.explosionSize * 2 / distance;
         int meta = world.getBlockMetadata(x, y, z);
-        int trueMeta = meta % 4;
-        trueMeta -= power;
+        int trueMeta = meta % 4 - (int)power;
         if (trueMeta < 0)
             world.setBlock(x, y, z, Blocks.air, 0, 0);
         else
@@ -130,4 +106,28 @@ public class BarricadeBlock extends Block
     {
         return true;
     }
+
+	@Override
+	public void reg()
+	{
+		GameRegistry.registerBlock(this, BarricadeItem.class, "barricade." + i++);
+	}
+
+	@Override
+	public void regRecipe()
+	{
+		if (this.block != null)
+			GameRegistry.addRecipe(new ItemStack(this, 4), "b", 'b', new ItemStack(this.block, 1));
+		else
+			GameRegistry.addRecipe(new ItemStack(this, 1), "b", "b", 'b', new ItemStack(this.modelBlock, 1, this.meta));
+	}
+
+	public BarricadeBlock setRecipeArg(Block block)
+	{
+		this.block = block;
+		return this;
+	}
+
+	Block block = null;
+	static int i = 0;
 }

@@ -3,6 +3,7 @@ package mods.natura.blocks;
 import java.util.List;
 
 import mods.natura.Natura;
+import mods.natura.items.blocks.PlankSlabItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,30 +15,19 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class NSlabBase extends Block
+public class NSlabBase extends NBlock
 {
-    Block modelBlock;
     int startingMeta;
-    int totalSize;
 
-    public NSlabBase(Material material, String name)
+    public NSlabBase(Material material, float hardness, Block model, int meta, int totalSize)
     {
-        super(material);
-        this.setCreativeTab(Natura.tab);
-        this.setBlockName(name);
-    }
-
-    public NSlabBase(Material material, Block model, int meta, int totalSize, String name)
-    {
-        super(material);
-        this.setCreativeTab(Natura.tab);
-        this.modelBlock = model;
+        super(material, hardness, model, -1, -1, totalSize);
         this.startingMeta = meta;
-        this.totalSize = totalSize;
-        this.setBlockName(name);
+        this.stepSound = Block.soundTypeWood;
     }
 
     @Override
@@ -65,12 +55,7 @@ public class NSlabBase extends Block
     @Override
     public int onBlockPlaced (World par1World, int blockX, int blockY, int blockZ, int side, float clickX, float clickY, float clickZ, int metadata)
     {
-        if (side == 1)
-            return metadata;
-        if (side == 0 || clickY >= 0.5F)
-            return metadata | 8;
-
-        return metadata;
+        return side == 0 || clickY >= 0.5F && side != 1 ? metadata | 8 : metadata;
     }
 
     @Override
@@ -87,25 +72,9 @@ public class NSlabBase extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons (IIconRegister iconRegister)
-    {
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta)
     {
-        meta = meta % 8 + startingMeta;
-        return modelBlock.getIcon(side, meta);
-    }
-
-    @Override
-    public void getSubBlocks (Item id, CreativeTabs tab, List list)
-    {
-        for (int iter = 0; iter < totalSize; iter++)
-        {
-            list.add(new ItemStack(id, 1, iter));
-        }
+        return this.modelBlock.getIcon(side, meta % 8 + startingMeta);
     }
 
     @Override
@@ -113,4 +82,11 @@ public class NSlabBase extends Block
     {
         return meta % 8;
     }
+
+	@Override
+	public void reg() {
+        GameRegistry.registerBlock(this, PlankSlabItem.class, "plankSlab" + i++);
+	}
+
+	static int i = 0;
 }

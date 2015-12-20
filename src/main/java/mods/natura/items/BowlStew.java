@@ -20,9 +20,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BowlStew extends ItemFood
 {
-    IIcon[] icons;
-    public static String[] textureNames = new String[] { "mushroom", "glowshroom" };
-
     public BowlStew()
     {
         super(6, 0.6f, false);
@@ -38,19 +35,14 @@ public class BowlStew extends ItemFood
     @Override
     public IIcon getIcon (ItemStack stack, int renderPass)
     {
-    	return renderPass == 0 ? Items.bowl.getIconFromDamage(0) : icons[stack.getItemDamage() / 14];
+    	return renderPass == 0 ? Items.bowl.getIconFromDamage(0) : this.itemIcon;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons (IIconRegister iconRegister)
     {
-        this.icons = new IIcon[textureNames.length];
-        for (int i = 0; i < BowlStew.textureNames.length; ++i)
-        {
-            if (!textureNames[i].equals(""))
-                this.icons[i] = iconRegister.registerIcon("natura:stew_" + textureNames[i]);
-        }
+    	this.itemIcon = iconRegister.registerIcon("natura:stew_glowshroom");
     }
     @Override
     public ItemStack onEaten (ItemStack stack, World world, EntityPlayer player)
@@ -74,48 +66,22 @@ public class BowlStew extends ItemFood
     @Override
     protected void onFoodEaten (ItemStack stack, World world, EntityPlayer player)
     {
-        if (!world.isRemote && stack.getItemDamage() / 14 == 1)
+        if (!world.isRemote)
         {
-            int duration = 0;
+            int duration;
             PotionEffect potion;
 
             potion = player.getActivePotionEffect(Potion.nightVision);
-            if (potion != null)
-                duration = potion.getDuration();
-            else
-                duration = 0;
+            duration = potion != null ? potion.getDuration() : 0;
             player.addPotionEffect(new PotionEffect(Potion.nightVision.id, duration + 45 * 25, 0));
 
             potion = player.getActivePotionEffect(Potion.weakness);
-            if (potion != null)
-                duration = potion.getDuration();
-            else
-                duration = 0;
+            duration = potion != null ? potion.getDuration() : 0;
             player.addPotionEffect(new PotionEffect(Potion.weakness.id, duration + 16 * 25, 0));
 
             potion = player.getActivePotionEffect(Potion.weakness);
-            if (potion != null)
-                duration = potion.getDuration();
-            else
-                duration = 0;
+            duration = potion != null ? potion.getDuration() : 0;
             player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, duration + 8 * 25, 0));
-        }
-    }
-
-    @Override
-    public String getUnlocalizedName (ItemStack stack)
-    {
-        int arr = MathHelper.clamp_int(stack.getItemDamage() / 14, 0, textureNames.length);
-        return "item.bowl." + textureNames[arr];
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void getSubItems (Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (int iter = 1; iter < textureNames.length; iter++)
-        {
-            par3List.add(new ItemStack(par1, 1, iter * 14));
         }
     }
 }

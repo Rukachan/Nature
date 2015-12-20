@@ -3,8 +3,11 @@ package mods.natura.common;
 import mods.natura.blocks.NPressurePlate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -90,8 +93,7 @@ import mods.natura.items.blocks.NetherSaplingItem;
 import mods.natura.items.blocks.NetherGlassItem;
 import mods.natura.items.blocks.NoColorLeavesItem;
 import mods.natura.items.blocks.OverworldLeavesItem;
-import mods.natura.items.blocks.PlankSlab1Item;
-import mods.natura.items.blocks.PlankSlab2Item;
+import mods.natura.items.blocks.PlankSlabItem;
 import mods.natura.items.blocks.RareSaplingItem;
 import mods.natura.items.blocks.OverworldTreeItem;
 import mods.natura.items.blocks.PlanksItem;
@@ -115,7 +117,6 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -215,23 +216,12 @@ public class NContent implements IFuelHandler
 
         if (PHNatura.enableDoors)
         {
-        	doorItem = new NDoorItem().setUnlocalizedName("redwoodDoorItem");
-	        GameRegistry.registerItem(doorItem, "redwoodDoorItem");
-	        redwoodDoor = new NDoor(Material.wood, 0, "redwood").setBlockName("door.redwood");
-	        eucalyptusDoor = new NDoor(Material.wood, 1, "eucalyptus").setBlockName("door.eucalyptus");
-	        hopseedDoor = new NDoor(Material.wood, 2, "hopseed").setBlockName("door.hopseed");
-	        sakuraDoor = new NDoor(Material.wood, 3, "sakura").setBlockName("door.sakura");
-	        ghostDoor = new NDoor(Material.wood, 4, "ghostwood").setBlockName("door.ghostwood");
-	        bloodDoor = new NDoor(Material.wood, 5, "bloodwood").setBlockName("door.bloodwood");
-	        redwoodBarkDoor = new NDoor(Material.wood, 6, "redwoodbark").setBlockName("door.redwoodbark");
+        	regs.add(new NDoorItem().setUnlocalizedName("redwoodDoorItem"));
 
-	        GameRegistry.registerBlock(redwoodDoor, "door.redwood");
-	        GameRegistry.registerBlock(eucalyptusDoor, "door.eucalyptus");
-	        GameRegistry.registerBlock(hopseedDoor, "door.hopseed");
-	        GameRegistry.registerBlock(sakuraDoor, "door.sakura");
-	        GameRegistry.registerBlock(ghostDoor, "door.ghostwood");
-	        GameRegistry.registerBlock(bloodDoor, "door.bloodwood");
-	        GameRegistry.registerBlock(redwoodBarkDoor, "door.redwoodbark");
+	        String doorName[] = {"redwood", "eucalyptus", "hopseed", "sakura", "ghostwood", "bloodwood", "redwoodbark"};
+	        doors = new Block[doorName.length];
+	        for (int i = 0; i < doorName.length; i++)
+	        	regs.add(doors[i] = new NDoor(Material.wood, i, doorName[i]).setBlockName("door." + doorName[i]));
         }
         if(PHNatura.dropBarley)
             MinecraftForge.addGrassSeed(new ItemStack(seeds, 1, 0), 3);
@@ -313,246 +303,76 @@ public class NContent implements IFuelHandler
 		bluebells = (FlowerBlock) new FlowerBlock().setBlockName("bluebells");
         GameRegistry.registerBlock(bluebells, "Bluebells");
 
-        // TODO 1.7 apparently this isn't so simple anymore
-        //MinecraftForge.addGrassPlant(bluebells, 0, 18);
-
         //Vanilla overrides and alternates
 		if (PHNatura.enableCraftingTables)
-		{
-		    alternateWorkbench = new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(Natura.tab);
-		    GameRegistry.registerBlock(alternateWorkbench, NAlternateItem.class, "Natura.workbench");
-		}
+		    regs.add(new AlternateWorkbench().setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("workbench").setCreativeTab(Natura.tab));
 
 		if (PHNatura.enableBookshelves)
-		{
-		    alternateBookshelf = new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(Natura.tab);
-		    GameRegistry.registerBlock(alternateBookshelf, NAlternateItem.class, "Natura.bookshelf");
-		}
+		    regs.add(new AlternateBookshelf().setHardness(1.5F).setStepSound(Block.soundTypeWood).setBlockName("bookshelf").setCreativeTab(Natura.tab));
 
 		if (PHNatura.enableFences)
-		{
-			alternateFence = new AlternateFence(Material.wood).setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setBlockName("fence").setCreativeTab(Natura.tab);
-			GameRegistry.registerBlock(alternateFence, FenceItem.class, "Natura.fence"); 
-		}
+			regs.add(new AlternateFence(Material.wood).setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setBlockName("fence").setCreativeTab(Natura.tab));
 
         grassBlock = new GrassBlock().setBlockName("GrassBlock");
         grassBlock.stepSound = Block.soundTypeGrass;
         GameRegistry.registerBlock(grassBlock, GrassBlockItem.class, "GrassBlock");
 
-        /* ###################### */
         if (PHNatura.enableSlabs)
         {
-	        grassSlab = new GrassSlab("GrassSlab");
-	        grassSlab.stepSound = Block.soundTypeGrass;
-	        GameRegistry.registerBlock(grassSlab, GrassSlabItem.class, "GrassSlab");
-	
-	        plankSlab1 = new NSlabBase(Material.wood, planks, 0, 8, "plankSlab1").setHardness(2.0f);
-	        plankSlab1.stepSound = Block.soundTypeWood;
-	        GameRegistry.registerBlock(plankSlab1, PlankSlab1Item.class, "plankSlab1");
-	
-	        plankSlab2 = new NSlabBase(Material.wood, planks, 8, 5, "plankSlab2").setHardness(2.0f);
-	        plankSlab2.stepSound = Block.soundTypeWood;
-	        GameRegistry.registerBlock(plankSlab2, PlankSlab2Item.class, "plankSlab2"); 
+        	regs.add(new GrassSlab().setBlockName("GrassSlab"));
+        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 0, 8).setBlockName("plankSlab"));
+        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 8, 5).setBlockName("plankSlab"));
         }
-
 
         /* Stairs */
         if (PHNatura.enableStairs)
-        {
-            /* public String[] stairNames = new String[] { "eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "amaranth", "tiger",
-    		"willow", "darkwood", "fusewood"}; */
-	        stairEucalyptus = new NStairs(planks, 0, "eucalyptus");
-	        GameRegistry.registerBlock(stairEucalyptus, "stair.eucalyptus");
-	
-	        stairSakura = new NStairs(planks, 1, "sakura");
-	        GameRegistry.registerBlock(stairSakura, "stair.sakura");
-	
-	        stairGhostwood = new NStairs(planks, 2, "ghostwood");
-	        GameRegistry.registerBlock(stairGhostwood, "stair.ghostwood");
-	
-	        stairRedwood = new NStairs(planks, 3, "redwood");
-	        GameRegistry.registerBlock(stairRedwood, "stair.redwood");
-	
-	        stairBloodwood = new NStairs(planks, 4, "bloodwood");
-	        GameRegistry.registerBlock(stairBloodwood, "stair.bloodwood");
-	
-	        stairHopseed = new NStairs(planks, 5, "hopseed");
-	        GameRegistry.registerBlock(stairHopseed, "stair.hopseed");
-	
-	        stairMaple = new NStairs(planks, 6, "maple");
-	        GameRegistry.registerBlock(stairMaple, "stair.maple");
-	
-	        stairSilverbell = new NStairs(planks, 7, "silverbell");
-	        GameRegistry.registerBlock(stairSilverbell, "stair.silverbell");
-	
-	        stairAmaranth = new NStairs(planks, 8, "amaranth");
-	        GameRegistry.registerBlock(stairAmaranth, "stair.amaranth");
-	
-	        stairTiger = new NStairs(planks, 9, "tiger");
-	        GameRegistry.registerBlock(stairTiger, "stair.tiger");
-	
-	        stairWillow = new NStairs(planks, 10, "willow");
-	        GameRegistry.registerBlock(stairWillow, "stair.willow");
-	
-	        stairDarkwood = new NStairs(planks, 11, "darkwood");
-	        GameRegistry.registerBlock(stairDarkwood, "stair.darkwood");
-	
-	        stairFusewood = new NStairs(planks, 12, "fusewood");
-	        GameRegistry.registerBlock(stairFusewood, "stair.fusewood");
-        }
+        	for (int i = 0; i < woodTextureNames.length; i++)
+        		regs.add(new NStairs(planks, i, woodTextureNames[i]));
 
         if (PHNatura.enableTrapdoors)
-        {
-	        trapdoorEucalyptus = new NTrapdoor("eucalyptus");
-	        GameRegistry.registerBlock(trapdoorEucalyptus, "trapdoor.eucalyptus");
-
-	        trapdoorSakura = new NTrapdoor("sakura");
-	        GameRegistry.registerBlock(trapdoorSakura, "trapdoor.sakura");
-
-	        trapdoorGhostwood = new NTrapdoor("ghostwood");
-	        GameRegistry.registerBlock(trapdoorGhostwood, "trapdoor.ghostwood");
-
-	        trapdoorRedwood = new NTrapdoor("redwood");
-	        GameRegistry.registerBlock(trapdoorRedwood, "trapdoor.redwood");
-
-	        trapdoorBloodwood = new NTrapdoor("bloodwood");
-	        GameRegistry.registerBlock(trapdoorBloodwood, "trapdoor.bloodwood");
-
-	        trapdoorHopseed = new NTrapdoor("hopseed");
-	        GameRegistry.registerBlock(trapdoorHopseed, "trapdoor.hopseed");
-
-	        trapdoorMaple = new NTrapdoor("maple");
-	        GameRegistry.registerBlock(trapdoorMaple, "trapdoor.maple");
-
-	        trapdoorAmaranth = new NTrapdoor("amaranth", "purpleheart"); /* TODO: fix amaranth having different names */
-	        GameRegistry.registerBlock(trapdoorAmaranth, "trapdoor.amaranth");
-
-	        trapdoorSilverbell = new NTrapdoor("silverbell");
-	        GameRegistry.registerBlock(trapdoorSilverbell, "trapdoor.silverbell");
-
-	        trapdoorTiger = new NTrapdoor("tiger");
-	        GameRegistry.registerBlock(trapdoorTiger, "trapdoor.tiger");
-
-	        trapdoorWillow = new NTrapdoor("willow");
-	        GameRegistry.registerBlock(trapdoorWillow, "trapdoor.willow");
-
-	        trapdoorDarkwood = new NTrapdoor("darkwood");
-	        GameRegistry.registerBlock(trapdoorDarkwood, "trapdoor.darkwood");
-
-	        trapdoorFusewood = new NTrapdoor("fusewood");
-	        GameRegistry.registerBlock(trapdoorFusewood, "trapdoor.fusewood");
-        }
+        	for (String name : woodTextureNames)
+        		regs.add(new NTrapdoor(name));
 
         if (PHNatura.enablePressurePlates)
-        {
-        	pressurePlateEucalyptus = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 0, "eucalyptus");
-        	GameRegistry.registerBlock(pressurePlateEucalyptus, "pressureplate.eucalyptus");
-        	pressurePlateSakura = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 1, "sakura");
-        	GameRegistry.registerBlock(pressurePlateSakura, "pressureplate.sakura");
-        	pressurePlateGhostwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 2, "ghostwood");
-        	GameRegistry.registerBlock(pressurePlateGhostwood, "pressureplate.ghostwood");
-        	pressurePlateRedwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 3, "redwood");
-        	GameRegistry.registerBlock(pressurePlateRedwood, "pressureplate.redwood");
-        	pressurePlateBloodwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 4, "bloodwood");
-        	GameRegistry.registerBlock(pressurePlateBloodwood, "pressureplate.bloodwood");
-        	pressurePlateHopseed = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 5, "hopseed");
-        	GameRegistry.registerBlock(pressurePlateHopseed, "pressureplate.hopseed");
-        	pressurePlateMaple = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 6, "maple");
-        	GameRegistry.registerBlock(pressurePlateMaple, "pressureplate.maple");
-        	pressurePlateAmaranth = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 7, "amaranth");
-        	GameRegistry.registerBlock(pressurePlateAmaranth, "pressureplate.amaranth");
-        	pressurePlateSilverbell = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 8, "silverbell");
-        	GameRegistry.registerBlock(pressurePlateSilverbell, "pressureplate.silverbell");
-        	pressurePlateTiger = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 9, "tiger");
-        	GameRegistry.registerBlock(pressurePlateTiger, "pressureplate.tiger");
-        	pressurePlateWillow = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 10, "willow");
-        	GameRegistry.registerBlock(pressurePlateWillow, "pressureplate.willow");
-        	pressurePlateDarkwood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 11, "darkwood");
-        	GameRegistry.registerBlock(pressurePlateDarkwood, "pressureplate.darkwood");
-        	pressurePlateFusewood = new NPressurePlate(Material.wood, Sensitivity.everything, planks, 12, "fusewood");
-        	GameRegistry.registerBlock(pressurePlateFusewood, "pressureplate.fusewood");
-        }
+        	for (int i = 0; i < woodTextureNames.length; i++)
+        		regs.add(new NPressurePlate(Material.wood, Sensitivity.everything, planks, i, woodTextureNames[i]));
 
         if (PHNatura.enableButtons)
-        {
-        	buttonEucalyptus = new NButton(planks, 0, "eucalyptus");
-        	GameRegistry.registerBlock(buttonEucalyptus, "button.eucalyptus");
-        	buttonSakura = new NButton(planks, 1, "sakura");
-        	GameRegistry.registerBlock(buttonSakura, "button.sakura");
-        	buttonGhostwood = new NButton(planks, 2, "ghostwood");
-        	GameRegistry.registerBlock(buttonGhostwood, "button.ghostwood");
-        	buttonRedwood = new NButton(planks, 3, "redwood");
-        	GameRegistry.registerBlock(buttonRedwood, "button.redwood");
-        	buttonBloodwood = new NButton(planks, 4, "bloodwood");
-        	GameRegistry.registerBlock(buttonBloodwood, "button.bloodwood");
-        	buttonHopseed = new NButton(planks, 5, "hopseed");
-        	GameRegistry.registerBlock(buttonHopseed, "button.hopseed");
-        	buttonMaple = new NButton(planks, 6, "maple");
-        	GameRegistry.registerBlock(buttonMaple, "button.maple");
-        	buttonAmaranth = new NButton(planks, 7, "amaranth");
-        	GameRegistry.registerBlock(buttonAmaranth, "button.amaranth");
-        	buttonSilverbell = new NButton(planks, 8, "silverbell");
-        	GameRegistry.registerBlock(buttonSilverbell, "button.silverbell");
-        	buttonTiger = new NButton(planks, 9, "tiger");
-        	GameRegistry.registerBlock(buttonTiger, "button.tiger");
-        	buttonWillow = new NButton(planks, 10, "willow");
-        	GameRegistry.registerBlock(buttonWillow, "button.willow");
-        	buttonDarkwood = new NButton(planks, 11, "darkwood");
-        	GameRegistry.registerBlock(buttonDarkwood, "button.darkwood");
-        	buttonFusewood = new NButton(planks, 12, "fusewood");
-        	GameRegistry.registerBlock(buttonFusewood, "button.fusewood");
-        }
+        	for (int i = 0; i < woodTextureNames.length; i++)
+        		regs.add(new NButton(planks, i, woodTextureNames[i]));
 
         if (PHNatura.enableFenceGates)
-        {
-        	fenceGateEucalyptus = new NFenceGate(planks, 0, "eucalyptus");
-        	GameRegistry.registerBlock(fenceGateEucalyptus, "fenceGate.eucalyptus");
-        	fenceGateSakura = new NFenceGate(planks, 1, "sakura");
-        	GameRegistry.registerBlock(fenceGateSakura, "fenceGate.sakura");
-        	fenceGateGhostwood = new NFenceGate(planks, 2, "ghostwood");
-        	GameRegistry.registerBlock(fenceGateGhostwood, "fenceGate.ghostwood");
-        	fenceGateRedwood = new NFenceGate(planks, 3, "redwood");
-        	GameRegistry.registerBlock(fenceGateRedwood, "fenceGate.redwood");
-        	fenceGateBloodwood = new NFenceGate(planks, 4, "bloodwood");
-        	GameRegistry.registerBlock(fenceGateBloodwood, "fenceGate.bloodwood");
-        	fenceGateHopseed = new NFenceGate(planks, 5, "hopseed");
-        	GameRegistry.registerBlock(fenceGateHopseed, "fenceGate.hopseed");
-        	fenceGateMaple = new NFenceGate(planks, 6, "maple");
-        	GameRegistry.registerBlock(fenceGateMaple, "fenceGate.maple");
-        	fenceGateAmaranth = new NFenceGate(planks, 7, "amaranth");
-        	GameRegistry.registerBlock(fenceGateAmaranth, "fenceGate.amaranth");
-        	fenceGateSilverbell = new NFenceGate(planks, 8, "silverbell");
-        	GameRegistry.registerBlock(fenceGateSilverbell, "fenceGate.silverbell");
-        	fenceGateTiger = new NFenceGate(planks, 9, "tiger");
-        	GameRegistry.registerBlock(fenceGateTiger, "fenceGate.tiger");
-        	fenceGateWillow = new NFenceGate(planks, 10, "willow");
-        	GameRegistry.registerBlock(fenceGateWillow, "fenceGate.willow");
-        	fenceGateDarkwood = new NFenceGate(planks, 11, "darkwood");
-        	GameRegistry.registerBlock(fenceGateDarkwood, "fenceGate.darkwood");
-        	fenceGateFusewood = new NFenceGate(planks, 12, "fusewood");
-        	GameRegistry.registerBlock(fenceGateFusewood, "fenceGate.fusewood");
-        }
+        	for (int i = 0; i < woodTextureNames.length; i++)
+        		regs.add(new NFenceGate(planks, i, woodTextureNames[i]));
 
         /* Barricades */
         if (PHNatura.enableVanillaBarricades)
         {
 	        String vanillaWoodNames[] = {"oak", "spruce", "birch", "jungle"};
 	        String vanillaWoodNames2[] = {"acacia", "darkoak"};
-	        vanillaBarricades = initBarricades ("", vanillaWoodNames, Blocks.log);
-	        vanillaBarricades2 = initBarricades ("", vanillaWoodNames2, Blocks.log2);
+	        for (int i = 0; i < vanillaWoodNames.length + vanillaWoodNames2.length; i++)
+	        {
+	        	Block log;
+	        	regs.add(log = (i < vanillaWoodNames.length ? new BarricadeBlock(Blocks.log, i) : new BarricadeBlock(Blocks.log2, i - vanillaWoodNames.length)));
+	        	regs.add(new BarricadeBlock(Blocks.planks, i).setRecipeArg(log));
+	        }
         }
-        String nameTree[] = {"eucalyptus", "sakura", "ghostwood", "hopseed"};
-        String nameDark[] = {"darkwood", "fusewood"};
-        String nameRare[] = {"maple", "silverbell", "amaranth", "tiger"};
-        String nameWillow[] = {"willow"};
 
-        if (PHNatura.enableNaturaBarricades)
-        	barricades = ArrayUtils.addAll(initBarricades ("", nameTree, tree), ArrayUtils.addAll(
-        			                       initBarricades ("", nameDark, darkTree), ArrayUtils.addAll(
-        			                       initBarricades ("", nameRare, rareTree),
-        			                       initBarricades ("", nameWillow, willow))));
-        if (PHNatura.enableNaturaPlankBarricades)
-        	plankBarricades = initBarricades ("plank", woodTextureNames, planks);
+        Block blocks[] = {tree, redwood, darkTree, rareTree, willow};
+        int maxlocal[] = {   4,       3,        2,        4,      1};
+    	int j = 0, sum = 0;
+        for (int i = 0; i < woodTextureNames.length; i++)
+        	if (PHNatura.enableNaturaBarricades)
+        	{
+            	Block logBar;
+
+        		if (i > maxlocal[j] + sum)
+        			sum += maxlocal[j++];
+
+        		regs.add(logBar = new BarricadeBlock(blocks[j], i - sum));
+            	if (PHNatura.enableNaturaPlankBarricades)
+            		regs.add(new BarricadeBlock(planks, i).setRecipeArg(logBar));
+        	}
 
         ArmorMaterial Imp = EnumHelper.addArmorMaterial("Imp", 33, new int[] {1, 3, 2, 1}, 15);
 
@@ -582,7 +402,7 @@ public class NContent implements IFuelHandler
         taintedSoil.setHarvestLevel("shovel", 0);
         heatSand.setHarvestLevel("shovel", 0);
 
-        bowlStew = new BowlStew().setUnlocalizedName("natura.stewbowl");
+        bowlStew = new BowlStew().setUnlocalizedName("bowl.glowshroom");
         GameRegistry.registerItem(bowlStew, "natura.stewbowl");
 
 		/* fire! */
@@ -595,6 +415,11 @@ public class NContent implements IFuelHandler
 		Blocks.fire.setFireInfo (darkTree, 5, 20);
         Blocks.fire.setFireInfo (rareTree, 5, 20);
         Blocks.fire.setFireInfo (rareLeaves, 30, 60);
+
+        for (NReg reg : (List<NReg>)regs)
+        	reg.reg();
+        for (NReg reg : (List<NReg>)regs)
+        	reg.regRecipe();
 
         addRecipes();
     }
@@ -629,21 +454,18 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.bread), "bbb", 'b', "cropBarley"));
 
-	/* old recipe: Barley used to give its own kind of flour.
-	if (PHNatura.enableBarleyRecipe)
-	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 1), "X", 'X', "cropBarley")); */
-	if (PHNatura.enableBarleyRecipe)
-	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropBarley"));
+        if (PHNatura.enableBarleyRecipe)
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropBarley"));
         if (PHNatura.enableWheatRecipe)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 2), "X", 'X', "cropWheat"));
 
         GameRegistry.addRecipe(new ItemStack(plantItem, 2, 8), "X", 'X', new ItemStack(bluebells));
 
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(saguaro, 1, 0), new ItemStack(Items.dye, 1, 2), 0.2F);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(impMeat, 1, 0), new ItemStack(impMeat, 1, 1), 0.2F);
+        GameRegistry.addSmelting(new ItemStack(saguaro, 1, 0), new ItemStack(Items.dye, 1, 2), 0.2F);
+        GameRegistry.addSmelting(new ItemStack(impMeat, 1, 0), new ItemStack(impMeat, 1, 1), 0.2F);
 
         for (int i = 1; i <= 2; i++)
-            FurnaceRecipes.smelting().func_151394_a(new ItemStack(plantItem, 1, i), new ItemStack(Items.bread, 1), 0.5f);
+        	GameRegistry.addSmelting(new ItemStack(plantItem, 1, i), new ItemStack(Items.bread, 1), 0.5f);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.cake, 1), "AAA", "BEB", " C ", 'A', Items.milk_bucket, 'B', Items.sugar, 'C', "foodFlour", 'E', Items.egg));//check1
 
         String[] berryTypes = {"cropRaspberry", "cropBlueberry", "cropBlackberry", "cropMaloberry"};
@@ -665,13 +487,10 @@ public class NContent implements IFuelHandler
 
         //Trees
         for (int i = 0; i < 3; i++)
-        {
             GameRegistry.addRecipe(new ItemStack(planks, 4, i), "w", 'w', new ItemStack(tree, 1, i));
-        }
         for (int i = 0; i < 4; i++)
-        {
             GameRegistry.addRecipe(new ItemStack(planks, 4, i + 6), "w", 'w', new ItemStack(rareTree, 1, i));
-        }
+
         GameRegistry.addRecipe(new ItemStack(planks, 4, 3), "w", 'w', new ItemStack(redwood, 1, 1));
         GameRegistry.addRecipe(new ItemStack(planks, 4, 4), "w", 'w', new ItemStack(bloodwood, 1, Short.MAX_VALUE));
         GameRegistry.addRecipe(new ItemStack(planks, 4, 5), "w", 'w', new ItemStack(tree, 1, 3));
@@ -682,29 +501,18 @@ public class NContent implements IFuelHandler
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(plantItem, 1, 5), " s ", "#s#", "#s#", 's', "stickWood", '#', new ItemStack(floraLeavesNoColor, 1, 1)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.arrow, 4, 0), " f ", "#s#", " # ", 's', "stickWood", '#', new ItemStack(plantItem, 1, 5), 'f', Items.flint));
 
-        List recipes = CraftingManager.getInstance().getRecipeList();
-        
+        recipes = CraftingManager.getInstance().getRecipeList();
+
         if (PHNatura.enableDoors)
         {
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 0), "##", "##", "##", '#', new ItemStack(planks, 1, 3));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 1), "##", "##", "##", '#', new ItemStack(planks, 1, 0));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 2), "##", "##", "##", '#', new ItemStack(planks, 1, 5));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 3), "##", "##", "##", '#', new ItemStack(planks, 1, 1));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 4), "##", "##", "##", '#', new ItemStack(planks, 1, 2));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 5), "##", "##", "##", '#', new ItemStack(planks, 1, 4));
-	        addShapedRecipeFirst(recipes, new ItemStack(doorItem, 1, 6), "##", "##", "##", '#', new ItemStack(redwood, 1, 0));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 0), "##", "##", "##", '#', new ItemStack(planks, 1, 3));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 1), "##", "##", "##", '#', new ItemStack(planks, 1, 0));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 2), "##", "##", "##", '#', new ItemStack(planks, 1, 5));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 3), "##", "##", "##", '#', new ItemStack(planks, 1, 1));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 4), "##", "##", "##", '#', new ItemStack(planks, 1, 2));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 5), "##", "##", "##", '#', new ItemStack(planks, 1, 4));
+        	GameRegistry.addRecipe(new ItemStack(doorItem, 1, 6), "##", "##", "##", '#', new ItemStack(redwood, 1, 0));
         }
-
-	if (PHNatura.enableCraftingTables && PHNatura.enableBookshelves)
-	    for (int i = 0; i < woodTextureNames.length; i++)
-	    {
-	    	if (PHNatura.enableCraftingTables)
-	    		addShapedRecipeFirst(recipes, new ItemStack(alternateWorkbench, 1, i), "##", "##", '#', new ItemStack(planks, 1, i));
-	    	if (PHNatura.enableBookshelves)
-	    		addShapedRecipeFirst(recipes, new ItemStack(alternateBookshelf, 1, i), "###", "bbb", "###", '#', new ItemStack(planks, 1, i), 'b', Items.book);
-	    	if (PHNatura.enableFences)
-	    		addShapedRecipeFirst(recipes, new ItemStack(alternateFence, 2, i), "s#s", "s#s", '#', new ItemStack(planks, 1, i), 's', Items.stick);
-	    }
 
         GameRegistry.addRecipe(new ItemStack(Items.leather, 2), "##", "##", '#', new ItemStack(plantItem, 1, 6));
 
@@ -730,61 +538,20 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addShapelessRecipe(new ItemStack(Blocks.soul_sand, 1, 0), heatSand, taintedSoil);
 
-        addShapelessRecipeFirst(recipes, new ItemStack(bowlStew, 1, 0), new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom), new ItemStack(Items.bowl));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bowlStew, 1, 14), new ItemStack(glowshroom, 1, 0), new ItemStack(glowshroom, 1, 1), new ItemStack(glowshroom, 1, 2), Items.bowl));
-
-        /*bowlStew = new BowlStew(PHNatura.bowlStew).setUnlocalizedName("natura.stewbowl");*/
+        GameRegistry.addShapelessRecipe(new ItemStack(bowlStew, 1), new ItemStack(glowshroom, 1, 0), new ItemStack(glowshroom, 1, 1), new ItemStack(glowshroom, 1, 2), Items.bowl);
 
         //Turn logs into charcoal
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(tree, 1, 0), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(tree, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(tree, 1, 2), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(tree, 1, 3), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(redwood, 1, 0), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(redwood, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(redwood, 1, 2), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(tree, 1, 0), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(tree, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(tree, 1, 2), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(tree, 1, 3), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(redwood, 1, 0), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(redwood, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15f);
+        GameRegistry.addSmelting(new ItemStack(redwood, 1, 2), new ItemStack(Items.coal, 1, 1), 0.15f);
 
         GameRegistry.addRecipe(new ItemStack(grassBlock, 1, 0), " s ", "s#s", " s ", 's', new ItemStack(Items.wheat_seeds), '#', new ItemStack(Blocks.dirt));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(grassBlock, 1, 1), new ItemStack(grassBlock, 1, 0), "dyeBlue"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(grassBlock, 1, 2), new ItemStack(grassBlock, 1, 0), "dyeRed"));
-
-        if (PHNatura.enableTrapdoors || PHNatura.enableFenceGates || PHNatura.enableButtons || PHNatura.enablePressurePlates || PHNatura.enableStairs)
-        {
-	        Block[] trapdoors = {trapdoorEucalyptus, trapdoorSakura, trapdoorGhostwood, trapdoorRedwood, trapdoorBloodwood, trapdoorHopseed, trapdoorMaple, trapdoorSilverbell,
-	                trapdoorAmaranth, trapdoorTiger, trapdoorWillow, trapdoorDarkwood, trapdoorFusewood};
-        	Block[] fenceGates = {fenceGateEucalyptus, fenceGateSakura, fenceGateGhostwood, fenceGateRedwood, fenceGateBloodwood, fenceGateHopseed, fenceGateMaple, fenceGateSilverbell,
-         	         fenceGateAmaranth, fenceGateTiger, fenceGateWillow, fenceGateDarkwood, fenceGateFusewood };
-        	Block[] buttons = {buttonEucalyptus, buttonSakura, buttonGhostwood, buttonRedwood, buttonBloodwood, buttonHopseed, buttonMaple, buttonSilverbell, buttonAmaranth, buttonTiger,
-            		buttonWillow, buttonDarkwood, buttonFusewood};
-        	Block[] pressurePlates = {pressurePlateEucalyptus, pressurePlateSakura, pressurePlateGhostwood, pressurePlateRedwood, pressurePlateBloodwood, pressurePlateHopseed,
-            		pressurePlateMaple, pressurePlateSilverbell, pressurePlateAmaranth, pressurePlateTiger, pressurePlateWillow, pressurePlateDarkwood, pressurePlateFusewood};
-        	Block[] stairs = {stairEucalyptus, stairSakura, stairGhostwood, stairRedwood, stairBloodwood, stairHopseed, stairMaple, stairSilverbell, stairAmaranth, stairTiger, stairWillow,
-        			stairDarkwood, stairFusewood};
-
-	        for (int i = 0; i < woodTextureNames.length; i++)
-	        {
-	        	if (PHNatura.enableTrapdoors)
-	        		addShapedRecipeFirst(recipes, new ItemStack(trapdoors[i], 2, 0), "###", "###", '#', new ItemStack(planks, 1, i));
-	        	if (PHNatura.enableFenceGates)
-	        		addShapedRecipeFirst(recipes, new ItemStack(fenceGates[i], 1, 0), "s#s", "s#s", '#', new ItemStack(planks, 1, i), 's', Items.stick);
-	        	if (PHNatura.enableButtons)
-	        		addShapedRecipeFirst(recipes, new ItemStack(buttons[i], 1, 0), "#", '#', new ItemStack(planks, 1, i));
-	        	if (PHNatura.enablePressurePlates)
-	        		addShapedRecipeFirst(recipes, new ItemStack(pressurePlates[i], 1, 0), "##", '#', new ItemStack(planks, 1, i));
-	        	if (PHNatura.enableStairs)
-	        		addShapedRecipeFirst(recipes, new ItemStack(stairs[i], 4, 0	), "#  ", "## ", "###", '#', new ItemStack(planks, 1, i));
-	        }
-        }
-
-        if (PHNatura.enableSlabs)
-        {
-        	for (int i = 0; i < 8; i++)
-        		addShapedRecipeFirst(recipes, new ItemStack(plankSlab1, 6, i), "###", '#', new ItemStack(planks, 1, i));
-        	for (int i = 0; i < 5; i++)
-        		addShapedRecipeFirst(recipes, new ItemStack(plankSlab2, 6, i), "###", '#', new ItemStack(planks, 1, 8 + i));
-        	for (int i = 0; i < 3; i++)
-        		GameRegistry.addRecipe(new ItemStack(grassSlab, 6, i), "bbb", 'b', new ItemStack(grassBlock, 1, i));
-        }
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brail, 16), "X X", "X#X", "X X", 'X', Items.blaze_rod, '#', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.brailPowered, 6), "X X", "X#X", "XRX", 'X', Items.blaze_rod, 'R', "dustRedstone", '#', new ItemStack(darkTree, 1, 1)));
@@ -793,136 +560,12 @@ public class NContent implements IFuelHandler
 
         GameRegistry.addRecipe(new ItemStack(NContent.netherrackFurnace), "###", "# #", "###", '#', Blocks.netherrack);
         GameRegistry.addRecipe(new ItemStack(NContent.respawnObelisk), "###", "# #", "###", '#', new ItemStack(tree, 1, 2));
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(Blocks.soul_sand, 1, 0), new ItemStack(netherGlass, 1, 0), 0.3f);
-        FurnaceRecipes.smelting().func_151394_a(new ItemStack(heatSand, 1, 0), new ItemStack(netherGlass, 1, 1), 0.3f);
+        GameRegistry.addSmelting(new ItemStack(Blocks.soul_sand, 1, 0), new ItemStack(netherGlass, 1, 0), 0.3f);
+        GameRegistry.addSmelting(new ItemStack(heatSand, 1, 0), new ItemStack(netherGlass, 1, 1), 0.3f);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(NContent.netherHopper), "# #", "#C#", " # ", '#', new ItemStack(Items.blaze_rod), 'C', "chestWood"));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.glass_bottle, 3), "# #", " # ", '#', "glass"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.daylight_detector), "GGG", "QQQ", "WWW", 'G', "glass", 'Q', "gemQuartz", 'W', "slabWood"));
-
-        if (PHNatura.enableVanillaBarricades)
-        {
-        	recipeBarricades(vanillaBarricades, Blocks.log);
-        	recipeBarricades(vanillaBarricades2, Blocks.log2);
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(vanillaBarricades[0], 1, 0), "b", "b", 'b', "logWood"));
-        }
-
-        if (PHNatura.enableNaturaBarricades)
-        {
-        	recipeBarricades(ArrayUtils.subarray(barricades, 0, 3), tree);
-        	recipeBarricades(ArrayUtils.subarray(barricades, 4, 5), darkTree);
-        	recipeBarricades(ArrayUtils.subarray(barricades, 6, 9), rareTree);
-        	recipeBarricades(ArrayUtils.subarray(barricades, 10, 10), willow);
-        }
-
-        if (PHNatura.enableNaturaPlankBarricades)
-        	for (int i = 0; i < plankBarricades.length; i++)
-        		GameRegistry.addRecipe(new ShapedOreRecipe (new ItemStack(plankBarricades[i], 4, 0), "a", "b", 'a', "barricadeLogWood", 'b', new ItemStack(planks, 1, i)));
-    }
-
-    public void addShapedRecipeFirst (List recipeList, ItemStack itemstack, Object... objArray)
-    {
-        String var3 = "";
-        int var4 = 0;
-        int var5 = 0;
-        int var6 = 0;
-
-        if (objArray[var4] instanceof String[])
-        {
-            String[] var7 = ((String[]) objArray[var4++]);
-
-            for (int var8 = 0; var8 < var7.length; ++var8)
-            {
-                String var9 = var7[var8];
-                ++var6;
-                var5 = var9.length();
-                var3 = var3 + var9;
-            }
-        }
-        else
-        {
-            while (objArray[var4] instanceof String)
-            {
-                String var11 = (String) objArray[var4++];
-                ++var6;
-                var5 = var11.length();
-                var3 = var3 + var11;
-            }
-        }
-
-        HashMap var12;
-
-        for (var12 = new HashMap(); var4 < objArray.length; var4 += 2)
-        {
-            Character var13 = (Character) objArray[var4];
-            ItemStack var14 = null;
-
-            if (objArray[var4 + 1] instanceof Item)
-            {
-                var14 = new ItemStack((Item) objArray[var4 + 1]);
-            }
-            else if (objArray[var4 + 1] instanceof Block)
-            {
-                var14 = new ItemStack((Block) objArray[var4 + 1], 1, Short.MAX_VALUE);
-            }
-            else if (objArray[var4 + 1] instanceof ItemStack)
-            {
-                var14 = (ItemStack) objArray[var4 + 1];
-            }
-
-            var12.put(var13, var14);
-        }
-
-        ItemStack[] var15 = new ItemStack[var5 * var6];
-
-        for (int var16 = 0; var16 < var5 * var6; ++var16)
-        {
-            char var10 = var3.charAt(var16);
-
-            if (var12.containsKey(Character.valueOf(var10)))
-            {
-                var15[var16] = ((ItemStack) var12.get(Character.valueOf(var10))).copy();
-            }
-            else
-            {
-                var15[var16] = null;
-            }
-        }
-
-        ShapedRecipes var17 = new ShapedRecipes(var5, var6, var15, itemstack);
-        recipeList.add(0, var17);
-    }
-
-    public void addShapelessRecipeFirst (List recipeList, ItemStack par1ItemStack, Object... par2ArrayOfObj)
-    {
-        ArrayList arraylist = new ArrayList();
-        Object[] aobject = par2ArrayOfObj;
-        int i = par2ArrayOfObj.length;
-
-        for (int j = 0; j < i; ++j)
-        {
-            Object object1 = aobject[j];
-
-            if (object1 instanceof ItemStack)
-            {
-                arraylist.add(((ItemStack) object1).copy());
-            }
-            else if (object1 instanceof Item)
-            {
-                arraylist.add(new ItemStack((Item) object1));
-            }
-            else
-            {
-                if (!(object1 instanceof Block))
-                {
-                    throw new RuntimeException("Invalid shapeless recipe!");
-                }
-
-                arraylist.add(new ItemStack((Block) object1));
-            }
-        }
-
-        recipeList.add(0, new ShapelessRecipes(par1ItemStack, arraylist));
     }
 
     public void addOredictSupport ()
@@ -961,13 +604,6 @@ public class NContent implements IFuelHandler
 
         OreDictionary.registerOre("taintedSoil", new ItemStack(taintedSoil, 1));
 
-        //Slabs
-        if (PHNatura.enableSlabs)
-        {
-	        OreDictionary.registerOre("slabWood", new ItemStack(plankSlab1, 1, Short.MAX_VALUE));
-	        OreDictionary.registerOre("slabWood", new ItemStack(plankSlab2, 1, Short.MAX_VALUE));
-        }
-
         //Saplings
         OreDictionary.registerOre("treeSapling", new ItemStack(floraSapling, 1, Short.MAX_VALUE));
         OreDictionary.registerOre("treeSapling", new ItemStack(rareSapling, 1, Short.MAX_VALUE));
@@ -979,13 +615,6 @@ public class NContent implements IFuelHandler
         OreDictionary.registerOre("treeLeaves", new ItemStack(rareLeaves, 1, Short.MAX_VALUE));
         OreDictionary.registerOre("treeLeaves", new ItemStack(darkLeaves, 1, Short.MAX_VALUE));
 
-        //Crafting table
-        if (PHNatura.enableCraftingTables)
-        {
-        	OreDictionary.registerOre("crafterWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
-        	OreDictionary.registerOre("craftingTableWood", new ItemStack(alternateWorkbench, 1, OreDictionary.WILDCARD_VALUE));
-        }
-
         //Planks
         OreDictionary.registerOre("plankWood", new ItemStack(NContent.planks, 1, OreDictionary.WILDCARD_VALUE));
 
@@ -996,24 +625,6 @@ public class NContent implements IFuelHandler
         OreDictionary.registerOre("logWood", new ItemStack(NContent.bloodwood, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("logWood", new ItemStack(NContent.redwood, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("logWood", new ItemStack(NContent.willow, 1, OreDictionary.WILDCARD_VALUE));
-
-        //Stairs
-        if (PHNatura.enableStairs)
-        {
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairEucalyptus, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairSakura, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairGhostwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairRedwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairBloodwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairHopseed, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairMaple, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairSilverbell, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairAmaranth, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairTiger, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairWillow, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairDarkwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("stairWood", new ItemStack(NContent.stairFusewood, 1, OreDictionary.WILDCARD_VALUE)); 
-        }
 
         //Dye
         OreDictionary.registerOre("dyeBlue", new ItemStack(plantItem, 1, 8));
@@ -1028,37 +639,17 @@ public class NContent implements IFuelHandler
 
         /* Pressure Plates */
         if (PHNatura.enablePressurePlates)
-        {
         	OreDictionary.registerOre("pressurePlateWood", Blocks.wooden_pressure_plate);
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateEucalyptus, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateSakura, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateGhostwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateRedwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateBloodwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateHopseed, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateMaple, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateSilverbell, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateAmaranth, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateTiger, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateWillow, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateDarkwood, 1, OreDictionary.WILDCARD_VALUE));
-	        OreDictionary.registerOre("pressurePlateWood", new ItemStack(NContent.pressurePlateFusewood, 1, OreDictionary.WILDCARD_VALUE)); 
-        }
 
         /* Fences */
         if (PHNatura.enableFences)
-        {
         	OreDictionary.registerOre("fenceWood", Blocks.fence);
-	        OreDictionary.registerOre("fenceWood", new ItemStack(alternateFence, 1, OreDictionary.WILDCARD_VALUE));
-        }
-
-        /* Barricades */
-        if (PHNatura.enableNaturaBarricades)
-        	for (Block barricade : barricades)
-        	OreDictionary.registerOre("barricadeLogWood", barricade);
 
         /* Cloud, only the normal one */
     	OreDictionary.registerOre("cloud", new ItemStack(cloud, 1, 0)); /* Chisel */
+
+    	for (NReg reg : (List<NReg>)regs)
+        	reg.regOredict();
     }
 
     public void createEntities ()
@@ -1081,6 +672,8 @@ public class NContent implements IFuelHandler
 
         BlockDispenser.dispenseBehaviorRegistry.putObject(spawnEgg, new DispenserBehaviorSpawnEgg());
     }
+
+    public static List regs = new ArrayList();
 
     public static Item spawnEgg;
 
@@ -1123,13 +716,7 @@ public class NContent implements IFuelHandler
 
     public static Block saguaro;
 
-    public static Block redwoodDoor;
-    public static Block eucalyptusDoor;
-    public static Block hopseedDoor;
-    public static Block sakuraDoor;
-    public static Block ghostDoor;
-    public static Block bloodDoor;
-    public static Block redwoodBarkDoor;
+    public static Block doors[];
 
     public static Item doorItem;
 
@@ -1184,9 +771,6 @@ public class NContent implements IFuelHandler
     //Vanilla overrides and alternates
     public static final String woodTextureNames[] = {"eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "purpleheart", "tiger", "willow", "darkwood",
             "fusewood"};
-    public static Block alternateWorkbench;
-    public static Block alternateBookshelf;
-    public static Block alternateFence;
 
     //Golem type things
     public static Block grassBlock;
@@ -1196,101 +780,14 @@ public class NContent implements IFuelHandler
     public static Block plankSlab1;
     public static Block plankSlab2;
 
-    /* stairs */
-    public static Block stairEucalyptus;
-    public static Block stairSakura;
-    public static Block stairGhostwood;
-    public static Block stairRedwood;
-    public static Block stairBloodwood;
-    public static Block stairHopseed;
-    public static Block stairMaple;
-    public static Block stairSilverbell;
-    public static Block stairAmaranth;
-    public static Block stairTiger;
-    public static Block stairWillow;
-    public static Block stairDarkwood;
-    public static Block stairFusewood;
+    public static List recipes;
 
-    /* pressure plates */
-    public static Block pressurePlateEucalyptus;
-    public static Block pressurePlateSakura;
-    public static Block pressurePlateGhostwood;
-    public static Block pressurePlateRedwood;
-    public static Block pressurePlateBloodwood;
-    public static Block pressurePlateHopseed;
-    public static Block pressurePlateMaple;
-    public static Block pressurePlateAmaranth;
-    public static Block pressurePlateSilverbell;
-    public static Block pressurePlateTiger;
-    public static Block pressurePlateWillow;
-    public static Block pressurePlateDarkwood;
-    public static Block pressurePlateFusewood; 
-
-    /* Trapdoors */
-    public static Block trapdoorEucalyptus;
-    public static Block trapdoorSakura;
-    public static Block trapdoorGhostwood;
-    public static Block trapdoorRedwood;
-    public static Block trapdoorBloodwood;
-    public static Block trapdoorHopseed;
-    public static Block trapdoorMaple;
-    public static Block trapdoorAmaranth;
-    public static Block trapdoorSilverbell;
-    public static Block trapdoorTiger;
-    public static Block trapdoorWillow;
-    public static Block trapdoorDarkwood;
-    public static Block trapdoorFusewood;
-    
-    /* Buttons */
-    public static Block buttonEucalyptus;
-    public static Block buttonSakura;
-    public static Block buttonGhostwood;
-    public static Block buttonRedwood;
-    public static Block buttonBloodwood;
-    public static Block buttonHopseed;
-    public static Block buttonMaple;
-    public static Block buttonAmaranth;
-    public static Block buttonSilverbell;
-    public static Block buttonTiger;
-    public static Block buttonWillow;
-    public static Block buttonDarkwood;
-    public static Block buttonFusewood;
-
-    /* Fence gates */
-    public static Block fenceGateEucalyptus;
-    public static Block fenceGateSakura;
-    public static Block fenceGateGhostwood;
-    public static Block fenceGateRedwood;
-    public static Block fenceGateBloodwood;
-    public static Block fenceGateHopseed;
-    public static Block fenceGateMaple;
-    public static Block fenceGateAmaranth;
-    public static Block fenceGateSilverbell;
-    public static Block fenceGateTiger;
-    public static Block fenceGateWillow;
-    public static Block fenceGateDarkwood;
-    public static Block fenceGateFusewood;
-
-    /* Barricades */
-    public static Block vanillaBarricades[];
-    public static Block vanillaBarricades2[];
-    public static Block barricades[];
-    public static Block plankBarricades[];
-
-    private Block[] initBarricades (String prefix, String name[], Block block)
+    public static String[] append(String[] str, String toAppend)
     {
-        Block ret[] = new Block[name.length];
-        for (int i = 0; i < name.length; i++)
-        {
-        	ret[i] = new BarricadeBlock(block, i).setBlockName("barricade");
-        	GameRegistry.registerBlock(ret[i], BarricadeItem.class, "barricade." + prefix + "." + name[i]);
-        }
-        return ret;
-    }
-    private void recipeBarricades (Block out[], Block in)
-    {
-    	for (int i = 0; i < out.length; i++)
-    		GameRegistry.addRecipe(new ItemStack(out[i], 1, 0), "b", "b", 'b', new ItemStack(in, 1, i));
+    	String[] newStr = str.clone();
+    	for (int i = 0; i < newStr.length; i++)
+    		newStr[i] += toAppend;
+		return newStr;
     }
 
     @Override

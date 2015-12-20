@@ -161,9 +161,7 @@ public class BaseCropWorldgen implements IWorldGenerator
             int j1 = (y + random.nextInt(4)) - random.nextInt(4);
             int k1 = (z + random.nextInt(8)) - random.nextInt(8);
             if (world.isAirBlock(i1, j1, k1) && Blocks.yellow_flower.canBlockStay(world, i1, j1, k1))
-            {
                 world.setBlock(i1, j1, k1, NContent.crops, 8, 2);
-            }
         }
 
         return true;
@@ -177,9 +175,7 @@ public class BaseCropWorldgen implements IWorldGenerator
             int j1 = (y + random.nextInt(8)) - random.nextInt(8);
             int k1 = (z + random.nextInt(8)) - random.nextInt(8);
             if (world.isAirBlock(i1, j1, k1) && Blocks.yellow_flower.canBlockStay(world, i1, j1, k1))
-            {
                 world.setBlock(i1, j1, k1, NContent.bluebells, 0, 2);
-            }
         }
 
         return true;

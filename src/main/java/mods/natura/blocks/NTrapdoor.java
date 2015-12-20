@@ -1,16 +1,19 @@
 package mods.natura.blocks;
 
 import mods.natura.Natura;
+import mods.natura.common.NContent;
+import mods.natura.common.NReg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class NTrapdoor extends BlockTrapDoor
+public class NTrapdoor extends BlockTrapDoor implements NReg
 {
     String textureName;
 
@@ -25,7 +28,7 @@ public class NTrapdoor extends BlockTrapDoor
     	super(Material.wood);
     	constructor(woodName, woodName);
     }
-    
+
     private void constructor(String woodName, String texture)
     {
         textureName = texture + "_trapdoor";
@@ -35,7 +38,6 @@ public class NTrapdoor extends BlockTrapDoor
         this.setBlockName("trapdoor." + woodName);
         this.disableStats();
     }
-
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -51,4 +53,19 @@ public class NTrapdoor extends BlockTrapDoor
         return this.blockIcon;
     }
 
+	@Override
+	public void reg() {
+        GameRegistry.registerBlock(this, "trapdoor." + this.getUnlocalizedName());
+	}
+
+	@Override
+	public void regRecipe() {
+    	GameRegistry.addRecipe(new ItemStack(this, 2, 0), "###", "###", '#', new ItemStack(NContent.planks, 1, i++));
+	}
+
+	@Override
+	public void regOredict() {
+	}
+
+	static int i = 0;
 }

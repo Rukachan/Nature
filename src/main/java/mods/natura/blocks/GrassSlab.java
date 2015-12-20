@@ -3,7 +3,9 @@ package mods.natura.blocks;
 import java.util.List;
 
 import mods.natura.client.GrassColorizerAlternate;
+import mods.natura.items.blocks.GrassSlabItem;
 import mods.natura.Natura;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,16 +16,16 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeGenBase;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GrassSlab extends NSlabBase
 {
-    public GrassSlab(String name)
+    public GrassSlab()
     {
-        super(Material.ground, name);
-        this.setHardness(0.6F);
-        this.setCreativeTab(Natura.tab);
+        super(Material.ground, 0.6f, null, -1, 3);
+        this.stepSound = Block.soundTypeGrass;
     }
 
     @Override
@@ -41,35 +43,19 @@ public class GrassSlab extends NSlabBase
     }
 
     @Override
-    public void getSubBlocks (Item id, CreativeTabs tab, List list)
-    {
-        for (int i = 0; i < 3; i++)
-            list.add(new ItemStack(id, 1, i));
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor ()
     {
-        double d0 = 0.5D;
-        double d1 = 1.0D;
-        return ColorizerGrass.getGrassColor(d0, d1);
+        return ColorizerGrass.getGrassColor(0.5D, 1.0D);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor (int meta)
     {
-        /*if (par1 % 8 == 0)
-            return this.getBlockColor();
-        return 0xFFFFFF;*/
-        double d0 = 0.5D;
-        double d1 = 1.0D;
-        if (meta == 1)
-            return GrassColorizerAlternate.getBlueGrassColor(d0, 0.5D);
-        if (meta == 2)
-            return GrassColorizerAlternate.getOrangeGrassColor(1.0D, 1.0D);
-        return ColorizerGrass.getGrassColor(d0, d1);
+        return meta == 1 ? GrassColorizerAlternate.getBlueGrassColor(0.5D, 0.5D)
+        	  :meta == 2 ? GrassColorizerAlternate.getOrangeGrassColor(1.0D, 1.0D)
+        			     : ColorizerGrass.getGrassColor(0.5D, 1.0D);
     }
 
     @Override
@@ -100,10 +86,15 @@ public class GrassSlab extends NSlabBase
                 }
                 else
                     grassColor = biome.getBiomeGrassColor(x, y, z);
-                l += (grassColor & 16711680) >> 16;
-                i1 += (grassColor & 65280) >> 8;
+                l += (grassColor & 0xFF0000) >> 16;
+                i1 += (grassColor & 0xFF00) >> 8;
                 j1 += grassColor & 0xFF;
             }
         return (l / 9 & 0xFF) << 16 | (i1 / 9 & 0xFF) << 8 | j1 / 9 & 0xFF;
+    }
+
+    @Override
+    public void reg() {
+    	GameRegistry.registerBlock(this, GrassSlabItem.class, "GrassSlab");
     }
 }

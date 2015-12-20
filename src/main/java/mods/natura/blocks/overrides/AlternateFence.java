@@ -4,21 +4,26 @@ import java.util.List;
 
 import mods.natura.client.FenceRender;
 import mods.natura.common.NContent;
+import mods.natura.common.NReg;
+import mods.natura.items.blocks.FenceItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class AlternateFence extends BlockFence
+public class AlternateFence extends BlockFence implements NReg
 {
     public AlternateFence(Material par3Material)
     {
@@ -85,4 +90,20 @@ public class AlternateFence extends BlockFence
         else
         	return true;
     }
+
+	@Override
+	public void reg() {
+		GameRegistry.registerBlock(this, FenceItem.class, "Natura.fence"); 
+	}
+
+	@Override
+	public void regRecipe() {
+	    for (int i = 0; i < NContent.woodTextureNames.length; i++)
+        	GameRegistry.addRecipe(new ItemStack(this, 2, i), "s#s", "s#s", '#', new ItemStack(NContent.planks, 1, i), 's', Items.stick);
+	}
+
+	@Override
+	public void regOredict() {
+        OreDictionary.registerOre("fenceWood", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
+	}
 }

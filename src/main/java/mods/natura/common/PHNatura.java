@@ -107,15 +107,7 @@ public class PHNatura
         enableNaturaBarricades = config.get("Disabler", "Enable Natura Barricades", true).getBoolean(true);
         enableNaturaPlankBarricades = config.get("Disabler", "Enable Natura Plank Barricades", true).getBoolean(true);
 
-        try
-        {
-            Class.forName("chococraft.common.ModChocoCraft");
-            enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", false).getBoolean(false);
-        }
-        catch (Exception e)
-        {
-            enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", true).getBoolean(true);
-        }
+        enableWheatRecipe = config.get("Disabler", "Enable wheat to flour recipe", true).getBoolean(true);
         enableBarleyRecipe = config.get("Disabler", "Enable barley to flour recipe", true).getBoolean(true);
 
         redwoodSpawnRarity = config.get("Worldgen", "Redwood Tree Spawn Rarity", 150).getInt(150);

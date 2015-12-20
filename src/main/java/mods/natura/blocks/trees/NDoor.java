@@ -3,6 +3,7 @@ package mods.natura.blocks.trees;
 import java.util.Random;
 
 import mods.natura.common.NContent;
+import mods.natura.common.NReg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
@@ -15,10 +16,11 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class NDoor extends BlockDoor
+public class NDoor extends BlockDoor implements NReg
 {
     private int meta;
     public IIcon[] icons;
@@ -57,13 +59,11 @@ public class NDoor extends BlockDoor
 
         this.icons[0] = iconRegister.registerIcon("natura:" + doorName + "_door_bottom");
         this.icons[1] = iconRegister.registerIcon("natura:" + doorName + "_door_top");
-        
+
         this.iconsReverse = new IIcon[this.icons.length];
-        
+
         for (int i = 0; i < this.icons.length; i++)
-        {
             this.iconsReverse[i] = new IconFlipped(this.icons[i], true, false);
-        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -80,57 +80,37 @@ public class NDoor extends BlockDoor
             boolean flag = (i1 & 4) != 0;
             boolean flag1 = false;
             boolean flag2 = (i1 & 8) != 0;
-            
+
             if (flag)
             {
                 if (j1 == 0 && side == 2)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 1 && side == 5)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 2 && side == 3)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 3 && side == 4)
-                {
                     flag1 = !flag1;
-                }
             }
             else
             {
                 if (j1 == 0 && side == 5)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 1 && side == 3)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 2 && side == 4)
-                {
                     flag1 = !flag1;
-                }
                 else if (j1 == 3 && side == 2)
-                {
                     flag1 = !flag1;
-                }
-    
+
                 if ((i1 & 16) != 0)
-                {
                     flag1 = !flag1;
-                }
             }
 
-            return flag1 ? this.iconsReverse[(flag2 ? 1 : 0)] : this.icons[(flag2 ? 1 : 0)];
+            return flag1 ? this.iconsReverse[flag2 ? 1 : 0] : this.icons[flag2 ? 1 : 0];
         }
         else
-        {
             return this.icons[0];
-        }
     }
 
     @Override
@@ -151,4 +131,17 @@ public class NDoor extends BlockDoor
     {
         return 7;
     }
+
+	@Override
+	public void reg() {
+        GameRegistry.registerBlock(this, "door." + this.getUnlocalizedName());
+	}
+
+	@Override
+	public void regRecipe() {
+	}
+
+	@Override
+	public void regOredict() {
+	}
 }

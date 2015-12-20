@@ -19,10 +19,9 @@ public class CloudBlock extends NBlock
 {
     public CloudBlock()
     {
-        super(Natura.cloud, 0.3F, new String[] { "cloud_white", "cloud_gray", "cloud_dark", "cloud_sulfur" });
+        super(Natura.cloud, 0.3F, new String[] {"cloud_white", "cloud_gray", "cloud_dark", "cloud_sulfur"});
         this.setStepSound(soundTypeCloth);
         this.setBlockName("cloud");
-        this.setCreativeTab(Natura.tab);
     }
 
     @Override
@@ -42,9 +41,7 @@ public class CloudBlock extends NBlock
         }
 
         if (entity.motionY < 0.0D)
-        {
             entity.motionY *= 0.005D;
-        }
         entity.fallDistance = 0.0F;
     }
 
@@ -61,15 +58,16 @@ public class CloudBlock extends NBlock
         return super.onBlockActivated(world, x, y, z, player, par6, par7, par8, par9);
     }
 
+    /*
     @Override
     public void onBlockDestroyedByExplosion (World world, int x, int y, int z, Explosion par5Explosion)
     {
-        /*int meta = world.getBlockMetadata(x, y, z);
+        int meta = world.getBlockMetadata(x, y, z);
         if (meta == 3)
         {
             this.explode(world, x, y, z, 1, null);
-        }*/
-    }
+        }
+    }*/
 
     public void explode (World world, int x, int y, int z, int size, EntityLivingBase living)
     {
@@ -91,15 +89,7 @@ public class CloudBlock extends NBlock
     @Override
     public boolean shouldSideBeRendered (IBlockAccess iblockaccess, int x, int y, int z, int side)
     {
-        Block block = iblockaccess.getBlock(x, y, z);
-        if (block == NContent.cloud)
-        {
-            return false;
-        }
-        else
-        {
-            return super.shouldSideBeRendered(iblockaccess, x, y, z, side);
-        }
+        return iblockaccess.getBlock(x, y, z) == NContent.cloud ? false : super.shouldSideBeRendered(iblockaccess, x, y, z, side);
     }
 
     @Override
@@ -115,37 +105,19 @@ public class CloudBlock extends NBlock
     }
 
     @Override
-    public int damageDropped (int meta)
-    {
-        return meta;
-    }
-
-    @Override
     public boolean isBlockSolid (IBlockAccess iblockaccess, int x, int y, int z, int l)
     {
-        Block block = iblockaccess.getBlock(x, y, z);
-        if (block == NContent.cloud)
-        {
-            return false;
-        }
-        else
-        {
-            return super.isBlockSolid(iblockaccess, x, y, z, l);
-        }
+        return iblockaccess.getBlock(x, y, z) == NContent.cloud ? false : super.isBlockSolid(iblockaccess, x, y, z, l);
     }
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
-        if (world.getBlock(x, y - 1, z) == NContent.cloud)
-        {
-            return null;
-        }
-        else
-        {
-            return AxisAlignedBB.getBoundingBox(x, y, z, x + 1.0D, y + 0.0625D, z + 1.0D);
-        }
+    	return world.getBlock(x, y - 1, z) == NContent.cloud ? null : AxisAlignedBB.getBoundingBox(x, y, z, x + 1.0D, y + 0.0625D, z + 1.0D);
     }
 
-    /* Explosions! */
+	@Override
+	public void reg() {
+		// TODO Auto-generated method stub
+	}
 }

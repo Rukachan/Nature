@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -46,10 +47,7 @@ public class BabyHeatscarSpider extends EntitySpider
             }
         }
         else
-        {
             super.attackEntity(par1Entity, par2);
-        }
-
     }
 
     @Override
@@ -58,9 +56,7 @@ public class BabyHeatscarSpider extends EntitySpider
         this.motionY = 0.62D;
 
         if (this.isPotionActive(Potion.jump))
-        {
             this.motionY += (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
-        }
 
         if (this.isSprinting())
         {
@@ -78,23 +74,15 @@ public class BabyHeatscarSpider extends EntitySpider
     {
         par1 = ForgeHooks.onLivingFall(this, par1);
         if (par1 <= 0)
-        {
             return;
-        }
 
         super.fall(par1);
         int i = MathHelper.ceiling_float_int(par1 - 5.0F);
 
         if (i > 0)
         {
-            if (i > 4)
-            {
-                this.playSound("damage.fallbig", 1.0F, 1.0F);
-            }
-            else
-            {
-                this.playSound("damage.fallsmall", 1.0F, 1.0F);
-            }
+        	this.playSound(i > 4 ? "damage.fallbig" : "damage.fallsmall", 1.0F, 1.0F);
+
 
             this.attackEntityFrom(DamageSource.fall, i);
             Block j = this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY - 0.20000000298023224D - this.yOffset), MathHelper.floor_double(this.posZ));
@@ -114,32 +102,15 @@ public class BabyHeatscarSpider extends EntitySpider
         {
             if (par1Entity instanceof EntityLiving)
             {
-                byte b0 = 0;
-
-                if (this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL)
-                {
-                    if (this.worldObj.difficultySetting == EnumDifficulty.NORMAL)
-                    {
-                        b0 = 5;
-                    }
-                    else if (this.worldObj.difficultySetting == EnumDifficulty.HARD)
-                    {
-                        b0 = 10;
-                    }
-                }
-
+            	int b0 = this.worldObj.difficultySetting == EnumDifficulty.NORMAL ? 5 : this.worldObj.difficultySetting == EnumDifficulty.HARD ? 10 : 0;
                 if (b0 > 0)
-                {
                     par1Entity.setFire(b0);
-                }
             }
 
             return true;
         }
         else
-        {
             return false;
-        }
     }
 
     public int getAttackStrength (Entity par1Entity)
@@ -150,14 +121,7 @@ public class BabyHeatscarSpider extends EntitySpider
     @Override
     protected Item getDropItem ()
     {
-        return NContent.plantItem;
-    }
-
-    @Override
-    // dropItemWithOffset
-    public EntityItem func_145778_a (Item item, int par2, float offset)
-    {
-        return this.entityDropItem(new ItemStack(item, par2, 7), offset);
+        return Items.string;
     }
 
     @Override
@@ -170,14 +134,10 @@ public class BabyHeatscarSpider extends EntitySpider
             int k = this.rand.nextInt(3) + 2;
 
             if (par2 > 0)
-            {
                 k += this.rand.nextInt(par2 + 1);
-            }
 
             for (int l = 0; l < k; ++l)
-            {
                 this.dropItem(j, 1);
-            }
         }
     }
 
