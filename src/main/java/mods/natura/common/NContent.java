@@ -322,7 +322,6 @@ public class NContent implements IFuelHandler
         	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 8, 5));
         }
 
-        /* Stairs */
         if (PHNatura.enableStairs)
         	for (int i = 0; i < woodTextureNames.length; i++)
         		regs.add(new NStairs(planks, i, woodTextureNames[i]));

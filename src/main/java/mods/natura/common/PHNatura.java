@@ -10,7 +10,7 @@ import mods.natura.plugins.PluginManager;
 
 public class PHNatura
 {
-    public static void initProps (File confFile)
+	public static void initProps (File confFile)
     {
         /* [Forge] Configuration class, used as config method */
         Configuration config = new Configuration(confFile);
@@ -167,6 +167,10 @@ public class PHNatura
         cloudBlacklist = config.get("Worldgen","dimension blacklist(clouds)", new int[]{}).getIntList();
         sulfurCloudBlacklist = config.get("Worldgen","dimension blacklist(sulfur clouds)", new int[]{}).getIntList();
 
+        disableAllCropWorldgen = config.get("Worldgen", "Disable all crop worldgen", false).getBoolean(false);
+        disableAllCloudWorldgen = config.get("Worldgen", "Disable all cloud worldgen", false).getBoolean(false);
+        disableAllTreeWorldgen = config.get("Worldgen", "Disable all tree worldgen", false).getBoolean(false);
+
         seaLevel = config.get("general", "Sea level", 64).getInt(64);
 
         PluginManager.config(config);
@@ -179,7 +183,10 @@ public class PHNatura
     public static int[] darkCloudBlacklist;
     public static int[] cloudBlacklist;
     public static int[] sulfurCloudBlacklist;
-    /* Prototype fields, used elsewhere */
+
+    public static boolean disableAllCropWorldgen;
+    public static boolean disableAllCloudWorldgen;
+    public static boolean disableAllTreeWorldgen;
 
     public static int seaLevel;
 

@@ -98,9 +98,12 @@ public class Natura
     @EventHandler
     public void init (FMLInitializationEvent evt)
     {
-        GameRegistry.registerWorldGenerator(crops = new BaseCropWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
-        GameRegistry.registerWorldGenerator(clouds = new BaseCloudWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
-        GameRegistry.registerWorldGenerator(trees = new BaseTreeWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
+    	if (!PHNatura.disableAllCropWorldgen)
+    		GameRegistry.registerWorldGenerator(crops = new BaseCropWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
+    	if (!PHNatura.disableAllCloudWorldgen)
+    		GameRegistry.registerWorldGenerator(clouds = new BaseCloudWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
+    	if (!PHNatura.disableAllTreeWorldgen)
+    		GameRegistry.registerWorldGenerator(trees = new BaseTreeWorldgen(), 20); // TODO 1.7 Find correct weight (param 2)
 
         proxy.registerRenderer();
         proxy.addNames();

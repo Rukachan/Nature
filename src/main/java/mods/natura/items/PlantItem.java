@@ -16,16 +16,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class PlantItem extends Item
 {
-    public String[] textureNames;
-    public String[] unlocalizedNames;
+    public String[] textureNames = {"barley_plant", "barley_flour", "wheat_flour", "cotton_plant", "sulfur", "ghostwood_fletching", "leather_imp", "flamestring", "dye_blue"};
+    public String[] unlocalizedNames = {"barley.plant", "barley.flour", "wheat.flour", "cotton.plant", "powder.sulfur", "fletching.ghostwood", "leather.imp", "string.flame", "dye.blue"};
     public IIcon[] icons;
 
     public PlantItem()
     {
         super();
-
-        textureNames = new String[] {"barley_plant", "barley_flour", "wheat_flour", "cotton_plant", "sulfur", "ghostwood_fletching", "leather_imp", "flamestring", "dye_blue"};
-        unlocalizedNames = new String[] {"barley.plant", "barley.flour", "wheat.flour", "cotton.plant", "powder.sulfur", "fletching.ghostwood", "leather.imp", "string.flame", "dye.blue"};
 
         this.setCreativeTab(Natura.tab);
         this.setMaxDamage(0);
