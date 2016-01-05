@@ -42,26 +42,19 @@ public class BoneBag extends Item
 
         boolean planted = false;
         for (int posX = x - 1; posX <= x + 1; posX++)
-        {
             for (int posZ = z - 1; posZ <= z + 1; posZ++)
-            {
-                if (player.canPlayerEdit(posX, y, posZ, side, stack) && player.canPlayerEdit(posX, y + 1, posZ, side, stack))
+                if (player.canPlayerEdit(posX, y, posZ, side, stack)
+                	&& player.canPlayerEdit(posX, y + 1, posZ, side, stack)
+                	&& applyBonemeal(stack, world, posX, y, posZ, player))
                 {
-                    if (applyBonemeal(stack, world, posX, y, posZ, player))
-                    {
-                        planted = true;
-                        if (!world.isRemote)
-                        {
-                            world.playAuxSFX(2005, posX, y, posZ, 0);
-                        }
-                    }
+                	planted = true;
+                	if (!world.isRemote)
+                		world.playAuxSFX(2005, posX, y, posZ, 0);
                 }
-            }
-        }
         if (planted)
         {
             if (!player.capabilities.isCreativeMode)
-                stack.stackSize--;
+                stack.stackSize--; /* move it here? */
             if (stack.stackSize < 1)
                 player.destroyCurrentEquippedItem();
         }
@@ -74,32 +67,16 @@ public class BoneBag extends Item
 
         BonemealEvent event = new BonemealEvent(player, par1World, l, par2, par3, par4);
         if (MinecraftForge.EVENT_BUS.post(event))
-        {
             return false;
-        }
 
         event.getResult();
         if (event.getResult() == Result.ALLOW)
-        {
-            /*if (!par1World.isRemote)
-            {
-                par0ItemStack.stackSize--;
-            }*/
             return true;
-        }
 
         if (l == Blocks.sapling)
         {
-            if (!par1World.isRemote)
-            {
-                if (par1World.rand.nextFloat() < 0.45D)
-                {
-                    ((BlockSapling) Blocks.sapling).func_149879_c/*markOrGrowMarked*/(par1World, par2, par3, par4, par1World.rand);
-                }
-
-                //--par0ItemStack.stackSize;
-            }
-
+            if (!par1World.isRemote && par1World.rand.nextFloat() < 0.45D)
+            	((BlockSapling) Blocks.sapling).func_149879_c/*markOrGrowMarked*/(par1World, par2, par3, par4, par1World.rand);
             return true;
         }
         else if (l != Blocks.brown_mushroom && l != Blocks.red_mushroom)
@@ -109,16 +86,11 @@ public class BoneBag extends Item
                 if (l != null && l instanceof BlockCrops)
                 {
                     if (par1World.getBlockMetadata(par2, par3, par4) == 7)
-                    {
                         return false;
-                    }
                     else
                     {
                         if (!par1World.isRemote)
-                        {
                             ((BlockCrops) l).func_149863_m/*fertilize*/(par1World, par2, par3, par4);
-                            //--par0ItemStack.stackSize;
-                        }
 
                         return true;
                     }
@@ -136,9 +108,7 @@ public class BoneBag extends Item
                         k1 = BlockCocoa.func_149987_c(i1);
 
                         if (k1 >= 2)
-                        {
                             return false;
-                        }
                         else
                         {
                             if (!par1World.isRemote)
@@ -152,9 +122,7 @@ public class BoneBag extends Item
                         }
                     }
                     else if (l != Blocks.grass)
-                    {
                         return false;
-                    }
                     else
                     {
                         if (!par1World.isRemote)
@@ -175,9 +143,7 @@ public class BoneBag extends Item
                                     l1 += itemRand.nextInt(3) - 1;
 
                                     if (par1World.getBlock(j1, k1 - 1, l1) != Blocks.grass || par1World.getBlock(j1, k1, l1).isNormalCube())
-                                    {
                                         continue label102;
-                                    }
                                 }
 
                                 if (par1World.getBlock(j1, k1, l1) == Blocks.air)
@@ -185,9 +151,7 @@ public class BoneBag extends Item
                                     if (itemRand.nextInt(10) != 0)
                                     {
                                         if (Blocks.tallgrass.canBlockStay(par1World, j1, k1, l1))
-                                        {
                                             par1World.setBlock(j1, k1, l1, Blocks.tallgrass, 1, 3);
-                                        }
                                     }
                                     else
                                     {
@@ -202,31 +166,19 @@ public class BoneBag extends Item
                 }
             }
             else if (par1World.getBlockMetadata(par2, par3, par4) == 7)
-            {
                 return false;
-            }
             else
             {
                 if (!par1World.isRemote)
-                {
                     ((BlockStem) l).func_149874_m/*fertilizeStem*/(par1World, par2, par3, par4);
-                    //--par0ItemStack.stackSize;
-                }
 
                 return true;
             }
         }
         else
         {
-            if (!par1World.isRemote)
-            {
-                if (par1World.rand.nextFloat() < 0.4D)
-                {
-                    ((BlockMushroom) l).func_149884_c/*fertilizeMushroom*/(par1World, par2, par3, par4, par1World.rand);
-                }
-
-                //--par0ItemStack.stackSize;
-            }
+        	if (!par1World.isRemote && par1World.rand.nextFloat() < 0.4D)
+        		((BlockMushroom) l).func_149884_c/*fertilizeMushroom*/(par1World, par2, par3, par4, par1World.rand);
 
             return true;
         }

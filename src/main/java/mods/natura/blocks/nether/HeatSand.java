@@ -52,9 +52,7 @@ public class HeatSand extends BlockFalling
                 entity.attackEntityFrom(DamageSource.inFire, 1);
         }
         else if (entity instanceof EntityLiving && !entity.isImmuneToFire())
-        {
             entity.attackEntityFrom(DamageSource.inFire, 1);
-        }
         /*par5Entity.motionX *= 0.4D;
         par5Entity.motionZ *= 0.4D;*/
     }

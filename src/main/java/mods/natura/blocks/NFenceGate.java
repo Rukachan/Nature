@@ -17,12 +17,15 @@ public class NFenceGate extends BlockFenceGate implements NReg
 {
     Block modelBlock;
     int modelMeta;
+    String name;
 
     public NFenceGate(Block block, int meta, String name)
     {
         super();
-        modelBlock = block;
-        modelMeta = meta;
+        this.modelBlock = block;
+        this.modelMeta = meta;
+        this.name = name;
+
         this.setCreativeTab(Natura.tab);
         this.setHardness(2.0F);
         this.setResistance(5.0F);
@@ -45,7 +48,7 @@ public class NFenceGate extends BlockFenceGate implements NReg
 
 	@Override
 	public void reg() {
-		GameRegistry.registerBlock(this, "fenceGate." + this.getUnlocalizedName());
+		GameRegistry.registerBlock(this, "fenceGate." + this.name);
 	}
 
 	@Override

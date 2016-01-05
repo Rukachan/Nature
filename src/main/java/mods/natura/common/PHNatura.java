@@ -57,7 +57,7 @@ public class PHNatura
         generateAshClouds = config.get("Disabler", "Generate Ash Clouds", true).getBoolean(true);
         generateDarkClouds = config.get("Disabler", "Generate Dark Clouds", true).getBoolean(true);
 
-        generatePurpleheart = config.get("Disabler", "Generate Amaranth Trees", true).getBoolean(true);
+        generatePurpleheart = config.get("Disabler", "Generate Purpleheart Trees", true).getBoolean(true);
         generateWillow = config.get("Disabler", "Generate Willow Trees", true).getBoolean(true);
         generateTiger = config.get("Disabler", "Generate Tigerwood Trees", true).getBoolean(true);
         generateSilverbell = config.get("Disabler", "Generate Silverbell Trees", true).getBoolean(true);
@@ -121,7 +121,7 @@ public class PHNatura
         bushSpawnRange = config.get("Worldgen", "Bush Tree Spawn Range", 20).getInt(20);
 
         willowRarity = config.get("Worldgen", "Willow Tree Spawn Rarity", 10).getInt(10);
-        purpleheartRarity = config.get("Worldgen", "Amaranth Tree Spawn Rarity", 1).getInt(1);
+        purpleheartRarity = config.get("Worldgen", "Purpleheart Tree Spawn Rarity", 1).getInt(1);
         mapleRarity = config.get("Worldgen", "Maple Tree Spawn Rarity", 34).getInt(34);
         tigerRarity = config.get("Worldgen", "Tigerwood Tree Spawn Rarity", 30).getInt(30);
         silverbellRarity = config.get("Worldgen", "Silverbell Tree Spawn Rarity", 70).getInt(70);

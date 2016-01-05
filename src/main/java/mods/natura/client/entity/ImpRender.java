@@ -20,5 +20,4 @@ public class ImpRender extends RenderLiving
     }
 
     static final ResourceLocation texture = new ResourceLocation("natura", "textures/mob/imp.png");
-
 }

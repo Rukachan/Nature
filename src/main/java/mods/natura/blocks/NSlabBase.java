@@ -28,6 +28,7 @@ public class NSlabBase extends NBlock
         super(material, hardness, model, -1, -1, totalSize);
         this.startingMeta = meta;
         this.stepSound = Block.soundTypeWood;
+        this.setBlockName("plankSlab");
     }
 
     @Override
@@ -85,7 +86,7 @@ public class NSlabBase extends NBlock
 
 	@Override
 	public void reg() {
-        GameRegistry.registerBlock(this, PlankSlabItem.class, "plankSlab" + i++);
+        GameRegistry.registerBlock(this, PlankSlabItem.class, "plankSlab" + ++i);
 	}
 
 	static int i = 0;

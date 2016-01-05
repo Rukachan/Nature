@@ -26,9 +26,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class NetherrackFurnaceLogic extends TileEntityFurnace
 {
-    private static final int[] slots_top = new int[] { 0 };
-    private static final int[] slots_bottom = new int[] { 2, 1 };
-    private static final int[] slots_sides = new int[] { 1 };
+    private static final int[] slots_top = {0};
+    private static final int[] slots_bottom = {2, 1};
+    private static final int[] slots_sides = {1};
 
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -79,17 +79,13 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
                 itemstack = this.inventory[par1].splitStack(par2);
 
                 if (this.inventory[par1].stackSize == 0)
-                {
                     this.inventory[par1] = null;
-                }
 
                 return itemstack;
             }
         }
         else
-        {
             return null;
-        }
     }
 
     /**
@@ -106,9 +102,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
             return itemstack;
         }
         else
-        {
             return null;
-        }
     }
 
     /**
@@ -120,9 +114,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         this.inventory[par1] = par2ItemStack;
 
         if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit())
-        {
             par2ItemStack.stackSize = this.getInventoryStackLimit();
-        }
     }
 
     /**
@@ -166,9 +158,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
             byte b0 = nbttagcompound1.getByte("Slot");
 
             if (b0 >= 0 && b0 < this.inventory.length)
-            {
                 this.inventory[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-            }
         }
 
         this.furnaceBurnTime = par1NBTTagCompound.getShort("BurnTime");
@@ -176,9 +166,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         this.currentItemBurnTime = getFuelTime(this.inventory[1]) * 2;
 
         if (par1NBTTagCompound.hasKey("CustomName"))
-        {
             this.field_94130_e = par1NBTTagCompound.getString("CustomName");
-        }
         readNetworkNBT(par1NBTTagCompound);
     }
 
@@ -194,7 +182,6 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.inventory.length; ++i)
-        {
             if (this.inventory[i] != null)
             {
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
@@ -202,14 +189,11 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
                 this.inventory[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
             }
-        }
 
         par1NBTTagCompound.setTag("Items", nbttaglist);
 
         if (this.isInvNameLocalized())
-        {
             par1NBTTagCompound.setString("CustomName", this.field_94130_e);
-        }
         writeNetworkNBT(par1NBTTagCompound);
     }
 
@@ -272,9 +256,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
     public int getBurnTimeRemainingScaled (int par1)
     {
         if (this.currentItemBurnTime == 0)
-        {
             this.currentItemBurnTime = 200;
-        }
 
         return this.furnaceBurnTime * par1 / this.currentItemBurnTime;
     }
@@ -299,9 +281,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         boolean flag1 = false;
 
         if (this.furnaceBurnTime > 0)
-        {
             --this.furnaceBurnTime;
-        }
 
         if (!this.worldObj.isRemote)
         {
@@ -318,9 +298,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
                         --this.inventory[1].stackSize;
 
                         if (this.inventory[1].stackSize == 0)
-                        {
                             this.inventory[1] = this.inventory[1].getItem().getContainerItem(inventory[1]);
-                        }
                     }
                 }
             }
@@ -361,9 +339,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         }
 
         if (flag1)
-        {
             this.markDirty();
-        }
     }
 
     /**
@@ -372,17 +348,13 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
     private boolean canSmelt ()
     {
         if (this.inventory[0] == null)
-        {
             return false;
-        }
         else
         {
             ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.inventory[0]);
-            if (itemstack == null)
-                return false;
             if (this.inventory[2] == null)
                 return true;
-            if (!this.inventory[2].isItemEqual(itemstack))
+            if (itemstack == null || !this.inventory[2].isItemEqual(itemstack))
                 return false;
             int result = inventory[2].stackSize + itemstack.stackSize;
             return (result <= getInventoryStackLimit() && result <= itemstack.getMaxStackSize());
@@ -400,20 +372,14 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
             ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.inventory[0]);
 
             if (this.inventory[2] == null)
-            {
                 this.inventory[2] = itemstack.copy();
-            }
             else if (this.inventory[2].isItemEqual(itemstack))
-            {
                 inventory[2].stackSize += itemstack.stackSize;
-            }
 
             --this.inventory[0].stackSize;
 
             if (this.inventory[0].stackSize <= 0)
-            {
                 this.inventory[0] = null;
-            }
         }
     }
 
@@ -426,55 +392,25 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
     public static int getFuelTime (ItemStack par0ItemStack)
     {
         if (par0ItemStack == null)
-        {
             return 0;
-        }
         else
         {
             Item item = par0ItemStack.getItem();
+            Block block = par0ItemStack.getItem() instanceof ItemBlock && item != null ? Block.getBlockFromItem(item) : null;
 
-            if (par0ItemStack.getItem() instanceof ItemBlock && item != null)
-            {
-                Block block = Block.getBlockFromItem(item);
-
-                if (block == Blocks.wooden_slab)
-                {
-                    return 150;
-                }
-
-                if (block instanceof BlockLog)
-                {
-                    return 1200;
-                }
-
-                if (block.getMaterial() == Material.wood)
-                {
-                    return 300;
-                }
-
-                if (block == Blocks.coal_block)
-                {
-                    return 16000;
-                }
-            }
-
-            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD"))
-                return 200;
-            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD"))
-                return 200;
-            if (item instanceof ItemHoe && ((ItemHoe) item).getToolMaterialName().equals("WOOD"))
-                return 200;
-            if (item == Items.stick)
-                return 100;
-            if (item == Items.coal)
-                return 1600;
-            if (item == Items.lava_bucket)
-                return 20000;
-            if (Block.getBlockFromItem(item) == Blocks.sapling)
-                return 100;
-            if (item == Items.blaze_rod)
-                return 2400;
-            return GameRegistry.getFuelValue(par0ItemStack);
+            return item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD")
+            		|| item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD")
+            		|| item instanceof ItemHoe && ((ItemHoe) item).getToolMaterialName().equals("WOOD")
+            		? 200
+            				: item == Items.stick || Block.getBlockFromItem(item) == Blocks.sapling ? 100
+            						: item == Items.coal ? 1600
+            								: item == Items.lava_bucket ? 20000
+            										: item == Items.blaze_rod ? 2400
+            												: block != null && block == Blocks.wooden_slab ? 150
+            														: block != null && block instanceof BlockLog ? 1200
+            																:block != null && block.getMaterial() == Material.wood ? 300
+            																		: block != null && block == Blocks.coal_block ? 16000
+            																				: GameRegistry.getFuelValue(par0ItemStack);
         }
     }
 
@@ -495,21 +431,13 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
 
-    public void openChest ()
-    {
-    }
-
-    public void closeChest ()
-    {
-    }
-
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
     @Override
     public boolean isItemValidForSlot (int par1, ItemStack par2ItemStack)
     {
-        return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
+        return par1 == 2 ? false : par1 == 1 ? isItemFuel(par2ItemStack) : true;
     }
 
     /**
@@ -519,7 +447,7 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
     @Override
     public int[] getAccessibleSlotsFromSide (int par1)
     {
-        return par1 == 0 ? slots_bottom : (par1 == 1 ? slots_top : slots_sides);
+        return par1 == 0 ? slots_bottom : par1 == 1 ? slots_top : slots_sides;
     }
 
     /**
@@ -555,15 +483,12 @@ public class NetherrackFurnaceLogic extends TileEntityFurnace
         case 0:
             direction = 2;
             break;
-
         case 1:
             direction = 5;
             break;
-
         case 2:
             direction = 3;
             break;
-
         case 3:
             direction = 4;
             break;

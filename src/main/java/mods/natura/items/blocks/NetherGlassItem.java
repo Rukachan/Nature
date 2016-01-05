@@ -33,9 +33,7 @@ public class NetherGlassItem extends MultiItemBlock
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage (int meta)
     {
-        if (meta < 1)
-            return NContent.netherGlass.icons[2];
-        return NContent.netherGlass.icons[3];
+        return NContent.netherGlass.icons[meta < 1 ? 2 : 3];
     }
 
     @Override

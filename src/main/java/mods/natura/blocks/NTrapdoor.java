@@ -15,27 +15,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class NTrapdoor extends BlockTrapDoor implements NReg
 {
-    String textureName;
+    String name;
 
-    public NTrapdoor(String woodName, String textureName)
+    public NTrapdoor(String name)
     {
         super(Material.wood);
-        constructor(woodName, textureName);
-    }
+        this.name = name;
 
-    public NTrapdoor(String woodName)
-    {
-    	super(Material.wood);
-    	constructor(woodName, woodName);
-    }
-
-    private void constructor(String woodName, String texture)
-    {
-        textureName = texture + "_trapdoor";
         this.setHardness(3.0F);
         this.setStepSound(Block.soundTypeWood);
         this.setCreativeTab(Natura.tab);
-        this.setBlockName("trapdoor." + woodName);
+        this.setBlockName("trapdoor." + name);
         this.disableStats();
     }
 
@@ -43,7 +33,7 @@ public class NTrapdoor extends BlockTrapDoor implements NReg
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons (IIconRegister iconRegister)
     {
-        this.blockIcon = iconRegister.registerIcon("natura:" + textureName);
+        this.blockIcon = iconRegister.registerIcon("natura:" + this.name + "_trapdoor");
     }
 
     @Override
@@ -55,7 +45,7 @@ public class NTrapdoor extends BlockTrapDoor implements NReg
 
 	@Override
 	public void reg() {
-        GameRegistry.registerBlock(this, "trapdoor." + this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, "trapdoor." + this.name);
 	}
 
 	@Override

@@ -17,12 +17,15 @@ public class NButton extends BlockButton implements NReg
 {
     Block modelBlock;
     int modelMeta;
+    String name;
 
     public NButton(Block block, int meta, String name)
     {
         super(true);
-        modelBlock = block;
-        modelMeta = meta;
+        this.modelBlock = block;
+        this.modelMeta = meta;
+        this.name = name;
+
         this.setCreativeTab(Natura.tab);
     	this.setHardness(0.5F);
     	this.setStepSound(Block.soundTypeWood);
@@ -44,7 +47,7 @@ public class NButton extends BlockButton implements NReg
 
 	@Override
 	public void reg() {
-		GameRegistry.registerBlock(this, "button." + this.getUnlocalizedName());
+		GameRegistry.registerBlock(this, "button." + this.name);
 	}
 
 	@Override

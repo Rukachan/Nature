@@ -32,11 +32,7 @@ public class SeedFood extends ItemSeedFood
     @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float clickX, float clickY, float clickZ)
     {
-        if (side != 1)
-        {
-            return false;
-        }
-        else if (player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack))
+        if (side == 1 && player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack))
         {
             Block soil = world.getBlock(x, y, z);
 
@@ -48,15 +44,8 @@ public class SeedFood extends ItemSeedFood
                     world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(crop));
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

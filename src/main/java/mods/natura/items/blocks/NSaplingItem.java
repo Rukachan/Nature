@@ -50,68 +50,40 @@ public abstract class NSaplingItem extends MultiItemBlock
         Block blockID = world.getBlock(x, y, z);
 
         if (blockID == Blocks.snow && (world.getBlockMetadata(x, y, z) & 7) < 1)
-        {
             side = 1;
-        }
         else if (blockID != Blocks.vine && blockID != Blocks.tallgrass && blockID != Blocks.deadbush && (blockID == null || !blockID.isReplaceable(world, x, y, z)))
+        	switch (side)
+        	{
+        	case 0:
+        		--y;
+        		break;
+        	case 1:
+        		y++;
+        		break;
+        	case 2:
+        		z--;
+        		break;
+        	case 3:
+        		z++;
+        		break;
+        	case 4:
+        		x--;
+        		break;
+        	case 5:
+        		x++;
+        		break;
+        	}
+
         {
-            if (side == 0)
-            {
-                --y;
-            }
-
-            if (side == 1)
-            {
-                ++y;
-            }
-
-            if (side == 2)
-            {
-                --z;
-            }
-
-            if (side == 3)
-            {
-                ++z;
-            }
-
-            if (side == 4)
-            {
-                --x;
-            }
-
-            if (side == 5)
-            {
-                ++x;
-            }
-        }
-
-        if (stack.getItemDamage() == 5)
-        {
-            Block block = world.getBlock(x, y + 1, z);
-            if (block == null || world.isAirBlock(x, y + 1, z))
+        	int newy = stack.getItemDamage() == 5 ? y + 1 : y - 1;
+            Block block = world.getBlock(x, newy, z);
+            if (block == null || world.isAirBlock(x, newy, z))
                 return false;
         }
+
+        if (stack.stackSize == 0 || !player.canPlayerEdit(x, y, z, side, stack) || y == 255 && this.bID.getMaterial().isSolid() || !world.canPlaceEntityOnSide(this.bID, x, y, z, false, side, player, stack))
+            return false;
         else
-        {
-            Block block = world.getBlock(x, y - 1, z);
-            if (block == null || world.isAirBlock(x, y - 1, z))
-                return false;
-        }
-
-        if (stack.stackSize == 0)
-        {
-            return false;
-        }
-        else if (!player.canPlayerEdit(x, y, z, side, stack))
-        {
-            return false;
-        }
-        else if (y == 255 && this.bID.getMaterial().isSolid())
-        {
-            return false;
-        }
-        else if (world.canPlaceEntityOnSide(this.bID, x, y, z, false, side, player, stack))
         {
             Block block = this.bID;
             int j1 = this.getMetadata(stack.getItemDamage());
@@ -124,10 +96,6 @@ public abstract class NSaplingItem extends MultiItemBlock
             }
 
             return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }

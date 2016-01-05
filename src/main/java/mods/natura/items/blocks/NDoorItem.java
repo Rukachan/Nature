@@ -23,7 +23,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class NDoorItem extends Item implements NReg
 {
     public IIcon[] icons;
-    final public String[] textureNames = {"redwood", "eucalyptus", "hopseed", "sakura", "ghostwood", "bloodwood", "redwoodbark"};
+    final static public String[] textureNames = {"redwood", "eucalyptus", "hopseed", "sakura", "ghostwood", "bloodwood", "redwoodbark"};
 
     public NDoorItem()
     {

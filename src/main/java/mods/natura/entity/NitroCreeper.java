@@ -46,13 +46,9 @@ public class NitroCreeper extends EntityCreeper
                 boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 
                 if (this.getPowered())
-                {
                     this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 20f, flag);
-                }
                 else
-                {
                     this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3f, false);
-                }
 
                 this.setDead();
             }
@@ -74,9 +70,7 @@ public class NitroCreeper extends EntityCreeper
         super.readEntityFromNBT(par1NBTTagCompound);
 
         if (par1NBTTagCompound.hasKey("Fuse"))
-        {
             this.fuseTime = par1NBTTagCompound.getShort("Fuse");
-        }
     }
 
     @Override
@@ -88,16 +82,12 @@ public class NitroCreeper extends EntityCreeper
             int i = this.getCreeperState();
 
             if (i > 0 && this.timeSinceIgnited == 0)
-            {
                 this.playSound("random.fuse", 1.0F, 0.5F);
-            }
 
             this.timeSinceIgnited += i;
 
             if (this.timeSinceIgnited < 0)
-            {
                 this.timeSinceIgnited = 0;
-            }
 
             int difficulty = worldObj.difficultySetting.getDifficultyId();
             int lengthBoost = 4 * (3 - difficulty);
@@ -112,13 +102,9 @@ public class NitroCreeper extends EntityCreeper
                     boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 
                     if (powered > 0)
-                    {
                         this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 20f, flag);
-                    }
                     else
-                    {
                         this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3f, flag);
-                    }
 
                     this.setDead();
                 }
@@ -144,14 +130,10 @@ public class NitroCreeper extends EntityCreeper
             int k = this.rand.nextInt(4) + 2;
 
             if (par2 > 0)
-            {
                 k += this.rand.nextInt(par2 + 1);
-            }
 
             for (int l = 0; l < k; ++l)
-            {
                 this.dropItem(j, 1);
-            }
         }
 
         if (this.getPowered())
@@ -161,45 +143,16 @@ public class NitroCreeper extends EntityCreeper
                 int k = this.rand.nextInt(40) + 20;
 
                 if (par2 > 0)
-                {
                     k += this.rand.nextInt(par2 * 6 + 1);
-                }
 
                 for (int l = 0; l < k; ++l)
-                {
                     this.dropItem(j, 1);
-                }
             }
-
-            /*j = Block.tnt.blockID;
-            int k = this.rand.nextInt(5) + 2;
-
-            if (par2 > 0)
-            {
-                k += this.rand.nextInt(par2*3 + 1);
-            }
-
-            for (int l = 0; l < k; ++l)
-            {
-                this.dropItem(j, 1);
-            }*/
         }
     }
 
     public boolean attackEntityFrom (DamageSource source, int damage)
     {
-        if (source instanceof EntityDamageSource && ((EntityDamageSource) source).getEntity() instanceof EntityIronGolem)
-        {
-            damage = 1000;
-        }
-        return super.attackEntityFrom(source, damage);
+        return super.attackEntityFrom(source, source instanceof EntityDamageSource && ((EntityDamageSource) source).getEntity() instanceof EntityIronGolem ? 1000 : damage);
     }
-
-    /*public boolean getCanSpawnHere()
-    {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.boundingBox.minY);
-        int k = MathHelper.floor_double(this.posZ);
-        return this.worldObj.checkNoEntityCollision(this.boundingBox) && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox) && this.getBlockPathWeight(i, j, k) >= 0.0F;
-    }*/
 }

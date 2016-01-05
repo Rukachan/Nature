@@ -34,5 +34,4 @@ public class FlameSpiderBabyRender extends RenderSpider
     }
 
     static final ResourceLocation texture = new ResourceLocation("natura", "textures/mob/flamespider.png");
-
 }

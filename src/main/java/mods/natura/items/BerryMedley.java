@@ -17,13 +17,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BerryMedley extends ItemFood
 {
     public IIcon[] icons;
-    public String[] textureNames = new String[] { "medley" };
+    public String[] textureNames = {"medley"};
 
     public BerryMedley(int heal)
     {
         super(heal, 1.4F, false);
-        setHasSubtypes(true);
-        setMaxDamage(0);
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
         this.setCreativeTab(Natura.tab);
         this.setAlwaysEdible();
     }
@@ -32,9 +32,7 @@ public class BerryMedley extends ItemFood
     public ItemStack onItemRightClick (ItemStack par1ItemStack, World par2World, EntityPlayer player)
     {
         if (player.canEat(true) && player.getFoodStats().getSaturationLevel() < 18F)
-        {
             player.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
-        }
 
         return par1ItemStack;
     }
@@ -47,9 +45,7 @@ public class BerryMedley extends ItemFood
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
             if (par1ItemStack.stackSize <= 0)
-            {
                 return new ItemStack(Items.bowl);
-            }
 
             par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.bowl));
         }
@@ -77,9 +73,7 @@ public class BerryMedley extends ItemFood
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:berry_" + textureNames[i]);
-        }
     }
 
     @Override

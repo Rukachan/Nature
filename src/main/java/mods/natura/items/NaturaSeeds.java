@@ -40,9 +40,7 @@ public class NaturaSeeds extends ItemSeeds
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:" + textureNames[i] + "_seeds");
-        }
     }
 
     @Override
@@ -62,11 +60,7 @@ public class NaturaSeeds extends ItemSeeds
     @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int xPos, int yPos, int zPos, int side, float xClick, float yClick, float zClick)
     {
-        if (side != 1)
-        {
-            return false;
-        }
-        else if (player.canPlayerEdit(xPos, yPos, zPos, side, stack) && player.canPlayerEdit(xPos, yPos + 1, zPos, side, stack))
+        if (side == 1 && player.canPlayerEdit(xPos, yPos, zPos, side, stack) && player.canPlayerEdit(xPos, yPos + 1, zPos, side, stack))
         {
             Block soil = world.getBlock(xPos, yPos, zPos);
 
@@ -76,22 +70,14 @@ public class NaturaSeeds extends ItemSeeds
                 --stack.stackSize;
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override
     public String getUnlocalizedName (ItemStack stack)
     {
-        int arr = MathHelper.clamp_int(stack.getItemDamage(), 0, textureNames.length);
-        return "item." + textureNames[arr] + ".seed";
+        return "item." + textureNames[MathHelper.clamp_int(stack.getItemDamage(), 0, textureNames.length)] + ".seed";
     }
 
     @Override

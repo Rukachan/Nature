@@ -47,7 +47,7 @@ block.bush.berry.sting.name=Stingberry Bush
 
 block.log.maple.name=Maple Wood
 block.log.silverbell.name=Silverbell Wood
-block.log.purpleheart.name=Amaranth Wood
+block.log.purpleheart.name=Purpleheart Wood
 block.log.tiger.name=Tiger Wood
 block.log.willow.name=Willow Wood
 
@@ -66,7 +66,7 @@ item.food.nether.potashapple.name=Potash Apple
 
 block.leaves.maple.name=Maple Leaves
 block.leaves.silverbell.name=Silverbell Leaves
-block.leaves.purpleheart.name=Amaranth Leaves
+block.leaves.purpleheart.name=Purpleheart Leaves
 block.leaves.tiger.name=Tiger Leaves
 block.leaves.willow.name=Willow Leaves
 
@@ -96,7 +96,7 @@ block.redwood.NPlanks.name=Redwood Planks
 block.maple.NPlanks.name=Maple Planks
 block.silverbell.NPlanks.name=Silverbell Planks
 block.tiger.NPlanks.name=Tigerwood Planks
-block.purpleheart.NPlanks.name=Amaranth Planks
+block.purpleheart.NPlanks.name=Purpleheart Planks
 block.willow.NPlanks.name=Willow Planks
 block.darkwood.NPlanks.name=Darkwood Planks
 block.fusewood.NPlanks.name=Fusewood Planks
@@ -112,7 +112,7 @@ block.sapling.fusewood.name=Fusewood Sapling
 block.sapling.willow.name=Willow Sapling
 block.sapling.tiger.name=Tigerwood Sapling
 block.sapling.maple.name=Maple Sapling
-block.sapling.purpleheart.name=Amaranth Sapling
+block.sapling.purpleheart.name=Purpleheart Sapling
 block.sapling.silverbell.name=Silverbell Sapling
 
 
@@ -127,7 +127,7 @@ block.wood.fusewood.slab.name=Fusewood Slab
 block.wood.willow.slab.name=Willow Slab
 block.wood.tiger.slab.name=Tigerwood Slab
 block.wood.maple.slab.name=Maple Slab
-block.wood.purpleheart.slab.name=Amaranth Slab
+block.wood.purpleheart.slab.name=Purpleheart Slab
 block.wood.silverbell.slab.name=Silverbell Slab 
 
 tile.door.eucalyptus.name=Eucalyptus Door
@@ -149,7 +149,7 @@ tile.pressureplate.fusewood.name=Fusewood Pressure Plate
 tile.pressureplate.willow.name=Willow Pressure Plate
 tile.pressureplate.tiger.name=Tigerwood Pressure Plate
 tile.pressureplate.maple.name=Maple Pressure Plate
-tile.pressureplate.amaranth.name=Amaranth Pressure Plate
+tile.pressureplate.purpleheart.name=Purpleheart Pressure Plate
 tile.pressureplate.silverbell.name=Silverbell Pressure Plate
 
 tile.fenceGate.eucalyptus.name=Eucalyptus Fence Gate
@@ -163,7 +163,7 @@ tile.fenceGate.fusewood.name=Fusewood Fence Gate
 tile.fenceGate.willow.name=Willow Fence Gate
 tile.fenceGate.tiger.name=Tigerwood Fence Gate
 tile.fenceGate.maple.name=Maple Fence Gate
-tile.fenceGate.amaranth.name=Amaranth Fence Gate
+tile.fenceGate.purpleheart.name=Purpleheart Fence Gate
 tile.fenceGate.silverbell.name=Silverbell Fence Gate
 
 tile.stair.eucalyptus.name=Eucalyptus Stairs
@@ -177,7 +177,7 @@ tile.stair.fusewood.name=Fusewood Stairs
 tile.stair.willow.name=Willow Stairs
 tile.stair.tiger.name=Tigerwood Stairs
 tile.stair.maple.name=Maple Stairs
-tile.stair.amaranth.name=Amaranth Stairs
+tile.stair.purpleheart.name=Purpleheart Stairs
 tile.stair.silverbell.name=Silverbell Stairs
 
 tile.button.eucalyptus.name=Eucalyptus Button
@@ -191,7 +191,7 @@ tile.button.fusewood.name=Fusewood Button
 tile.button.willow.name=Willow Button
 tile.button.tiger.name=Tigerwood Button
 tile.button.maple.name=Maple Button
-tile.button.amaranth.name=Amaranth Button
+tile.button.purpleheart.name=Purpleheart Button
 tile.button.silverbell.name=Silverbell Button 
 
 tile.trapdoor.eucalyptus.name=Eucalyptus Trapdoor
@@ -205,7 +205,7 @@ tile.trapdoor.fusewood.name=Fusewood Trapdoor
 tile.trapdoor.willow.name=Willow Trapdoor
 tile.trapdoor.tiger.name=Tigerwood Trapdoor
 tile.trapdoor.maple.name=Maple Trapdoor
-tile.trapdoor.amaranth.name=Amaranth Trapdoor
+tile.trapdoor.purpleheart.name=Purpleheart Trapdoor
 tile.trapdoor.silverbell.name=Silverbell Trapdoor
 
 tile.blazerail.name=Blaze Rail

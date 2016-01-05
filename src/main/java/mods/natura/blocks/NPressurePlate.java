@@ -18,12 +18,15 @@ public class NPressurePlate extends BlockPressurePlate implements NReg
 {
     Block modelBlock;
     int modelMeta;
+    String name;
 
     public NPressurePlate(Material material, Sensitivity s, Block block, int meta, String name)
     {
         super("", material, s);
-        modelBlock = block;
-        modelMeta = meta;
+        this.modelBlock = block;
+        this.modelMeta = meta;
+        this.name = name;
+
         this.setCreativeTab(Natura.tab);
         this.setHardness(0.5F);
         this.setStepSound(Block.soundTypeWood);
@@ -45,7 +48,7 @@ public class NPressurePlate extends BlockPressurePlate implements NReg
 
 	@Override
 	public void reg() {
-		GameRegistry.registerBlock(this, "pressureplate." + this.getUnlocalizedName());
+		GameRegistry.registerBlock(this, "pressureplate." + this.name);
 	}
 
 	@Override

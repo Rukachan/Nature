@@ -25,25 +25,15 @@ public class WorkbenchContainer extends Container
         worldObj = world;
         this.addSlotToContainer(new SlotCrafting(inventoryplayer.player, craftMatrix, craftResult, 0, 124, 35));
         for (int i = 0; i < 3; i++)
-        {
             for (int l = 0; l < 3; l++)
-            {
                 this.addSlotToContainer(new Slot(craftMatrix, l + i * 3, 30 + l * 18, 17 + i * 18));
-            }
-        }
 
         for (int column = 0; column < 3; column++)
-        {
             for (int row = 0; row < 9; row++)
-            {
                 this.addSlotToContainer(new Slot(inventoryplayer, row + column * 9 + 9, 8 + row * 18, 84 + column * 18));
-            }
-        }
 
         for (int column = 0; column < 9; column++)
-        {
             this.addSlotToContainer(new Slot(inventoryplayer, column, 8 + column * 18, 142));
-        }
 
         onCraftMatrixChanged(craftMatrix);
     }
@@ -59,16 +49,12 @@ public class WorkbenchContainer extends Container
     {
         super.onContainerClosed(entityplayer);
         if (worldObj.isRemote)
-        {
             return;
-        }
         for (int i = 0; i < 9; i++)
         {
             ItemStack itemstack = craftMatrix.getStackInSlot(i);
             if (itemstack != null)
-            {
                 entityplayer.entityDropItem(itemstack, 0);
-            }
         }
     }
 
@@ -90,44 +76,29 @@ public class WorkbenchContainer extends Container
             if (i == 0)
             {
                 if (!mergeItemStack(itemstack1, 10, 46, true))
-                {
                     return null;
-                }
             }
             else if (i >= 10 && i < 37)
             {
                 if (!mergeItemStack(itemstack1, 37, 46, false))
-                {
                     return null;
-                }
             }
             else if (i >= 37 && i < 46)
             {
                 if (!mergeItemStack(itemstack1, 10, 37, false))
-                {
                     return null;
-                }
             }
             else if (!mergeItemStack(itemstack1, 10, 46, false))
-            {
                 return null;
-            }
             if (itemstack1.stackSize == 0)
-            {
                 slot.putStack(null);
-            }
             else
-            {
                 slot.onSlotChanged();
-            }
+
             if (itemstack1.stackSize != itemstack.stackSize)
-            {
                 slot.onPickupFromSlot(entityplayer, itemstack1);
-            }
             else
-            {
                 return null;
-            }
         }
         return itemstack;
     }

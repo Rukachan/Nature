@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CactusJuice extends ItemFood
 {
-    public String[] textureNames = new String[] { "waterdrop" };
+    public String[] textureNames = {"waterdrop"};
     public String[] unlocalizedNames;
     public IIcon[] icons;
 

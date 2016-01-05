@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class NetherFoodItem extends ItemFood
 {
     public IIcon[] icons;
-    public String[] textureNames = new String[] { "potashapple" };//, "haste"
+    public String[] textureNames = {"potashapple"};//, "haste"
 
     public NetherFoodItem()
     {
@@ -86,9 +86,7 @@ public class NetherFoodItem extends ItemFood
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:fruit_" + textureNames[i]);
-        }
     }
 
     @Override
@@ -128,13 +126,6 @@ public class NetherFoodItem extends ItemFood
     public void getSubItems (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         for (int var4 = 0; var4 < 1; ++var4)
-        {
             par3List.add(new ItemStack(par1, 1, var4));
-        }
     }
-
-    /*public boolean isPotionIngredient()
-    {
-        return true;
-    }*/
 }

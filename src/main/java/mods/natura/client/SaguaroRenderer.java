@@ -28,12 +28,7 @@ public class SaguaroRenderer implements ISimpleBlockRenderingHandler
         if (modelID == model)
         {
             int meta = world.getBlockMetadata(x, y, z);
-            if (meta == 0)
-                return renderCactus(renderer, world, x, y, z, (SaguaroBlock) block);
-            else if (meta == 1 || meta == 2)
-                return renderSmall(renderer, world, x, y, z, block);
-            else
-                return renderFruit((SaguaroBlock) block, x, y, z, world, meta);
+            return meta == 0 ? renderCactus(renderer, world, x, y, z, (SaguaroBlock) block) : meta == 1 || meta == 2 ? renderSmall(renderer, world, x, y, z, block) : renderFruit((SaguaroBlock) block, x, y, z, world, meta);
         }
 
         return true;

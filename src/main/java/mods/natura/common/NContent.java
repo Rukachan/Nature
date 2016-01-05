@@ -203,7 +203,7 @@ public class NContent implements IFuelHandler
         //Trees
         tree = new TreeBlock().setBlockName("natura.treeblock");
         redwood = new SimpleLog().setBlockName("natura.redwood");
-        planks = new Planks().setBlockName("natura.planks");
+        regs.add(planks = new Planks());
         floraLeaves = (NLeaves) new NLeaves().setBlockName("natura.leaves");
         floraLeavesNoColor = (NLeaves) new NLeavesNocolor().setBlockName("natura.leavesnocolor");
 
@@ -218,10 +218,9 @@ public class NContent implements IFuelHandler
         {
         	regs.add(new NDoorItem().setUnlocalizedName("redwoodDoorItem"));
 
-	        String doorName[] = {"redwood", "eucalyptus", "hopseed", "sakura", "ghostwood", "bloodwood", "redwoodbark"};
-	        doors = new Block[doorName.length];
-	        for (int i = 0; i < doorName.length; i++)
-	        	regs.add(doors[i] = new NDoor(Material.wood, i, doorName[i]).setBlockName("door." + doorName[i]));
+	        doors = new Block[NDoorItem.textureNames.length];
+	        for (int i = 0; i < NDoorItem.textureNames.length; i++)
+	        	regs.add(doors[i] = new NDoor(Material.wood, i, NDoorItem.textureNames[i]).setBlockName("door." + NDoorItem.textureNames[i]));
         }
         if(PHNatura.dropBarley)
             MinecraftForge.addGrassSeed(new ItemStack(seeds, 1, 0), 3);
@@ -230,7 +229,6 @@ public class NContent implements IFuelHandler
 
         GameRegistry.registerBlock(tree, TreeItem.class, "tree");
         GameRegistry.registerBlock(redwood, RedwoodItem.class, "redwood");
-        GameRegistry.registerBlock(planks, PlanksItem.class, "planks");
         GameRegistry.registerBlock(floraLeaves, NLeavesItem.class, "floraleaves");
         GameRegistry.registerBlock(floraLeavesNoColor, NoColorLeavesItem.class, "floraleavesnocolor");
         GameRegistry.registerBlock(floraSapling, FloraSaplingItem.class, "florasapling");
@@ -320,8 +318,8 @@ public class NContent implements IFuelHandler
         if (PHNatura.enableSlabs)
         {
         	regs.add(new GrassSlab().setBlockName("GrassSlab"));
-        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 0, 8).setBlockName("plankSlab"));
-        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 8, 5).setBlockName("plankSlab"));
+        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 0, 8));
+        	regs.add(new NSlabBase(Material.wood, 2.0f, planks, 8, 5));
         }
 
         /* Stairs */
@@ -347,16 +345,13 @@ public class NContent implements IFuelHandler
 
         /* Barricades */
         if (PHNatura.enableVanillaBarricades)
-        {
-	        String vanillaWoodNames[] = {"oak", "spruce", "birch", "jungle"};
-	        String vanillaWoodNames2[] = {"acacia", "darkoak"};
 	        for (int i = 0; i < vanillaWoodNames.length + vanillaWoodNames2.length; i++)
 	        {
 	        	Block log;
-	        	regs.add(log = (i < vanillaWoodNames.length ? new BarricadeBlock(Blocks.log, i) : new BarricadeBlock(Blocks.log2, i - vanillaWoodNames.length)));
-	        	regs.add(new BarricadeBlock(Blocks.planks, i).setRecipeArg(log));
+	        	String name = i < vanillaWoodNames.length ? vanillaWoodNames[i] : vanillaWoodNames2[i - vanillaWoodNames.length];
+	        	regs.add(log = (i < vanillaWoodNames.length ? new BarricadeBlock(Blocks.log, i, name) : new BarricadeBlock(Blocks.log2, i - vanillaWoodNames.length, name)));
+	        	regs.add(new BarricadeBlock(Blocks.planks, i, "plank." + name).setRecipeArg(log));
 	        }
-        }
 
         Block blocks[] = {tree, redwood, darkTree, rareTree, willow};
         int maxlocal[] = {   4,       3,        2,        4,      1};
@@ -366,12 +361,11 @@ public class NContent implements IFuelHandler
         	{
             	Block logBar;
 
-        		if (i > maxlocal[j] + sum)
+        		if (i >= maxlocal[j] + sum)
         			sum += maxlocal[j++];
-
-        		regs.add(logBar = new BarricadeBlock(blocks[j], i - sum));
+        		regs.add(logBar = new BarricadeBlock(blocks[j], i - sum, woodTextureNames[i]));
             	if (PHNatura.enableNaturaPlankBarricades)
-            		regs.add(new BarricadeBlock(planks, i).setRecipeArg(logBar));
+            		regs.add(new BarricadeBlock(planks, i, "plank." + woodTextureNames[i]).setRecipeArg(logBar));
         	}
 
         ArmorMaterial Imp = EnumHelper.addArmorMaterial("Imp", 33, new int[] {1, 3, 2, 1}, 15);
@@ -405,6 +399,11 @@ public class NContent implements IFuelHandler
         bowlStew = new BowlStew().setUnlocalizedName("bowl.glowshroom");
         GameRegistry.registerItem(bowlStew, "natura.stewbowl");
 
+        for (NReg reg : (List<NReg>)regs)
+        	reg.reg();
+        for (NReg reg : (List<NReg>)regs)
+        	reg.regRecipe();
+
 		/* fire! */
         /* TODO: make more objects burnable and make some checks */
 		Blocks.fire.setFireInfo (planks, 5, 20);
@@ -416,35 +415,30 @@ public class NContent implements IFuelHandler
         Blocks.fire.setFireInfo (rareTree, 5, 20);
         Blocks.fire.setFireInfo (rareLeaves, 30, 60);
 
-        for (NReg reg : (List<NReg>)regs)
-        	reg.reg();
-        for (NReg reg : (List<NReg>)regs)
-        	reg.regRecipe();
-
         addRecipes();
     }
 
     public void addRecipes ()
     {
-        //Crops
-		if (PHNatura.enableSeedBags)
-		{
-		    GameRegistry.addRecipe(new ItemStack(wheatBag, 1, 0), "sss", "sss", "sss", 's', Items.wheat_seeds);
-		    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(barleyBag, 1, 0), "sss", "sss", "sss", 's', "seedBarley"));
-		    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(potatoBag, 1, 0), "sss", "sss", "sss", 's', "cropPotato"));
-		    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(carrotBag, 1, 0), "sss", "sss", "sss", 's', "cropCarrot"));
-		    GameRegistry.addRecipe(new ItemStack(netherWartBag, 1, 0), "sss", "sss", "sss", 's', Items.nether_wart);
-		    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cottonBag, 1, 0), "sss", "sss", "sss", 's', "seedCotton"));
-		    GameRegistry.addRecipe(new ItemStack(boneBag, 1, 0), "sss", "sss", "sss", 's', new ItemStack(Items.dye, 1, 15));
-		}
+    	//Crops
+    	if (PHNatura.enableSeedBags)
+    	{
+    		GameRegistry.addRecipe(new ItemStack(wheatBag, 1, 0), "sss", "sss", "sss", 's', Items.wheat_seeds);
+    		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(barleyBag, 1, 0), "sss", "sss", "sss", 's', "seedBarley"));
+    		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(potatoBag, 1, 0), "sss", "sss", "sss", 's', "cropPotato"));
+    		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(carrotBag, 1, 0), "sss", "sss", "sss", 's', "cropCarrot"));
+    		GameRegistry.addRecipe(new ItemStack(netherWartBag, 1, 0), "sss", "sss", "sss", 's', Items.nether_wart);
+    		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(cottonBag, 1, 0), "sss", "sss", "sss", 's', "seedCotton"));
+    		GameRegistry.addRecipe(new ItemStack(boneBag, 1, 0), "sss", "sss", "sss", 's', new ItemStack(Items.dye, 1, 15));
 
-        GameRegistry.addRecipe(new ItemStack(Items.wheat_seeds, 9, 0), "s", 's', wheatBag);
-        GameRegistry.addRecipe(new ItemStack(seeds, 9, 0), "s", 's', barleyBag);
-        GameRegistry.addRecipe(new ItemStack(Items.potato, 9, 0), "s", 's', potatoBag);
-        GameRegistry.addRecipe(new ItemStack(Items.carrot, 9, 0), "s", 's', carrotBag);
-        GameRegistry.addRecipe(new ItemStack(Items.nether_wart, 9, 0), "s", 's', netherWartBag);
-        GameRegistry.addRecipe(new ItemStack(seeds, 9, 1), "s", 's', cottonBag);
-        GameRegistry.addRecipe(new ItemStack(Items.dye, 9, 15), "s", 's', boneBag);
+    		GameRegistry.addRecipe(new ItemStack(Items.wheat_seeds, 9, 0), "s", 's', wheatBag);
+    		GameRegistry.addRecipe(new ItemStack(seeds, 9, 0), "s", 's', barleyBag);
+    		GameRegistry.addRecipe(new ItemStack(Items.potato, 9, 0), "s", 's', potatoBag);
+    		GameRegistry.addRecipe(new ItemStack(Items.carrot, 9, 0), "s", 's', carrotBag);
+    		GameRegistry.addRecipe(new ItemStack(Items.nether_wart, 9, 0), "s", 's', netherWartBag);
+    		GameRegistry.addRecipe(new ItemStack(seeds, 9, 1), "s", 's', cottonBag);
+    		GameRegistry.addRecipe(new ItemStack(Items.dye, 9, 15), "s", 's', boneBag);
+    	}
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.string), "sss", 's', "cropCotton"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.wool), "sss", "sss", "sss", 's', "cropCotton"));
@@ -771,6 +765,9 @@ public class NContent implements IFuelHandler
     //Vanilla overrides and alternates
     public static final String woodTextureNames[] = {"eucalyptus", "sakura", "ghostwood", "redwood", "bloodwood", "hopseed", "maple", "silverbell", "purpleheart", "tiger", "willow", "darkwood",
             "fusewood"};
+    public static final String vanillaWoodNames[] = {"oak", "spruce", "birch", "jungle"};
+    public static final String vanillaWoodNames2[] = {"acacia", "darkoak"};
+
 
     //Golem type things
     public static Block grassBlock;

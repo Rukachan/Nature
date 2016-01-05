@@ -13,14 +13,19 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 import mods.natura.Natura;
 import mods.natura.client.BarricadeRender;
+import mods.natura.common.NContent;
 import mods.natura.items.blocks.BarricadeItem;
 
 public class BarricadeBlock extends NBlock
 {
-	public BarricadeBlock(Block model, int meta)
+	String name;
+
+	public BarricadeBlock(Block model, int meta, String name)
 	{
 		super(Material.wood, 4.0F, model, meta, 2, 1);
-		this.setBlockName("barricade");
+		this.setBlockName("barricade." + name);
+
+		this.name = name;
 	}
 
     @Override
@@ -110,7 +115,7 @@ public class BarricadeBlock extends NBlock
 	@Override
 	public void reg()
 	{
-		GameRegistry.registerBlock(this, BarricadeItem.class, "barricade." + i++);
+		GameRegistry.registerBlock(this, BarricadeItem.class, "barricade." + name);
 	}
 
 	@Override
@@ -129,5 +134,4 @@ public class BarricadeBlock extends NBlock
 	}
 
 	Block block = null;
-	static int i = 0;
 }

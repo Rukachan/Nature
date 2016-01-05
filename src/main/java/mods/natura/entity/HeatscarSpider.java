@@ -118,15 +118,7 @@ public class HeatscarSpider extends EntitySpider
         {
             if (par1Entity instanceof EntityLiving)
             {
-                byte b0 = 0;
-
-                if (this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL)
-                {
-                    if (this.worldObj.difficultySetting == EnumDifficulty.NORMAL)
-                        b0 = 5;
-                    else if (this.worldObj.difficultySetting == EnumDifficulty.HARD)
-                        b0 = 10;
-                }
+                int b0 = this.worldObj.difficultySetting == EnumDifficulty.NORMAL ? 5 : this.worldObj.difficultySetting == EnumDifficulty.HARD ? 10 : 0;
 
                 if (b0 > 0)
                     par1Entity.setFire(b0);

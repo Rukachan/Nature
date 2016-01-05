@@ -48,9 +48,7 @@ public class WillowGen extends WorldGenerator
         int l;
 
         for (l = par2Random.nextInt(4) + 5; world.getBlock(x, y - 1, z).getMaterial() == Material.water; --y)
-        {
             ;
-        }
 
         boolean flag = true;
 

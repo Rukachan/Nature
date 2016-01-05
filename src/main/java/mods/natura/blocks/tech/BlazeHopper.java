@@ -47,7 +47,7 @@ public class BlazeHopper extends BlockHopper
     @SideOnly(Side.CLIENT)
     public static IIcon hopperIcon (String par0Str)
     {
-        return par0Str.equals("hopper_outside") ? NContent.netherHopper.hopperIcon : (par0Str.equals("hopper_inside") ? NContent.netherHopper.hopperInsideIcon : null);
+        return par0Str.equals("hopper_outside") ? NContent.netherHopper.hopperIcon : par0Str.equals("hopper_inside") ? NContent.netherHopper.hopperInsideIcon : null;
     }
 
     @Override

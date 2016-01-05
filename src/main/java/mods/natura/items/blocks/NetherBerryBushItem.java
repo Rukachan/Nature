@@ -36,10 +36,7 @@ public class NetherBerryBushItem extends MultiItemBlock
     @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
     {
-        if (side != 1)
-            return false;
-
-        else if (player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack))
+        if (side == 1 && player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x, y + 1, z, side, stack))
         {
             Block block = world.getBlock(x, y, z);
 
@@ -52,11 +49,8 @@ public class NetherBerryBushItem extends MultiItemBlock
                     world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(NContent.netherBerryBush));
                 return true;
             }
-            else
-                return false;
         }
-        else
-            return false;
+        return false;
     }
 
     /* Block name in inventory */

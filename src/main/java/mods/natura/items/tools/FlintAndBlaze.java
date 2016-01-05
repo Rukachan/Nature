@@ -66,40 +66,30 @@ public class FlintAndBlaze extends Item
     @Override
     public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-        if (side == 0)
-        {
-            --y;
-        }
-
-        if (side == 1)
-        {
-            ++y;
-        }
-
-        if (side == 2)
-        {
-            --z;
-        }
-
-        if (side == 3)
-        {
-            ++z;
-        }
-
-        if (side == 4)
-        {
-            --x;
-        }
-
-        if (side == 5)
-        {
-            ++x;
-        }
+    	switch (side)
+    	{
+    	case 0:
+    		--y;
+    		break;
+    	case 1:
+    		y++;
+    		break;
+    	case 2:
+    		z--;
+    		break;
+    	case 3:
+    		z++;
+    		break;
+    	case 4:
+    		x--;
+    		break;
+    	case 5:
+    		x++;
+    		break;
+    	}
 
         if (!player.canPlayerEdit(x, y, z, side, stack))
-        {
             return false;
-        }
         else
         {
             if (world.isAirBlock(x, y, z))

@@ -116,15 +116,11 @@ public class ImpEntity extends EntityAnimal
         int amount = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
 
         for (int iter = 0; iter < amount; ++iter)
-        {
             this.dropItem(NContent.impMeat, 1);
-        }
 
         amount = this.rand.nextInt(5) + 2 + this.rand.nextInt(1 + par2 * 2);
         for (int iter = 0; iter < amount; ++iter)
-        {
             this.entityDropItem(new ItemStack(NContent.plantItem, 1, 6), 0f);
-        }
     }
 
     /**
@@ -154,7 +150,6 @@ public class ImpEntity extends EntityAnimal
     @Override
     public boolean getCanSpawnHere ()
     {
-        //return true;
         return this.worldObj.provider instanceof WorldProviderHell && this.worldObj.checkNoEntityCollision(this.boundingBox)
                 && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox);
     }

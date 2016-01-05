@@ -43,9 +43,15 @@ public class LargeGlowshroom extends Block
      */
     public IIcon getIcon (int side, int meta)
     {
-        return meta == 10 && side > 1 ? this.iconStem : (meta >= 1 && meta <= 9 && side == 1 ? this.iconSkin : (meta >= 1 && meta <= 3 && side == 2 ? this.iconSkin : (meta >= 7 && meta <= 9
-                && side == 3 ? this.iconSkin : ((meta == 1 || meta == 4 || meta == 7) && side == 4 ? this.iconSkin : ((meta == 3 || meta == 6 || meta == 9) && side == 5 ? this.iconSkin
-                : (meta == 14 ? this.iconSkin : (meta == 15 ? this.iconStem : this.iconInside)))))));
+        return meta == 10 && side > 1 ?	this.iconStem
+        		: meta >= 1 && meta <= 9 && side == 1 ? this.iconSkin
+        				: meta >= 1 && meta <= 3 && side == 2 ? this.iconSkin
+        						: meta >= 7 && meta <= 9 && side == 3 ? this.iconSkin
+        								: (meta == 1 || meta == 4 || meta == 7) && side == 4 ? this.iconSkin
+        										: (meta == 3 || meta == 6 || meta == 9) && side == 5 ? this.iconSkin
+        												: meta == 14 ? this.iconSkin
+        														: meta == 15 ? this.iconStem
+        																: this.iconInside;
     }
 
     /**
@@ -55,26 +61,13 @@ public class LargeGlowshroom extends Block
     public int quantityDropped (Random par1Random)
     {
         int i = par1Random.nextInt(10) - 7;
-
-        if (i < 0)
-        {
-            i = 0;
-        }
-
-        return i;
+        return i < 0 ? 0 : i;
     }
 
     @Override
     public int damageDropped (int meta)
     {
-        if (this == NContent.glowshroomBlue)
-            return 2;
-        if (this == NContent.glowshroomPurple)
-            return 1;
-        if (this == NContent.glowshroomGreen)
-            return 0;
-
-        return 0;
+        return this == NContent.glowshroomBlue ? 2 : this == NContent.glowshroomPurple ? 1 : 0;
     }
 
     @Override
@@ -99,14 +92,7 @@ public class LargeGlowshroom extends Block
     public boolean shouldSideBeRendered (IBlockAccess iblockaccess, int x, int y, int z, int side)
     {
         Block blockID = iblockaccess.getBlock(x, y, z);
-        if (blockID == NContent.glowshroomBlue || blockID == NContent.glowshroomPurple)
-        {
-            return false;
-        }
-        else
-        {
-            return super.shouldSideBeRendered(iblockaccess, x, y, z, side);
-        }
+        return blockID == NContent.glowshroomBlue || blockID == NContent.glowshroomPurple ? false : super.shouldSideBeRendered(iblockaccess, x, y, z, side);
     }
 
     /**
@@ -143,14 +129,7 @@ public class LargeGlowshroom extends Block
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
-        if (world.getBlock(x, y + 1, z) instanceof LargeGlowshroom)
-        {
-            return null;
-        }
-        else
-        {
-            return AxisAlignedBB.getBoundingBox(x, y + 0.9375, z, x + 1.0D, (double) y + 1, z + 1.0D);
-        }
+    	return world.getBlock(x, y + 1, z) instanceof LargeGlowshroom ? null : AxisAlignedBB.getBoundingBox(x, y + 0.9375, z, x + 1.0D, (double) y + 1, z + 1.0D);
     }
 
     @Override

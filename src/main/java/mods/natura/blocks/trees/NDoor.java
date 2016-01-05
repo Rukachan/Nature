@@ -33,8 +33,9 @@ public class NDoor extends BlockDoor implements NReg
         this.doorName = doorName;
         float f = 0.5F;
         float f1 = 1.0F;
-        setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
-        meta = md;
+        this.meta = md;
+
+        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
         this.setHardness(3F);
         this.setStepSound(Block.soundTypeWood);
         this.disableStats();
@@ -67,9 +68,6 @@ public class NDoor extends BlockDoor implements NReg
     }
 
     @SideOnly(Side.CLIENT)
-    /**
-     * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
-     */
     @Override
     public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side)
     {
@@ -134,7 +132,7 @@ public class NDoor extends BlockDoor implements NReg
 
 	@Override
 	public void reg() {
-        GameRegistry.registerBlock(this, "door." + this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, "door." + doorName);
 	}
 
 	@Override

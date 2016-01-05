@@ -41,23 +41,15 @@ public class Glowshroom extends BlockMushroom
             int posZ;
 
             for (posX = x - b0; posX <= x + b0; ++posX)
-            {
                 for (posZ = z - b0; posZ <= z + b0; ++posZ)
-                {
                     for (posY = y - 1; posY <= y + 1; ++posY)
-                    {
                         if (world.getBlock(posX, posY, posZ) == this)
                         {
                             --l;
 
                             if (l <= 0)
-                            {
                                 return;
-                            }
                         }
-                    }
-                }
-            }
 
             posX = x + random.nextInt(3) - 1;
             posY = y + random.nextInt(2) - random.nextInt(2);
@@ -92,39 +84,14 @@ public class Glowshroom extends BlockMushroom
 
         int meta = world.getBlockMetadata(x, y, z);
         world.setBlockToAir(x, y, z);
-        WorldGenerator obj = null;
+        WorldGenerator obj = meta == 0 ? new GlowshroomGenBlueGreen(true, 0) : meta == 1 ? new GlowshroomGenPurple(true) : meta == 2 ? new GlowshroomGenBlueGreen(true, 1) : null;
 
-        if (meta == 0)
-        {
-            obj = new GlowshroomGenBlueGreen(true, 0);
-        }
-        if (meta == 1)
-        {
-            obj = new GlowshroomGenPurple(true);
-        }
-        if (meta == 2)
-        {
-            obj = new GlowshroomGenBlueGreen(true, 1);
-        }
-
-        /*if (this.blockID == Block.mushroomBrown.blockID)
-        {
-            worldgenbigmushroom = new WorldGenBigMushroom(0);
-        }
-        else if (this.blockID == Block.mushroomRed.blockID)
-        {
-            worldgenbigmushroom = new WorldGenBigMushroom(1);
-        }*/
-
-        if (obj != null && obj.generate(world, random, x, y, z))
-        {
-            return true;
-        }
-        else
+        if (obj == null || !obj.generate(world, random, x, y, z))
         {
             world.setBlock(x, y, z, this, meta, 3);
             return false;
         }
+        return true;
     }
 
     @Override
@@ -134,9 +101,7 @@ public class Glowshroom extends BlockMushroom
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:mushroom_" + textureNames[i]);
-        }
     }
 
     @Override

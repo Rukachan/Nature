@@ -64,28 +64,7 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int metadata)
     {
-        if (field_150121_P)
-        {
-            if (metadata < 12)
-            {
-                return fancyIcons[metadata % 4];
-            }
-            else
-            {
-                return fancyIcons[metadata % 4 + 4];
-            }
-        }
-        else
-        {
-            if (metadata < 12)
-            {
-                return fastIcons[metadata % 4];
-            }
-            else
-            {
-                return fastIcons[metadata % 4 + 4];
-            }
-        }
+        return (field_150121_P ? fancyIcons : fastIcons)[metadata % 4 + metadata < 12 ? 0 : 4];
     }
 
     /* Bushes are stored by size then type */
@@ -100,36 +79,15 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z)
     {
         int l = world.getBlockMetadata(x, y, z);
-        if (l < 4)
-        {
-            return AxisAlignedBB.getBoundingBox(x + 0.25D, y, z + 0.25D, x + 0.75D, y + 0.5D, z + 0.75D);
-        }
-        else if (l < 8)
-        {
-            return AxisAlignedBB.getBoundingBox(x + 0.125D, y, z + 0.125D, x + 0.875D, y + 0.75D, z + 0.875D);
-        }
-        else
-        {
-            return AxisAlignedBB.getBoundingBox(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D);
-        }
+        return l < 4 ? AxisAlignedBB.getBoundingBox(x + 0.25D, y, z + 0.25D, x + 0.75D, y + 0.5D, z + 0.75D)
+        		: l < 8 ? AxisAlignedBB.getBoundingBox(x + 0.125D, y, z + 0.125D, x + 0.875D, y + 0.75D, z + 0.875D)
+        				: AxisAlignedBB.getBoundingBox(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D);
     }
 
     @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z)
     {
-        int l = world.getBlockMetadata(x, y, z);
-        if (l < 4)
-        {
-            return AxisAlignedBB.getBoundingBox(x + 0.25D, y, z + 0.25D, x + 0.75D, y + 0.5D, z + 0.75D);
-        }
-        else if (l < 8)
-        {
-            return AxisAlignedBB.getBoundingBox(x + 0.125D, y, z + 0.125D, x + 0.875D, y + 0.75D, z + 0.875D);
-        }
-        else
-        {
-            return AxisAlignedBB.getBoundingBox(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D);
-        }
+    	return getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
@@ -235,14 +193,7 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
     @Override
     public boolean shouldSideBeRendered (IBlockAccess iblockaccess, int i, int j, int k, int l)
     {
-        if (l > 7 || field_150121_P)
-        {
-            return super.shouldSideBeRendered(iblockaccess, i, j, k, l);
-        }
-        else
-        {
-            return true;
-        }
+    	return l > 7 || field_150121_P ? super.shouldSideBeRendered(iblockaccess, i, j, k, l) : true;
     }
 
     /* Bush growth */
@@ -251,28 +202,20 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
     public void updateTick (World world, int x, int y, int z, Random random1)
     {
         if (world.isRemote)
-        {
             return;
-        }
 
         int height;
 
         for (height = 1; world.getBlock(x, y - height, z) == this; ++height)
-        {
             ;
-        }
 
         if (random1.nextInt(75) == 0)
         {
             int md = world.getBlockMetadata(x, y, z);
             if (md < 12)
-            {
                 world.setBlock(x, y, z, this, md + 4, 3);
-            }
             if (random1.nextInt(3) == 0 && height < 3 && world.getBlock(x, y + 1, z) == Blocks.air && md >= 8)
-            {
                 world.setBlock(x, y + 1, z, this, md % 4, 3);
-            }
         }
     }
 
@@ -304,9 +247,7 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
     public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         for (int var4 = 12; var4 < 16; ++var4)
-        {
             par3List.add(new ItemStack(par1, 1, var4));
-        }
     }
 
     @Override
@@ -346,11 +287,8 @@ public class NetherBerryBush extends BlockLeavesBase implements IPlantable
         Block block = world.getBlock(x, y + 1, z);
         if (block == null || world.isAirBlock(x, y + 1, z))
         {
-            if (random.nextBoolean())
-            {
-                if (random.nextInt(3) == 0)
-                    world.setBlock(x, y + 1, z, this, meta % 4, 3);
-            }
+        	if (random.nextBoolean() && random.nextInt(3) == 0)
+        		world.setBlock(x, y + 1, z, this, meta % 4, 3);
 
             return true;
         }

@@ -21,16 +21,12 @@ public class CoordTuple implements Comparable
 
     public boolean equalCoords (int posX, int posY, int posZ)
     {
-        if (this.x == posX && this.y == posY && this.z == posZ)
-            return true;
-        else
-            return false;
+    	return this.x == posX && this.y == posY && this.z == posZ;
     }
 
     public boolean equals (Object obj) {
-    	if (!(obj instanceof CoordTuple)) {
+    	if (!(obj instanceof CoordTuple))
     		return false;
-    	}
 
     	CoordTuple that = (CoordTuple)obj;
     	return this.x == that.x && this.y == that.y && this.z == that.z;
@@ -55,35 +51,20 @@ public class CoordTuple implements Comparable
     @Override
     public int compareTo (Object o)
     {
-        if (o == null)
-            throw new NullPointerException("Object cannot be null");
-
         CoordTuple coord = (CoordTuple) o;
 
         if (x < coord.x)
-        {
             return -1;
-        }
         if (x > coord.x)
-        {
             return 1;
-        }
         if (y < coord.y)
-        {
             return -1;
-        }
         if (y > coord.y)
-        {
             return 1;
-        }
         if (z < coord.z)
-        {
             return -1;
-        }
         if (z > coord.z)
-        {
             return 1;
-        }
 
         return 0;
     }

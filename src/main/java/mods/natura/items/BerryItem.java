@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BerryItem extends ItemFood
 {
     public IIcon[] icons;
-    public String[] textureNames = new String[] { "rasp", "blue", "black", "geo" };
+    public String[] textureNames = {"rasp", "blue", "black", "geo"};
 
     public BerryItem(int heal)
     {
@@ -33,9 +33,7 @@ public class BerryItem extends ItemFood
     public ItemStack onItemRightClick (ItemStack par1ItemStack, World par2World, EntityPlayer player)
     {
         if (player.canEat(true) && player.getFoodStats().getSaturationLevel() < 18F)
-        {
             player.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
-        }
 
         return par1ItemStack;
     }
@@ -60,9 +58,7 @@ public class BerryItem extends ItemFood
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:berry_" + textureNames[i]);
-        }
     }
 
     @Override
@@ -87,8 +83,6 @@ public class BerryItem extends ItemFood
     public void getSubItems (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         for (int var4 = 0; var4 < 4; ++var4)
-        {
             par3List.add(new ItemStack(par1, 1, var4));
-        }
     }
 }

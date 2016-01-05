@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class DarkTreeBlock extends Block
 {
     public IIcon[] icons;
-    public String[] textureNames = new String[] { "darkwood_bark", "darkwood_heart", "fusewood_bark", "fusewood_heart" };
+    public String[] textureNames = {"darkwood_bark", "darkwood_heart", "fusewood_bark", "fusewood_heart"};
 
     public DarkTreeBlock()
     {
@@ -36,27 +36,13 @@ public class DarkTreeBlock extends Block
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int metadata)
     {
-        int tex = (metadata % 4) * 2;
+        int tex = metadata % 4 * 2;
         int orientation = metadata / 4;
 
-        switch (orientation)
         //Ends of logs
-        {
-        case 0:
-            if (side == 0 || side == 1)
-                return icons[tex + 1];
-            break;
-        case 1:
-            if (side == 4 || side == 5)
-                return icons[tex + 1];
-            break;
-        case 2:
-            if (side == 2 || side == 3)
-                return icons[tex + 1];
-            break;
-        }
-
-        return icons[tex];
+        return icons[tex + orientation == 0 && (side == 0 || side == 1)
+        		           || orientation == 1 && (side == 4 || side == 5)
+        		           || orientation == 2 && (side == 2 || side == 3) ? 1 : 0];
     }
 
     @Override
@@ -66,9 +52,7 @@ public class DarkTreeBlock extends Block
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:" + textureNames[i]);
-        }
     }
 
     @Override
@@ -86,23 +70,15 @@ public class DarkTreeBlock extends Block
         int j1 = b0 + 1;
 
         if (par1World.checkChunksExist(par2 - j1, par3 - j1, par4 - j1, par2 + j1, par3 + j1, par4 + j1))
-        {
             for (int k1 = -b0; k1 <= b0; ++k1)
-            {
                 for (int l1 = -b0; l1 <= b0; ++l1)
-                {
                     for (int i2 = -b0; i2 <= b0; ++i2)
                     {
                         Block j2 = par1World.getBlock(par2 + k1, par3 + l1, par4 + i2);
 
                         if (j2 != null)
-                        {
                             j2.beginLeavesDecay(par1World, par2 + k1, par3 + l1, par4 + i2);
-                        }
                     }
-                }
-            }
-        }
     }
 
     /**
@@ -116,10 +92,6 @@ public class DarkTreeBlock extends Block
 
         switch (par5)
         {
-        case 0:
-        case 1:
-            b0 = 0;
-            break;
         case 2:
         case 3:
             b0 = 8;
@@ -138,7 +110,7 @@ public class DarkTreeBlock extends Block
     @Override
     public int damageDropped (int par1)
     {
-        return par1 & 3;
+        return limitToValidMetadata (par1);
     }
 
     /**
@@ -153,11 +125,6 @@ public class DarkTreeBlock extends Block
     protected ItemStack createStackedBlock (int par1)
     {
         return new ItemStack(this, 1, limitToValidMetadata(par1));
-    }
-
-    public boolean isBlockReplaceable (World world, int x, int y, int z)
-    {
-        return false;
     }
 
     @Override

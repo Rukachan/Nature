@@ -29,17 +29,11 @@ public class FurnaceContainer extends Container
         int i;
 
         for (i = 0; i < 3; ++i)
-        {
             for (int j = 0; j < 9; ++j)
-            {
                 this.addSlotToContainer(new Slot(par1InventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
 
         for (i = 0; i < 9; ++i)
-        {
             this.addSlotToContainer(new Slot(par1InventoryPlayer, i, 8 + i * 18, 142));
-        }
     }
 
     @Override
@@ -64,19 +58,13 @@ public class FurnaceContainer extends Container
             ICrafting icrafting = (ICrafting) this.crafters.get(i);
 
             if (this.lastCookTime != this.furnace.furnaceCookTime)
-            {
                 icrafting.sendProgressBarUpdate(this, 0, this.furnace.furnaceCookTime);
-            }
 
             if (this.lastBurnTime != this.furnace.furnaceBurnTime)
-            {
                 icrafting.sendProgressBarUpdate(this, 1, this.furnace.furnaceBurnTime);
-            }
 
             if (this.lastItemBurnTime != this.furnace.currentItemBurnTime)
-            {
                 icrafting.sendProgressBarUpdate(this, 2, this.furnace.currentItemBurnTime);
-            }
         }
 
         this.lastCookTime = this.furnace.furnaceCookTime;
@@ -89,19 +77,13 @@ public class FurnaceContainer extends Container
     public void updateProgressBar (int par1, int par2)
     {
         if (par1 == 0)
-        {
             this.furnace.furnaceCookTime = par2;
-        }
 
         if (par1 == 1)
-        {
             this.furnace.furnaceBurnTime = par2;
-        }
 
         if (par1 == 2)
-        {
             this.furnace.currentItemBurnTime = par2;
-        }
     }
 
     @Override
@@ -127,9 +109,7 @@ public class FurnaceContainer extends Container
             if (par2 == 2)
             {
                 if (!this.mergeItemStack(itemstack1, 3, 39, true))
-                {
                     return null;
-                }
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
@@ -138,47 +118,31 @@ public class FurnaceContainer extends Container
                 if (FurnaceRecipes.smelting().getSmeltingResult(itemstack1) != null)
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
-                    {
                         return null;
-                    }
                 }
                 else if (TileEntityFurnace.isItemFuel(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
-                    {
                         return null;
-                    }
                 }
                 else if (par2 >= 3 && par2 < 30)
                 {
                     if (!this.mergeItemStack(itemstack1, 30, 39, false))
-                    {
                         return null;
-                    }
                 }
                 else if (par2 >= 30 && par2 < 39 && !this.mergeItemStack(itemstack1, 3, 30, false))
-                {
                     return null;
-                }
             }
             else if (!this.mergeItemStack(itemstack1, 3, 39, false))
-            {
                 return null;
-            }
 
             if (itemstack1.stackSize == 0)
-            {
                 slot.putStack((ItemStack) null);
-            }
             else
-            {
                 slot.onSlotChanged();
-            }
 
             if (itemstack1.stackSize == itemstack.stackSize)
-            {
                 return null;
-            }
 
             slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }

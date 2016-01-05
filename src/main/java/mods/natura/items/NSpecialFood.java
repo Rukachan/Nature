@@ -58,16 +58,13 @@ public class NSpecialFood extends ItemFood
         this.icons = new IIcon[iconNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:" + iconNames[i]);
-        }
     }
 
     @Override
     public String getUnlocalizedName (ItemStack stack)
     {
-        int arr = MathHelper.clamp_int(stack.getItemDamage(), 0, unlocalizedNames.length);
-        return getUnlocalizedName() + "." + unlocalizedNames[arr];
+        return getUnlocalizedName() + "." + unlocalizedNames[MathHelper.clamp_int(stack.getItemDamage(), 0, unlocalizedNames.length)];
     }
 
     @Override

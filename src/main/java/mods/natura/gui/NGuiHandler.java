@@ -13,28 +13,13 @@ public class NGuiHandler implements IGuiHandler
     @Override
     public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == craftingGui)
-        {
-            return new WorkbenchGui(player.inventory, world);
-        }
-        if (ID == furnaceGui)
-        {
-            return new FurnaceGui(player.inventory, (NetherrackFurnaceLogic) world.getTileEntity(x, y, z));
-        }
-        return null;
+
+        return ID == craftingGui ? new WorkbenchGui(player.inventory, world) : ID == furnaceGui ? new FurnaceGui(player.inventory, (NetherrackFurnaceLogic) world.getTileEntity(x, y, z)) : null;
     }
 
     @Override
     public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == craftingGui)
-        {
-            return new WorkbenchContainer(player.inventory, world);
-        }
-        if (ID == furnaceGui)
-        {
-            return new FurnaceContainer(player.inventory, (NetherrackFurnaceLogic) world.getTileEntity(x, y, z));
-        }
-        return null;
+        return ID == craftingGui ? new WorkbenchContainer(player.inventory, world) : ID == furnaceGui ? new FurnaceContainer(player.inventory, (NetherrackFurnaceLogic) world.getTileEntity(x, y, z)) : null;
     }
 }

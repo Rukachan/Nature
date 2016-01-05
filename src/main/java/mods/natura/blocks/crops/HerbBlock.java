@@ -50,13 +50,6 @@ public class HerbBlock extends CropBlock
         }
     }
 
-    /**
-     * Apply bonemeal to the crops.
-     */
-    public void fertilize (World world, int x, int y, int z)
-    {
-    }
-
     @Override
     boolean requiresSun (int meta)
     {

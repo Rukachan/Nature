@@ -97,17 +97,13 @@ public class NetherrackFurnaceBlock extends BlockContainer
                         int itemSize = rand.nextInt(21) + 10;
 
                         if (itemSize > stack.stackSize)
-                        {
                             itemSize = stack.stackSize;
-                        }
 
                         stack.stackSize -= itemSize;
                         EntityItem entityitem = new EntityItem(par1World, x + jumpX, y + jumpY, z + jumpZ, new ItemStack(stack.getItem(), itemSize, stack.getItemDamage()));
 
                         if (stack.hasTagCompound())
-                        {
                             entityitem.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
-                        }
 
                         float offset = 0.05F;
                         entityitem.motionX = (float) rand.nextGaussian() * offset;
@@ -142,33 +138,23 @@ public class NetherrackFurnaceBlock extends BlockContainer
         {
             NetherrackFurnaceLogic direction = (NetherrackFurnaceLogic) logic;
             if (entityliving == null)
-            {
                 direction.setDirection(0F, 0F, null);
-            }
             else
-            {
                 direction.setDirection(entityliving.rotationYaw * 4F, entityliving.rotationPitch, entityliving);
-            }
         }
 
         if (logic instanceof NetherrackFurnaceLogic)
         {
             NetherrackFurnaceLogic inv = (NetherrackFurnaceLogic) logic;
             if (stack.hasDisplayName())
-            {
                 inv.setGuiDisplayName(stack.getDisplayName());
-            }
         }
     }
 
     public static boolean isActive (IBlockAccess world, int x, int y, int z)
     {
         TileEntity logic = world.getTileEntity(x, y, z);
-        if (logic instanceof NetherrackFurnaceLogic)
-        {
-            return ((NetherrackFurnaceLogic) logic).getActive();
-        }
-        return false;
+        return logic instanceof NetherrackFurnaceLogic ? ((NetherrackFurnaceLogic) logic).getActive() : false;
     }
 
     @Override
@@ -182,11 +168,7 @@ public class NetherrackFurnaceBlock extends BlockContainer
     public int getLightValue (IBlockAccess world, int x, int y, int z)
     {
         TileEntity te = world.getTileEntity(x, y, z);
-        if (te instanceof NetherrackFurnaceLogic)
-        {
-            return ((NetherrackFurnaceLogic) te).getActive() ? 15 : 0;
-        }
-        return this.getLightValue();
+        return te instanceof NetherrackFurnaceLogic ? ((NetherrackFurnaceLogic) te).getActive() ? 15 : 0 : this.getLightValue();
     }
 
     /* Comparator */
@@ -250,12 +232,7 @@ public class NetherrackFurnaceBlock extends BlockContainer
     @SideOnly(Side.CLIENT)
     public int getTextureIndex (int side)
     {
-        if (side == 0 || side == 1)
-            return 3;
-        if (side == 3)
-            return 0;
-
-        return 2;
+        return side == 0 || side == 1 ? 3 : side == 3 ? 0 : 2;
     }
 
     @Override
@@ -266,22 +243,7 @@ public class NetherrackFurnaceBlock extends BlockContainer
         int direction = (logic instanceof NetherrackFurnaceLogic) ? ((NetherrackFurnaceLogic) logic).getRenderDirection() : 0;
         int meta = world.getBlockMetadata(x, y, z) % 8;
 
-        if (meta == 0)
-        {
-            if (side == direction)
-            {
-                if (((NetherrackFurnaceLogic) logic).getActive())
-                    return icons[1];
-                else
-                    return icons[0];
-            }
-            else if (side > 1)
-            {
-                return icons[2];
-            }
-            return icons[3];
-        }
-        return icons[0];
+        return icons[meta == 0 ? side == direction ? ((NetherrackFurnaceLogic) logic).getActive() ? 1 : 0 : side > 1 ? 2 : 3 : 0];
     }
 
     @SideOnly(Side.CLIENT)
@@ -290,9 +252,7 @@ public class NetherrackFurnaceBlock extends BlockContainer
     @SideOnly(Side.CLIENT)
     public String[] getTextureNames ()
     {
-        String[] textureNames = { "nfurnace_off", "nfurnace_on", "nfurnace_side", "nfurnace_top" };
-
-        return textureNames;
+        return new String[] {"nfurnace_off", "nfurnace_on", "nfurnace_side", "nfurnace_top"};
     }
 
     @Override
@@ -303,8 +263,6 @@ public class NetherrackFurnaceBlock extends BlockContainer
         this.icons = new IIcon[textureNames.length];
 
         for (int i = 0; i < this.icons.length; ++i)
-        {
             this.icons[i] = iconRegister.registerIcon("natura:" + textureNames[i]);
-        }
     }
 }

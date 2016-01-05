@@ -89,9 +89,7 @@ public class SpawnEgg extends Item
         {
             activateSpawnEgg(stack, world, posX, posY, posZ, par7);
             if (!player.capabilities.isCreativeMode)
-            {
                 --stack.stackSize;
-            }
         }
         return true;
     }
@@ -102,12 +100,7 @@ public class SpawnEgg extends Item
         posX += Facing.offsetsXForSide[par7];
         posY += Facing.offsetsYForSide[par7];
         posZ += Facing.offsetsZForSide[par7];
-        double d0 = 0.0D;
-
-        if (par7 == 1 && i1 != null && i1.getRenderType() == 11)
-        {
-            d0 = 0.5D;
-        }
+        double d0 = par7 == 1 && i1 != null && i1.getRenderType() == 11 ? 0.5D : 0.0D;
 
         int damage = stack.getItemDamage();
         EntityLiving entity = null;

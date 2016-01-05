@@ -60,9 +60,7 @@ public final class ChunkCoord implements Comparable<ChunkCoord>, Serializable
     {
 
         if (!(obj instanceof ChunkCoord))
-        {
             return false;
-        }
         ChunkCoord other = (ChunkCoord) obj;
         return this.chunkX == other.chunkX && this.chunkZ == other.chunkZ;
     }
@@ -70,7 +68,6 @@ public final class ChunkCoord implements Comparable<ChunkCoord>, Serializable
     @Override
     public int hashCode ()
     {
-
         int hash = chunkX;
         hash *= 31 + this.chunkZ;
         return hash;
@@ -79,7 +76,6 @@ public final class ChunkCoord implements Comparable<ChunkCoord>, Serializable
     @Override
     public String toString ()
     {
-
         return "[" + this.chunkX + ", " + this.chunkZ + "]";
     }
 
@@ -87,7 +83,6 @@ public final class ChunkCoord implements Comparable<ChunkCoord>, Serializable
     @Override
     public int compareTo (ChunkCoord other)
     {
-
         return this.chunkX == other.chunkX ? this.chunkZ - other.chunkZ : this.chunkX - other.chunkX;
     }
 }
