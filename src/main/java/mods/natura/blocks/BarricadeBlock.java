@@ -23,7 +23,7 @@ public class BarricadeBlock extends NBlock
 	public BarricadeBlock(Block model, int meta, String name)
 	{
 		super(Material.wood, 4.0F, model, meta, 2, 1);
-		this.setBlockName("barricade." + name);
+		this.setBlockName("barricade");
 
 		this.name = name;
 	}

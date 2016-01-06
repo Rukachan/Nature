@@ -118,10 +118,10 @@ block.sapling.silverbell.name=Silverbell Sapling
 
 block.wood.eucalyptus.slab.name=Eucalyptus Slab
 block.wood.sakura.slab.name=Sakura Slab
-block.wood.ghost.slab.name=Ghostwood Slab
-block.wood.bush.slab.name=Hopseed Slab
+block.wood.ghostwood.slab.name=Ghostwood Slab
+block.wood.hopseed.slab.name=Hopseed Slab
 block.wood.redwood.slab.name=Redwood Slab
-block.wood.blood.slab.name=Blood Slab
+block.wood.bloodwood.slab.name=Blood Slab
 block.wood.darkwood.slab.name=Darkwood Slab
 block.wood.fusewood.slab.name=Fusewood Slab
 block.wood.willow.slab.name=Willow Slab
