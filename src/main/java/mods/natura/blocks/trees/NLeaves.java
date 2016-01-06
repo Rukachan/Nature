@@ -31,7 +31,7 @@ public class NLeaves extends BlockLeaves
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setStepSound(Block.soundTypeGrass);
-        this.setBlockName("floraLeaves");
+        this.setBlockName("leaves");
         this.setCreativeTab(Natura.tab);
     }
 
@@ -83,17 +83,13 @@ public class NLeaves extends BlockLeaves
                 boolean nearbyTree = false;
                 byte range = 4;
                 for (int posX = x - range; posX <= x + range; posX++)
-                {
                     for (int posY = y - range; posY <= y + range; posY++)
-                    {
                         for (int posZ = z - range; posZ <= z + range; posZ++)
                         {
                             Block block = world.getBlock(posX, posY, posZ);
                             if (block != null && block.canSustainLeaves(world, posX, posY, posZ))
                                 nearbyTree = true;
                         }
-                    }
-                }
 
                 if (!nearbyTree)
                     this.removeLeaves(world, x, y, z);
@@ -133,12 +129,8 @@ public class NLeaves extends BlockLeaves
             ArrayList<ItemStack> items = getDrops(par1World, par2, par3, par4, par5, par7);
 
             for (ItemStack item : items)
-            {
                 if (par1World.rand.nextFloat() <= par6)
-                {
                     this.dropBlockAsItem(par1World, par2, par3, par4, item);
-                }
-            }
         }
     }
 
@@ -149,21 +141,15 @@ public class NLeaves extends BlockLeaves
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int metadata)
     {
-        int meta = metadata % 4;
-        if (metadata == 3)
-            meta = 0;
-
-        if (field_150121_P)
-            return fancyIcons[meta];
-        else
-            return fastIcons[meta];
+        int meta = metadata == 3 ? 0 : metadata % 4;
+        return (field_150121_P ? fancyIcons : fastIcons)[meta];
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons (IIconRegister iconRegister)
     {
-        String[] textureNames = new String[] { "redwood", "eucalyptus", "hopseed" };
+        String[] textureNames = {"redwood", "eucalyptus", "hopseed"};
         this.fastIcons = new IIcon[textureNames.length];
         this.fancyIcons = new IIcon[textureNames.length];
 
@@ -178,7 +164,6 @@ public class NLeaves extends BlockLeaves
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-
     @Override
     public boolean shouldSideBeRendered (IBlockAccess var1, int var2, int var3, int var4, int var5)
     {
@@ -191,9 +176,8 @@ public class NLeaves extends BlockLeaves
      */
     public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-        par3List.add(new ItemStack(par1, 1, 2));
+    	for (int i = 0; i < 3; i++)
+    		par3List.add(new ItemStack(par1, 1, i));
     }
 
     public int getDamageValue (World par1World, int par2, int par3, int par4)
@@ -205,11 +189,7 @@ public class NLeaves extends BlockLeaves
     public int getLightOpacity (IBlockAccess world, int x, int y, int z)
     {
         int meta = world.getBlockMetadata(x, y, z) % 4;
-        if (meta == 0)
-        {
-            return 255;
-        }
-        return super.getLightOpacity(world, x, y, z);//this.getLightOpacity(world, x, y, z);//lightOpacity[blockID];
+        return meta == 0 ? 0xFF : super.getLightOpacity(world, x, y, z);
     }
 
     @Override

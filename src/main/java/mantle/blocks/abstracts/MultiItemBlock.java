@@ -16,15 +16,12 @@ public class MultiItemBlock extends ItemBlock
     private String blockType[];
     private String unlocalizedName;
     private String append;
-    private int specialIndex[] = { -1, -1 };
+    private int specialIndex[] = {-1, -1};
 
     public MultiItemBlock(Block b, String itemBlockUnlocalizedName, String[] blockTypes)
     {
         super(b);
-        if (itemBlockUnlocalizedName.isEmpty())
-            this.unlocalizedName = super.getUnlocalizedName();
-        else
-            this.unlocalizedName = itemBlockUnlocalizedName;
+        this.unlocalizedName = itemBlockUnlocalizedName.isEmpty() ? super.getUnlocalizedName() : itemBlockUnlocalizedName;
         this.blockType = blockTypes;
         this.append = "";
     }
@@ -61,9 +58,9 @@ public class MultiItemBlock extends ItemBlock
         }
         catch (ArrayIndexOutOfBoundsException ex)
         {
-	    /* logger.warn("[MultiItemBlock] Caught array index error in getUnlocalizedName: " + ex.getMessage());
-	     * logger.warn("[MultiItemBlock] Returning unlocalized name: " + getUnlocalizedName());
-	     */
+        	/* logger.warn("[MultiItemBlock] Caught array index error in getUnlocalizedName: " + ex.getMessage());
+        	 * logger.warn("[MultiItemBlock] Returning unlocalized name: " + getUnlocalizedName());
+        	 */
             return getUnlocalizedName();
         }
     }

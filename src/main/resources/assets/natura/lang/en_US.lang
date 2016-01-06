@@ -224,11 +224,11 @@ block.glowshroom.green.name=Green Glowshroom
 block.glowshroom.purple.name=Purple Glowshroom
 block.glowshroom.blue.name=Blue Glowshroom
 
-block.eucalyptus.NLeaves.name=Eucalyptus Leaves
+block.leaves.eucalyptus.name=Eucalyptus Leaves
 block.leaves.sakura.name=Sakura Leaves
 block.leaves.ghost.name=Ghostwood Leaves
-block.bush.NLeaves.name=Hopseed Leaves
-block.redwood.NLeaves.name=Redwood Leaves
+block.leaves.bush.name=Hopseed Leaves
+block.leaves.redwood.name=Redwood Leaves
 block.leaves.blood.name=Bloodleaves
 
 block.eucalyptus.log.name=Eucalyptus Wood
@@ -258,7 +258,6 @@ tile.TaintedSoil.name=Tainted Soil
 tile.HeatSand.name=Heat Sand
 tile.Thornvines.name=Thornvines
 tile.potashApple.name=Potash Apple
-item.natura.stick.name=Stick
 
 item.natura.armor.imphelmet.name=Impskin Helmet
 item.natura.armor.impjerkin.name=Impskin Jerkin

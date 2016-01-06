@@ -5,20 +5,21 @@ import java.util.List;
 import mantle.blocks.abstracts.MultiItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class NLeavesDarkItem extends MultiItemBlock
+public class NLeavesDarkItem extends ItemBlock
 {
-    public static final String blockType[] = { "darkwood", "darkwood.flowering", "darkwood.fruit", "fusewood", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+    public static final String blockType[] = {"darkwood", "darkwood.flowering", "darkwood.fruit", "fusewood"};
 
     public NLeavesDarkItem(Block i)
     {
-        super(i, "block.leaves", blockType);
-        setMaxDamage(0);
-        setHasSubtypes(true);
+        super(i);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
     }
 
     @Override
@@ -27,11 +28,11 @@ public class NLeavesDarkItem extends MultiItemBlock
         return md | 4;
     }
 
-    /* @Override
-     public String getUnlocalizedName (ItemStack itemstack)
-     {
-         return (new StringBuilder()).append("block.leaves.").append(blockType[itemstack.getItemDamage()]).toString();
-     }*/
+    @Override
+    public String getUnlocalizedName (ItemStack itemstack)
+    {
+    	return "block.leaves." + blockType[itemstack.getItemDamage() % blockType.length];
+    }
 
     @Override
     @SideOnly(Side.CLIENT)

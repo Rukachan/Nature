@@ -204,8 +204,8 @@ public class NContent implements IFuelHandler
         tree = new TreeBlock().setBlockName("natura.treeblock");
         redwood = new SimpleLog().setBlockName("natura.redwood");
         regs.add(planks = new Planks());
-        floraLeaves = (NLeaves) new NLeaves().setBlockName("natura.leaves");
-        floraLeavesNoColor = (NLeaves) new NLeavesNocolor().setBlockName("natura.leavesnocolor");
+        floraLeaves = (NLeaves) new NLeaves();
+        floraLeavesNoColor = (NLeaves) new NLeavesNocolor();
 
 		floraSapling = ((FloraSaplingBlock) new FloraSaplingBlock().setBlockName("natura.sapling"));
 		willow = new WillowBlock().setBlockName("willow");

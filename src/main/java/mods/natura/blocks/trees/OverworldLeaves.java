@@ -26,7 +26,7 @@ public class OverworldLeaves extends NLeaves
     @Override
     public void registerBlockIcons (IIconRegister iconRegister)
     {
-        String[] textureNames = new String[] { "maple", "silverbell", "purpleheart", "tiger" };
+        String[] textureNames = {"maple", "silverbell", "purpleheart", "tiger"};
         this.fastIcons = new IIcon[textureNames.length];
         this.fancyIcons = new IIcon[textureNames.length];
 
@@ -43,9 +43,7 @@ public class OverworldLeaves extends NLeaves
     {
         int meta = world.getBlockMetadata(x, y, z) % 4;
         if (meta == 0)
-        {
             return 0xcc5718;
-        }
 
         /*if (meta == 2)
         {
@@ -59,7 +57,6 @@ public class OverworldLeaves extends NLeaves
             int k1 = 0;
 
             for (int l1 = -1; l1 <= 1; ++l1)
-            {
                 for (int i2 = -1; i2 <= 1; ++i2)
                 {
                     int j2 = world.getBiomeGenForCoords(x + i2, z + l1).getBiomeFoliageColor(x, y, z);
@@ -67,7 +64,6 @@ public class OverworldLeaves extends NLeaves
                     j1 += (j2 & 65280) >> 8;
                     k1 += j2 & 255;
                 }
-            }
 
             return ((i1 / 9 & 255) << 16 | (j1 / 9 & 255) << 8 | k1 / 9 & 255) + 0x222222;
         }
@@ -81,10 +77,7 @@ public class OverworldLeaves extends NLeaves
     {
         int meta = metadata % 4;
 
-        if (field_150121_P)
-            return fancyIcons[meta];
-        else
-            return fastIcons[meta];
+        return (field_150121_P ? fancyIcons : fastIcons)[meta];
     }
 
     @Override
@@ -97,10 +90,8 @@ public class OverworldLeaves extends NLeaves
     @Override
     public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-        par3List.add(new ItemStack(par1, 1, 2));
-        par3List.add(new ItemStack(par1, 1, 3));
+    	for (int i = 0; i < 4; i++)
+    		par3List.add(new ItemStack(par1, 1, i));
     }
 
     @Override

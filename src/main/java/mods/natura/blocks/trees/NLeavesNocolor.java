@@ -24,13 +24,13 @@ public class NLeavesNocolor extends NLeaves
     public NLeavesNocolor()
     {
         super();
-        this.setCreativeTab(Natura.tab);
+        this.setBlockName("leavesnocolor");
     }
 
     @SideOnly(Side.CLIENT)
     public int getBlockColor ()
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     @SideOnly(Side.CLIENT)
@@ -39,7 +39,7 @@ public class NLeavesNocolor extends NLeaves
      */
     public int getRenderColor (int par1)
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     @SideOnly(Side.CLIENT)
@@ -49,7 +49,7 @@ public class NLeavesNocolor extends NLeaves
      */
     public int colorMultiplier (IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     public int getFlammability (IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
@@ -64,41 +64,31 @@ public class NLeavesNocolor extends NLeaves
 
     public int damageDropped (int meta)
     {
-        if (meta % 4 == 3)
-            return 4;
-        return (meta & 3) + 3;
+    	return meta % 4 == 3 ? 4 : (meta & 3) + 3;
     }
 
     @Override
     public Item getItemDropped (int meta, Random random, int fortune)
     {
-        if (meta % 4 == 3)
-            return Item.getItemFromBlock(NContent.rareSapling);
-        return Item.getItemFromBlock(NContent.floraSapling);
+    	return Item.getItemFromBlock(meta % 4 == 3 ? NContent.rareSapling : NContent.floraSapling);
     }
 
     @Override
     public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune)
     {
         ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
-        
-        if (metadata % 4 == 2)
-        {
-            if (fortune > 3 || Natura.random.nextInt(40 - fortune * 10) == 0)
-            {
-                ret.add(new ItemStack(Items.redstone));
-            }
 
-        }
-            
+        if (metadata % 4 == 2 && (fortune > 3 || Natura.random.nextInt(40 - fortune * 10) == 0))
+        	ret.add(new ItemStack(Items.redstone));
+
         return ret;
     }
-    
+
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons (IIconRegister iconRegister)
     {
-        String[] textureNames = new String[] { "sakura", "ghostwood", "bloodwood", "willow" };
+        String[] textureNames = {"sakura", "ghostwood", "bloodwood", "willow"};
         this.fastIcons = new IIcon[textureNames.length];
         this.fancyIcons = new IIcon[textureNames.length];
 
@@ -114,20 +104,14 @@ public class NLeavesNocolor extends NLeaves
     public IIcon getIcon (int side, int metadata)
     {
         int meta = metadata % 4;
-
-        if (field_150121_P)
-            return fancyIcons[meta];
-        else
-            return fastIcons[meta];
+        return (field_150121_P ? fancyIcons : fastIcons)[meta];
     }
 
     @Override
     public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-        par3List.add(new ItemStack(par1, 1, 2));
-        par3List.add(new ItemStack(par1, 1, 3));
+    	for (int i = 0; i < 4; i++)
+    		par3List.add(new ItemStack(par1, 1, i));
     }
 
     public int getLightOpacity (World world, int x, int y, int z)

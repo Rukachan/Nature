@@ -5,28 +5,28 @@ import java.util.List;
 import mantle.blocks.abstracts.MultiItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class OverworldLeavesItem extends MultiItemBlock
+public class OverworldLeavesItem extends ItemBlock
 {
-    public static final String blockType[] = { "maple", "silverbell", "purpleheart", "tiger" };
+    public static final String blockType[] = {"maple", "silverbell", "purpleheart", "tiger"};
 
     public OverworldLeavesItem(Block i)
     {
-        super(i, "block.leaves", blockType);
-        setMaxDamage(0);
-        setHasSubtypes(true);
+        super(i);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
     }
 
-    /* @Override
-     public String getUnlocalizedName (ItemStack itemstack)
-     {
-         int i = MathHelper.clamp_int(itemstack.getItemDamage(), 0, 3);
-         return (new StringBuilder()).append("block.leaves.").append(blockType[i]).toString();
-     }*/
+    @Override
+    public String getUnlocalizedName (ItemStack itemstack)
+    {
+    	return "block.leaves." + blockType[itemstack.getItemDamage() % blockType.length];
+    }
 
     @Override
     @SideOnly(Side.CLIENT)

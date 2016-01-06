@@ -135,8 +135,6 @@ public class NDoorItem extends Item implements NReg
 
 	@Override
 	public void regRecipe() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

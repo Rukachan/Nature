@@ -21,7 +21,6 @@ public class NLeavesDark extends NLeaves
     public NLeavesDark()
     {
         super();
-        this.setCreativeTab(Natura.tab);
         this.setBlockName("Darkleaves");
     }
 
@@ -29,7 +28,7 @@ public class NLeavesDark extends NLeaves
     @Override
     public void registerBlockIcons (IIconRegister iconRegister)
     {
-        String[] textureNames = new String[] { "darkwood", "darkwood_flowering", "darkwood_fruit", "fusewood" };
+        String[] textureNames = {"darkwood", "darkwood_flowering", "darkwood_fruit", "fusewood"};
         this.fastIcons = new IIcon[textureNames.length];
         this.fancyIcons = new IIcon[textureNames.length];
 
@@ -46,17 +45,14 @@ public class NLeavesDark extends NLeaves
     {
         int meta = metadata % 4;
 
-        if (field_150121_P)
-            return fancyIcons[meta];
-        else
-            return fastIcons[meta];
+        return (field_150121_P ? fancyIcons : fastIcons)[meta];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor ()
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     @Override
@@ -66,7 +62,7 @@ public class NLeavesDark extends NLeaves
      */
     public int getRenderColor (int par1)
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     @Override
@@ -77,7 +73,7 @@ public class NLeavesDark extends NLeaves
      */
     public int colorMultiplier (IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        return 16777215;
+        return 0xFFFFFF;
     }
 
     public int getFlammability (IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
@@ -93,36 +89,26 @@ public class NLeavesDark extends NLeaves
     @Override
     public Item getItemDropped (int metadata, Random random, int fortune)
     {
-        if (metadata % 4 == 2)
-            return NContent.potashApple;
-        return Item.getItemFromBlock(NContent.netherSapling);
+    	return metadata % 4 == 2 ? NContent.potashApple : Item.getItemFromBlock(NContent.netherSapling);
     }
 
     @Override
-    public int damageDropped (int par1)
+    public int damageDropped (int meta)
     {
-        if (par1 % 4 == 2)
-            return 0;
-        if (par1 % 4 == 3)
-            return 7;
-        return 6;
+    	return meta % 4 == 2 ? 0 : meta % 4 == 3 ? 7 : 6;
     }
 
     @Override
     public int quantityDropped (int meta, int fortune, Random random)
     {
-        if (meta % 4 == 2)
-            return 1;
-        return quantityDroppedWithBonus(fortune, random);
+    	return meta % 4 == 2 ? 1 : quantityDroppedWithBonus(fortune, random);
     }
 
     @Override
     public void getSubBlocks (Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-        par3List.add(new ItemStack(par1, 1, 2));
-        par3List.add(new ItemStack(par1, 1, 3));
+    	for (int i = 0; i < 4; i++)
+    		par3List.add(new ItemStack(par1, 1, i));
     }
 
     @Override
