@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -86,8 +87,9 @@ public class NSlabBase extends NBlock
 
 	@Override
 	public void reg() {
-        GameRegistry.registerBlock(this, PlankSlabItem.class, "plankSlab" + ++i);
+		GameRegistry.registerBlock(this, PlankSlabItem.class, "plankSlab" + i, (i - 1) * 8);
+		i++;
 	}
 
-	static int i = 0;
+	static int i = 1;
 }

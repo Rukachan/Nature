@@ -15,31 +15,34 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class PlankSlabItem extends MultiItemBlock
 {
     Block block;
+    int addToMeta;
 
-    public PlankSlabItem(Block id)
+    public PlankSlabItem(Block id, Integer addToMeta)
     {
         super(id, "block.wood", "slab", NContent.woodTextureNames);
         this.block = id;
+        this.addToMeta = addToMeta;
+
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
     	list.add(StatCollector.translateToLocal("tooltip.tree" + stack.getItemDamage()));
     }
 
     @Override
-    public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         Block id = world.getBlock(x, y, z);
         int meta = world.getBlockMetadata(x, y, z);
         int trueMeta = meta % 8;
         boolean flag = id != null;
 
-        if ((side == 1 && !flag || side == 0 && flag) && id == this.block && trueMeta == stack.getItemDamage() && world.setBlock(x, y, z, NContent.planks, trueMeta, 3))
+        if ((side == 1 && !flag || side == 0 && flag) && id == this.block && trueMeta == stack.getItemDamage() && world.setBlock(x, y, z, NContent.planks, trueMeta + addToMeta, 3))
         {
             world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, this.block.stepSound.getBreakSound(), (this.block.stepSound.getVolume() + 1.0F) / 2.0F, this.block.stepSound.getPitch() * 0.8F);
             --stack.stackSize;

@@ -771,11 +771,6 @@ public class NContent implements IFuelHandler
     //Golem type things
     public static Block grassBlock;
 
-    /* slabs */
-    public static Block grassSlab;
-    public static Block plankSlab1;
-    public static Block plankSlab2;
-
     public static List recipes;
 
     public static String[] append(String[] str, String toAppend)
