@@ -65,7 +65,7 @@ public class BerryBush extends BlockLeavesBase implements IPlantable
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int metadata)
     {
-        return (field_150121_P ? fancyIcons : fastIcons)[metadata % 4 + metadata < 12 ? 0 : 4];
+        return (field_150121_P ? fancyIcons : fastIcons)[metadata % 4 + (metadata < 12 ? 0 : 4)];
     }
 
     /* Bushes are stored by size then type */
